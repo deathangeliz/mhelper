@@ -53,7 +53,7 @@ public class SilentEvent extends Service{
 		int ringerMode = AudioManager.RINGER_MODE_SILENT;
 		audioMgr.setRingerMode(ringerMode);
 		return START_NOT_STICKY;
-	}
+	}     
 
 	
 
