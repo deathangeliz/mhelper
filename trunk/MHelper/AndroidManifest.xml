@@ -14,7 +14,8 @@
             </intent-filter>
         </activity>
         <service android:name=".SilentEvent"></service>
-        <service android:name=".ShockEvent"></service>
+        <service android:name=".PlaneEvent"></service>
+        <service android:name=".SilentEvent"></service>
 
 
     </application>
