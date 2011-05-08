@@ -20,22 +20,7 @@ public class VibratorEvent extends Service {
 		// TODO Auto-generated method stub
 		super.onCreate();
 	}
-	/* (non-Javadoc)
-	 * @see android.app.Service#onDestroy()
-	 */
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
-	/* (non-Javadoc)
-	 * @see android.app.Service#onStart(android.content.Intent, int)
-	 */
-	@Override
-	public void onStart(Intent intent, int startId) {
-		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
-	}
+	
 	/* (non-Javadoc)
 	 * @see android.app.Service#onStartCommand(android.content.Intent, int, int)
 	 */

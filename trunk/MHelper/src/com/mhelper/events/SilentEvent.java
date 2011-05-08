@@ -1,6 +1,5 @@
 package com.mhelper.events;
 
-import java.io.FileDescriptor;
 import java.io.PrintWriter;
 
 import android.app.Service;
@@ -23,24 +22,6 @@ public class SilentEvent extends Service{
 	public void onCreate() {
 		
 		super.onCreate();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.Service#onDestroy()
-	 */
-	@Override
-	public void onDestroy() {
-		// TODO Auto-generated method stub
-		super.onDestroy();
-	}
-
-	/* (non-Javadoc)
-	 * @see android.app.Service#onStart(android.content.Intent, int)
-	 */
-	@Override
-	public void onStart(Intent intent, int startId) {
-		// TODO Auto-generated method stub
-		super.onStart(intent, startId);
 	}
 
 	/* (non-Javadoc)
