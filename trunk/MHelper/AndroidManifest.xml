@@ -6,7 +6,7 @@
 
 
     <application android:icon="@drawable/icon" android:label="@string/app_name">
-        <activity android:name=".Main"
+        <activity android:name="com.mhelper.ui.NewCondEvent"
                   android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,7 +16,8 @@
         <service android:name=".SilentEvent"></service>
         <service android:name=".VibratorEvent"></service>
         <service android:name=".PlaneEvent"></service>
-    
+        <activity android:name=".ui.NewCondSettings"></activity>
+        <activity android:name=".ui.NewEventSettings"></activity>
 
     </application>
 </manifest>
