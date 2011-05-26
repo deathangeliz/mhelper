@@ -73,7 +73,7 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 					return null;
 			}
 			else if (groupPosition == 4) {
-				if (convertView instanceof NewNotificationChildView)
+				if (convertView instanceof NewNotificationSelectChildView)
 					return convertView;
 				else 
 					//In this we should throw exception, but now just return null.
@@ -104,7 +104,7 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 			return view;
 		}
 		else if (groupPosition == 4) {
-			View view = new NewNotificationChildView(context);
+			View view = new NewNotificationSelectChildView(context);
 			return view;
 		}
 		else if (groupPosition == 5) {
