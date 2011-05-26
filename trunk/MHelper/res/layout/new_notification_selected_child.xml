@@ -11,11 +11,10 @@
       android:layout_gravity="left" 
       android:id="@+id/newNotificationText">
     </TextView>
-    <ImageView 
-      android:src="@drawable/icon" 
+    <Spinner
       android:layout_width="wrap_content" 
-      android:id="@+id/newNotificationImage" 
       android:layout_height="64dp" 
-      android:layout_gravity="right">
-      </ImageView>  
+      android:layout_gravity="right" 
+      android:id="@+id/newNotificationSpinner">
+    </Spinner>  
 </LinearLayout>
