@@ -11,33 +11,45 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 	Context context;
 	ArrayList<String> groupContent = new ArrayList<String>();
 	ArrayList<ArrayList<String>> childContent = new	ArrayList<ArrayList<String>>();
+	Object groupLock = new Object();
+	Object childrenLock = new Object();
 	
 	public  HomeExpandableListAdapter(Context ctx) {
 		context = ctx;
 	}
 	
 	public ArrayList<String> getGroupContent() {
-		return groupContent;
+		synchronized (groupLock) {
+			return groupContent;
+		}
 	}
 	
 	public boolean setGroupContent(ArrayList<String> gc) {
-		groupContent = gc;
-		return true;
+		synchronized (groupLock) {
+		    groupContent = gc;
+		    return true;
+		}
 	}
 	
 	public ArrayList<ArrayList<String>> getChildContent() {
-		return childContent;
+		synchronized (childrenLock) {
+			return childContent;
+		}		
 	}
 	
 	public boolean setChildContent(ArrayList<ArrayList<String>> cc) {
-		childContent = cc;
-		return true;
+		synchronized (childrenLock) {
+		    childContent = cc;
+		    return true;
+		}
 	}
 	
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		// TODO Auto-generated method stub
-		return childContent.get(groupPosition).get(childPosition);
+		synchronized (childrenLock) {
+			return childContent.get(groupPosition).get(childPosition);
+		}		
 	}
 
 	@Override
@@ -50,31 +62,51 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		return null;
+		if (convertView != null) {
+			if (convertView instanceof HomeChildView)
+				return convertView;
+			else {
+				////In this we should throw exception, but now just return null.
+				return null;
+			}
+		}
+		synchronized (childrenLock) {
+			HomeChildView view = new HomeChildView(context);
+			view.setHomeText((String)getChild(groupPosition, childPosition));
+			return view;
+		}	
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		// TODO Auto-generated method stub
-		return childContent.get(groupPosition).size();
+		synchronized (childrenLock) {
+			return childContent.get(groupPosition).size();
+		}	
 	}
 
 	@Override
 	public Object getGroup(int groupPosition) {
 		// TODO Auto-generated method stub
-		return groupContent.get(groupPosition);
+		synchronized (groupLock) {
+			return groupContent.get(groupPosition);
+		}		
 	}
 
 	@Override
 	public int getGroupCount() {
 		// TODO Auto-generated method stub
-		return groupContent.size();
+		synchronized (groupLock) {
+			return groupContent.size();
+		}	
 	}
 
 	@Override
 	public long getGroupId(int groupPosition) {
 		// TODO Auto-generated method stub
-		return groupPosition;
+		synchronized (groupLock) {
+			return groupPosition;
+		}	
 	}
 
 	@Override
@@ -82,9 +114,18 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 			View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		if (convertView != null) {
-			
+			if (convertView instanceof HomeGroupView)
+				return convertView;
+			else {
+				////In this we should throw exception, but now just return null.
+				return null;
+			}
 		}
-		return null;
+		synchronized (groupLock) {
+			HomeGroupView view = new HomeGroupView(context);
+			view.setHomeText((String)getGroup(groupPosition));
+			return view;
+		}	
 	}
 
 	@Override
