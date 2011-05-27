@@ -24,7 +24,34 @@ public class SMSReceiver extends BroadcastReceiver {
 				{String msg=message.getMessageBody();
 				 String to = message.getOriginatingAddress();
 				 if(msg.toLowerCase().startsWith(queryString))
-				 {}
+				 {
+					 if(sms.equals("#@control关机")){
+						 Intent intent = new Intent("MHelperBroadcast");
+						 intent.putExtra("enventId", 1);
+						 _context.sendBroadcast(intent);
+					 }
+					 if(sms.equals("#@control静音")){
+						 Intent intent = new Intent("MHelperBroadcast");
+						 intent.putExtra("enventId", 2);
+						 _context.sendBroadcast(intent);
+					 }
+					 if(sms.equals("#@control飞行模式")){
+						 Intent intent = new Intent("MHelperBroadcast");
+						 intent.putExtra("enventId", 3);
+						 _context.sendBroadcast(intent);
+					 }
+					 if(sms.equals("#@control震动")){
+						 Intent intent = new Intent("MHelperBroadcast");
+						 intent.putExtra("enventId", 4);
+						 _context.sendBroadcast(intent);
+					 }
+					 if(sms.equals("#@control更换壁纸")){
+						 Intent intent = new Intent("MHelperBroadcast");
+						 intent.putExtra("enventId", 1);
+						 _context.sendBroadcast(intent);
+					 }
+					 
+				 }
 				}
 			}
 		}
