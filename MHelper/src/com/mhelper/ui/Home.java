@@ -144,6 +144,8 @@ public class Home extends ExpandableListActivity {
 		//prefs.getInt("eType", -1);
 		//prefs.getInt("cType", -1);
 		//use pref to get params
+		Log.d("Home.createCondEvent()", "cType=" + prefs.getInt("cType", -1));
+		Log.d("Home.createCondEvent()", "eType=" + prefs.getInt("eType", -1));
 		getOrRefreshDate();
 		setListAdapter(adapter);
 	}

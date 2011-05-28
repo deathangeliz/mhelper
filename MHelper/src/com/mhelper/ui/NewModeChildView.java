@@ -3,6 +3,8 @@ package com.mhelper.ui;
 import com.mhelper.R;
 
 import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,9 +18,11 @@ public class NewModeChildView extends LinearLayout {
 	Spinner newModeSpinner;
 	TextView newModeText;
 	int modeType = 0;
+	Context context;
 
-	public NewModeChildView(Context context) {
-		super(context);
+	public NewModeChildView(Context _context) {
+		super(_context);
+		context = _context;
 		// TODO Auto-generated constructor stub
 		String infService = Context.LAYOUT_INFLATER_SERVICE;
 		LayoutInflater li;
@@ -38,11 +42,19 @@ public class NewModeChildView extends LinearLayout {
 					public void onItemSelected(
 	                        AdapterView<?> parent, View view, int position, long id) {
 	                	modeType = position;
+	                	Editor editor = PreferenceManager.getDefaultSharedPreferences(
+								context.getApplicationContext()).edit();
+	                	editor.putInt("eType", modeType + 1);
+	                	editor.commit();
 	                }
 
 	                @Override
 					public void onNothingSelected(AdapterView<?> parent) {
 	                	modeType = 0;
+	                	Editor editor = PreferenceManager.getDefaultSharedPreferences(
+								context.getApplicationContext()).edit();
+	                	editor.putInt("eType", modeType + 1);
+	                	editor.commit();
 	                }
 	            });
 	}
