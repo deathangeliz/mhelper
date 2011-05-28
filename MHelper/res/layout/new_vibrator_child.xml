@@ -9,7 +9,7 @@
       android:layout_height="64dp" 
       android:layout_width="wrap_content" 
       android:layout_gravity="left" 
-      android:id="@+id/newVibratorText">
+      android:id="@+id/newVibratorText" android:layout_weight="1">
     </TextView>
     <ImageView 
       android:src="@drawable/icon" 

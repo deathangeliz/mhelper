@@ -2,6 +2,8 @@ package com.mhelper.ui;
 
 import java.util.ArrayList;
 
+import com.mhelper.R.id;
+
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +12,11 @@ import android.widget.BaseExpandableListAdapter;
 public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 	Context context;
 	ArrayList<String> groupContent = new ArrayList<String>();
-	ArrayList<ArrayList<String>> childContent = new	ArrayList<ArrayList<String>>();
+	ArrayList<ArrayList<String>> childrenContent = new	ArrayList<ArrayList<String>>();
+	ArrayList<Integer> condEventId = new ArrayList<Integer>();
 	Object groupLock = new Object();
 	Object childrenLock = new Object();
+	Object idLock = new Object();
 	
 	public  HomeExpandableListAdapter(Context ctx) {
 		context = ctx;
@@ -31,16 +35,29 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 		}
 	}
 	
-	public ArrayList<ArrayList<String>> getChildContent() {
+	public ArrayList<ArrayList<String>> getChildrenContent() {
 		synchronized (childrenLock) {
-			return childContent;
+			return childrenContent;
 		}		
 	}
 	
-	public boolean setChildContent(ArrayList<ArrayList<String>> cc) {
+	public boolean setChildrenContent(ArrayList<ArrayList<String>> cc) {
 		synchronized (childrenLock) {
-		    childContent = cc;
+		    childrenContent = cc;
 		    return true;
+		}
+	}
+	
+	public ArrayList<Integer> getCondEventId() {
+		synchronized (idLock) {
+			return condEventId;
+		}
+	}
+	
+	public boolean setCondEventID(ArrayList<Integer> ceid) {
+		synchronized (idLock) {
+	        condEventId = ceid;
+	        return true;
 		}
 	}
 	
@@ -48,7 +65,7 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 	public Object getChild(int groupPosition, int childPosition) {
 		// TODO Auto-generated method stub
 		synchronized (childrenLock) {
-			return childContent.get(groupPosition).get(childPosition);
+			return childrenContent.get(groupPosition).get(childPosition);
 		}		
 	}
 
@@ -81,7 +98,7 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 	public int getChildrenCount(int groupPosition) {
 		// TODO Auto-generated method stub
 		synchronized (childrenLock) {
-			return childContent.get(groupPosition).size();
+			return childrenContent.get(groupPosition).size();
 		}	
 	}
 
@@ -124,6 +141,7 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 		synchronized (groupLock) {
 			HomeGroupView view = new HomeGroupView(context);
 			view.setHomeText((String)getGroup(groupPosition));
+			view.setDeleteListener(groupPosition);
 			return view;
 		}	
 	}

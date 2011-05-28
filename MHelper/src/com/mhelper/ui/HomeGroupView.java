@@ -1,6 +1,8 @@
 package com.mhelper.ui;
 
 import com.mhelper.R;
+import com.mhelper.ui.Home;
+import com.mhelper.ui.HomeExpandableListAdapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -12,24 +14,27 @@ import android.widget.TextView;
 public class HomeGroupView extends LinearLayout {
 
 	TextView homeGroupText;
-	ImageView homeeGroupImage;
+	ImageView homeGroupImage;
+	Context ctx;
 	
 	public HomeGroupView(Context context) {
 		super(context);
 		// TODO Auto-generated constructor stub
+		ctx = context;
 		String infService = Context.LAYOUT_INFLATER_SERVICE;
 		LayoutInflater li;
 		li = (LayoutInflater)getContext().getSystemService(infService);
 		li.inflate(R.layout.home_group, this, true);
 		
 		homeGroupText = (TextView)findViewById(R.id.homeGroupText);
-		homeeGroupImage = (ImageView)findViewById(R.id.homeGroupImage);
+		homeGroupImage = (ImageView)findViewById(R.id.homeGroupImage);
 		
-		homeeGroupImage.setOnClickListener(new OnClickListener() {
+		homeGroupImage.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
+				//delete group
 				
 			}
 		});
@@ -38,5 +43,16 @@ public class HomeGroupView extends LinearLayout {
 	public void setHomeText(String str) {
 		homeGroupText.setText(str);
 	}
+	
 
+	public void setDeleteListener(final int groupPosition) {
+		homeGroupImage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				((Home)ctx).deleteData(groupPosition);
+			}
+		});
+	}
 }

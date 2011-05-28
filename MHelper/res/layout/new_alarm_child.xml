@@ -8,7 +8,7 @@
       android:layout_width="wrap_content" 
       android:layout_height="64dp"
       android:id="@+id/newAlarmText" 
-      android:layout_gravity="left">
+      android:layout_gravity="left" android:layout_weight="1">
     </TextView>
     <EditText 
       android:text="EditText"
@@ -16,7 +16,7 @@
       android:enabled="false" 
       android:layout_height="64dp" 
       android:layout_gravity="center" 
-      android:layout_width="wrap_content">
+      android:layout_width="wrap_content" android:layout_weight="1">
     </EditText>
     <ImageView 
       android:layout_width="wrap_content" 
