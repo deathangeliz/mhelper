@@ -1,18 +1,24 @@
 package com.mhelper.ui;
 
 import java.util.Calendar;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
+import android.R.integer;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ExpandableListActivity;
 import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.View;
 import android.widget.DatePicker;
 import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 import android.widget.TimePicker;
+import android.widget.ExpandableListView.OnGroupClickListener;
 
 public class NewCondSettings extends ExpandableListActivity {
 	ExpandableListAdapter condAdapter;
@@ -56,18 +62,18 @@ public class NewCondSettings extends ExpandableListActivity {
     	    
     	    typeToMessage = 0;
         } else if (mode == MODE_EDIT) {
-			cType = extras.getInt(CTYPE);
+			cType = prefs.getInt("cType", -1);
 			if (cType == 0) {
 				/*condAlramYear = extras.getInt("year");
 				condAlarmMonth = extras.getInt("month");
 				condAlarmDay = extras.getInt("day");
 				condAlarmHour = extras.getInt("hour");
 				condAlramMinute = extras.getInt("minute");*/
-				condAlramYear = prefs.getInt("year", 2011);
-				condAlarmMonth = prefs.getInt("month", 1);
-				condAlarmDay = prefs.getInt("day", 1);
-				condAlarmHour = prefs.getInt("hour", 0);
-				condAlramMinute = prefs.getInt("minute", 0);
+				condAlramYear = prefs.getInt("condAlramYear", 2011);
+				condAlarmMonth = prefs.getInt("condAlarmMonth", 1);
+				condAlarmDay = prefs.getInt("condAlarmDay", 1);
+				condAlarmHour = prefs.getInt("condAlarmHour", 0);
+				condAlramMinute = prefs.getInt("condAlramMinute", 0);
 			}
 			else if (cType == 1){
 				
@@ -81,6 +87,7 @@ public class NewCondSettings extends ExpandableListActivity {
 
         // Set up our adapter
         condAdapter = new NewCondExpandableListAdapter(NewCondSettings.this);
+        setListAdapter(condAdapter);
         if (mode == MODE_NEW) {
         	NewAlarmChildView alramView = (NewAlarmChildView)condAdapter.getChildView(0, 0, 
         			false, null, null);
@@ -104,6 +111,26 @@ public class NewCondSettings extends ExpandableListActivity {
         	else {
         		messageView.setSelectedMessageType(typeToMessage);
         	}
+        	
+        	getExpandableListView().setOnGroupClickListener(
+        			new ExpandableListView.OnGroupClickListener() {
+						
+						@Override
+						public boolean onGroupClick(ExpandableListView parent, View v,
+								int groupPosition, long id) {
+							// TODO Auto-generated method stub
+							cType = groupPosition;
+							Editor editor = prefs.edit();
+							editor.putInt("cType", cType);
+							editor.commit();
+							if (parent.isGroupExpanded(groupPosition))
+								parent.collapseGroup(groupPosition);
+							else {
+								parent.expandGroup(groupPosition);
+							}
+							return true;
+						}
+					});
         } else if (mode == MODE_EDIT){
 			if (cType == 0) {
 				NewAlarmChildView alramView = (NewAlarmChildView)condAdapter.getChildView(0, 0, 
@@ -120,6 +147,8 @@ public class NewCondSettings extends ExpandableListActivity {
 	    				timeStr = timeStr + condAlramMinute;
 	    			alramView.setAlarmTime(timeStr);
 	        	}    
+	        	
+	        	
 			} else if (cType == 1){
 				
 			} else if (cType == 2) {
@@ -135,7 +164,16 @@ public class NewCondSettings extends ExpandableListActivity {
 		} else {
 			finish();
 		}
-        setListAdapter(condAdapter);
     }
 	
+	public void expandOneGroupAndCollapseOthers(int group) {
+		ExpandableListView view = getExpandableListView();
+    	for (int i = 0; i < 3; i++) {
+    		if (i== group)
+    			view.expandGroup(i);
+    		else {
+				view.collapseGroup(i);
+			}
+    	}
+	}
 }

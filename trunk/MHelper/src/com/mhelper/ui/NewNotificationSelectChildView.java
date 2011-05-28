@@ -47,6 +47,7 @@ public class NewNotificationSelectChildView extends LinearLayout {
                     	Editor editor = PreferenceManager.getDefaultSharedPreferences(
                     			context.getApplicationContext()).edit();
                     	editor.putInt("notificationType", selectedType);
+                    	editor.commit();
                     }
 
                     @Override
@@ -56,6 +57,7 @@ public class NewNotificationSelectChildView extends LinearLayout {
                     	Editor editor = PreferenceManager.getDefaultSharedPreferences(
                     			context.getApplicationContext()).edit();
                     	editor.putInt("notificationType", selectedType);
+                    	editor.commit();
                     }
                 });
 	}

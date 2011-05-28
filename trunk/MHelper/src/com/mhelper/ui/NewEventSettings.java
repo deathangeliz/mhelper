@@ -1,12 +1,18 @@
 package com.mhelper.ui;
 
+import java.security.spec.EllipticCurve;
+
 import android.app.ExpandableListActivity;
 import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.text.TextUtils.EllipsizeCallback;
 import android.util.Log;
+import android.view.View;
 import android.widget.ExpandableListAdapter;
+import android.widget.ExpandableListView;
 
 public class NewEventSettings extends ExpandableListActivity {
     ExpandableListAdapter eventAdapter;
@@ -43,7 +49,7 @@ public class NewEventSettings extends ExpandableListActivity {
         	
         	imageUri = null;
         } else if (mode == MODE_EDIT) {
-        	eType = extras.getInt(ETYPE);
+        	eType = prefs.getInt("eType", -1);
         	if (eType == 0) {
         		
         	} else if (eType == 1) {
@@ -65,6 +71,7 @@ public class NewEventSettings extends ExpandableListActivity {
         
         // Set up our adapter
         eventAdapter = new NewEventExpandableListAdapter(NewEventSettings.this);
+        setListAdapter(eventAdapter);
         
         if (mode == MODE_NEW) {
         	
@@ -89,10 +96,37 @@ public class NewEventSettings extends ExpandableListActivity {
         	} else if (eType == 5) {
         		
         	}
+        	getExpandableListView().setOnGroupClickListener(
+        			new ExpandableListView.OnGroupClickListener() {
+						
+						@Override
+						public boolean onGroupClick(ExpandableListView parent, View v,
+								int groupPosition, long id) {
+							// TODO Auto-generated method stub
+							if (groupPosition == 0) {
+								eType = 0;
+							} else if (groupPosition == 1){
+								eType = 1;
+							} else if (groupPosition == 2){
+								eType = 4;
+							} else if (groupPosition == 3){
+								eType = 5;
+							} 
+							Editor editor = prefs.edit();
+							editor.putInt("eType", eType);
+							editor.commit();
+							if (parent.isGroupExpanded(groupPosition))
+								parent.collapseGroup(groupPosition);
+							else {
+								parent.expandGroup(groupPosition);
+							}
+							return true;
+						}
+					});
         } else {
 			finish();
 		}
-        setListAdapter(eventAdapter);
+       
     }
 	
 	public void damnIt() {

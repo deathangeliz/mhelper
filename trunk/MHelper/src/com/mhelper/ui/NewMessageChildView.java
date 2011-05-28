@@ -46,6 +46,7 @@ public class NewMessageChildView extends LinearLayout {
                         Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
                         editor.putInt("typeToMessage", ((NewCondSettings)context).typeToMessage);
+                        editor.commit();
                     }
 
                     @Override
@@ -56,6 +57,7 @@ public class NewMessageChildView extends LinearLayout {
                         Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
                         editor.putInt("typeToMessage", ((NewCondSettings)context).typeToMessage);
+                        editor.commit();
                     }
                 });
 	}
