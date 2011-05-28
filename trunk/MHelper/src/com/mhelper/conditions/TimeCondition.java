@@ -8,6 +8,7 @@ public class TimeCondition {
 	private Calendar startTime;
 	private Calendar finishTime;
 	private boolean point;
+	private int eventid;
 	private    int id;
 	private static long condEventld=0;
 	
@@ -56,6 +57,14 @@ public class TimeCondition {
 	}
 	public String getTitle() {
 		return title;
+	}
+
+	public void setEventid(int eventid) {
+		this.eventid = eventid;
+	}
+
+	public int getEventid() {
+		return eventid;
 	}
 	
 	
