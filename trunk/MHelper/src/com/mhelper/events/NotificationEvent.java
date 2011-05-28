@@ -43,7 +43,7 @@ public class NotificationEvent{
 			Notification notification = new Notification(R.drawable.icon, str, System.currentTimeMillis());
 			notificationManager.notify(condEventId, notification);
 			break;
-		case 2:// dialogue
+		case 2:// dialog
 			ad = new AlertDialog.Builder(context);
 			ad.setCancelable(true);
 			ad.setTitle(context.getString(R.string.DIALOG_TITLE));

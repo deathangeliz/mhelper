@@ -3,6 +3,10 @@
       package="com.mhelper"
       android:versionCode="1"
       android:versionName="1.0">
+
+      <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+      
+
     <uses-sdk android:targetSdkVersion="8" android:minSdkVersion="8"></uses-sdk>
 
 
@@ -14,9 +18,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RemindEvent"></activity>
         <service android:name=".SilentEvent"></service>
         <service android:name=".VibratorEvent"></service>
         <service android:name=".PlaneEvent"></service>
+        <service android:name=".ChangeWallpaperEvent"/>
         <activity android:name=".ui.NewCondSettings"></activity>
         <activity android:name=".ui.NewEventSettings"></activity>
         <!--  <activity android:name=".ui.NewCondEvent"></activity>  -->
