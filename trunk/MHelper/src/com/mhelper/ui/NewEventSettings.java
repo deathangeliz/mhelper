@@ -85,4 +85,8 @@ public class NewEventSettings extends ExpandableListActivity {
         }
         setListAdapter(eventAdapter);
     }
+	
+	public void damnIt() {
+		
+	}
 }
