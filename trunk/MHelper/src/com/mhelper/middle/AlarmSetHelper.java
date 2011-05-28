@@ -18,39 +18,46 @@ public class AlarmSetHelper {
 		if(setStart)
 		{
 			Intent intent =new Intent("MHelperBroadcast");
-	        intent.putExtra("id", condition.getId());
-	        intent.putExtra("title", condition.getTitle());
+	        intent.putExtra("COND_EVENT_ID", condition.getCondEventld());
+	        intent.putExtra("COND_TYPE", 1);
+	        intent.putExtra("TIME_COND_ID", condition.getId());
 	        PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition.getId(), intent,PendingIntent.FLAG_UPDATE_CURRENT);
 	        AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
 	        alarms.set(AlarmManager.RTC, condition.getStartTime().getTimeInMillis(), PI);
 	    }
 		if(setFinish)
 		{
-			Intent intent2 =new Intent("MHelperBroadcast");
-	        intent2.putExtra("id", condition.getId());
-	        intent2.putExtra("title", condition.getTitle());
-	        PendingIntent PI2 = PendingIntent.getBroadcast(thiscontext, condition.getId(), intent2,PendingIntent.FLAG_UPDATE_CURRENT);
+			Intent intent =new Intent("MHelperBroadcast");
+	        intent.putExtra("COND_EVENT_ID", condition.getCondEventld());
+	        intent.putExtra("COND_TYPE", 2);
+	        intent.putExtra("TIME_COND_ID", condition.getId());
+	        PendingIntent PI2 = PendingIntent.getBroadcast(thiscontext, condition.getId(), intent,PendingIntent.FLAG_UPDATE_CURRENT);
 	        AlarmManager alarms2 = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
 	        alarms2.set(AlarmManager.RTC, condition.getFinishTime().getTimeInMillis(), PI2);
 		}
 	}
    
-	public void cancelAlarm(TimeCondition condition2, boolean setStart, boolean setFinish){
-		if(setStart)
-		{
-	    Intent intent3 =new Intent("MHelperBroadcast");
-        
-        PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition2.getId(), intent3,PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
-        alarms.cancel(PI);
-			
+	public void cancelAlarm(TimeCondition condition2, boolean setStart,
+			boolean setFinish) {
+		if (setStart) {
+			Intent intent3 = new Intent("MHelperBroadcast");
+			PendingIntent PI = PendingIntent.getBroadcast(thiscontext,
+					condition2.getId(), intent3,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			AlarmManager alarms = (AlarmManager) thiscontext
+					.getSystemService(thiscontext.ALARM_SERVICE);
+			alarms.cancel(PI);
+
 		}
-		if(setFinish)
-		{Intent intent4 =new Intent("MHelperBroadcast");
-        
-        PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition2.getId(), intent4,PendingIntent.FLAG_UPDATE_CURRENT);
-        AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
-        alarms.cancel(PI);}
+		if (setFinish) {
+			Intent intent4 = new Intent("MHelperBroadcast");
+			PendingIntent PI = PendingIntent.getBroadcast(thiscontext,
+					condition2.getId(), intent4,
+					PendingIntent.FLAG_UPDATE_CURRENT);
+			AlarmManager alarms = (AlarmManager) thiscontext
+					.getSystemService(thiscontext.ALARM_SERVICE);
+			alarms.cancel(PI);
+		}
 	}
 	public void setThiscontext(Context thiscontext) {
 		this.thiscontext = thiscontext;
