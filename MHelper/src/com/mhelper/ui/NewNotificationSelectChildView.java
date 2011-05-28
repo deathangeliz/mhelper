@@ -34,12 +34,14 @@ public class NewNotificationSelectChildView extends LinearLayout {
 		newNotificationSpinner.setAdapter(adapter);
 		newNotificationSpinner.setOnItemSelectedListener(
                 new OnItemSelectedListener() {
-                    public void onItemSelected(
+                    @Override
+					public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
                     	selectedType = position;
                     }
 
-                    public void onNothingSelected(AdapterView<?> parent) {
+                    @Override
+					public void onNothingSelected(AdapterView<?> parent) {
                     	selectedType = 0;
                     }
                 });

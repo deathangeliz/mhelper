@@ -1,10 +1,7 @@
 package com.mhelper.events;
 
-import java.io.PrintWriter;
-
 import android.app.Service;
 import android.content.Intent;
-import android.content.res.Configuration;
 import android.media.AudioManager;
 import android.os.IBinder;
 

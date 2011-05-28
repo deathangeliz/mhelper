@@ -1,12 +1,9 @@
 package com.mhelper.ui;
 
-import com.mhelper.R;
-
 import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
-import android.widget.LinearLayout;
 
 public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 

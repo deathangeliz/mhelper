@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.widget.TabHost;
 
 public class NewCondEvent extends TabActivity {
+	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		
