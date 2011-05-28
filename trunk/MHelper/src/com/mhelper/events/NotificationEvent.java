@@ -22,16 +22,9 @@ public class NotificationEvent extends Activity{
 		super.onCreate(savedInstanceState);
 		Intent intent =new Intent();
 		Bundle bundle= intent.getExtras();
-		if(bundle !=null){
-			Object[] pdus=(Object[]) bundle.get("pdus");
-			SmsMessage[] messages=new SmsMessage[pdus.length];
-			for(int i=0;i<pdus.length;i++)
-				messages[i]=SmsMessage.createFromPdu((byte[]) pdus[i]);
-			
-		}
-		
+
 		Context context= getApplicationContext();
-		String msg="asfdasfasf";
+		String msg;
 		int duration=Toast.LENGTH_LONG;	
 		Toast toast=Toast.makeText(context,msg, duration);
 		int offsetX=0;
@@ -42,17 +35,11 @@ public class NotificationEvent extends Activity{
 		
 		Dialog d=new Dialog(this);
 		
-		
-		
-		
-		
-		
-		
-		
+
 		
 		String svcName=Context.NOTIFICATION_SERVICE;
 		NotificationManager notificationManager=(NotificationManager)getSystemService(svcName);
-		String tickerText="Notification";
+		String tickerText;
 		long when=System.currentTimeMillis();
 		Notification notification=new Notification(0, tickerText,when);
 		notification.number++;
@@ -60,13 +47,4 @@ public class NotificationEvent extends Activity{
 		
 		
 	}
-	public  void typeChoose(int type,String message){
-		switch (type){
-		case 0:
-			case 1:
-			;
-			case 2:
-			;
-			}			
-		}
 }
