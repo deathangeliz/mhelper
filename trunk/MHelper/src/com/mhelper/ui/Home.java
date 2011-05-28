@@ -3,6 +3,7 @@ package com.mhelper.ui;
 import java.util.ArrayList;
 
 import android.R;
+import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -11,6 +12,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
+import android.preference.EditTextPreference;
+import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,7 +34,25 @@ public class Home extends ExpandableListActivity {
 	
 	static final private int NEW_MENU_ITEM = Menu.FIRST;
 	static final private int ABOUT_MENU_ITEM = Menu.FIRST + 1;
-	static final private int REQUEST_NEW = 0;
+	
+	static final private int REQUEST_NEW_PARAMS = 0;
+	static final private int REQUEST_EDIT_PARAMS = 1;
+	
+	static final public int MODE_NEW = 0;
+	static final public int MODE_EDIT = 1;
+	static final public String MODE = "mode";
+	
+	static final public String COND_TYPE = "cond_type";
+	static final public int COND_TIME = 0;
+	static final public int COND_CALENDAR = 1;
+	static final public int COND_MESSAGE = 3;
+	static final public String EVENT_TYPE = "event_type";
+	static final public int EVENT_SHUTDOWM = 0;
+	static final public int EVENT_SLIENT = 1;
+	static final public int EVENT_VIBRATION = 2;
+	static final public int EVENT_AIRMODE = 3;
+	static final public int EVENT_NOTIFICATION = 4;
+	static final public int EVENT_CHANGE_WALLPAPER = 5;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -83,6 +104,43 @@ public class Home extends ExpandableListActivity {
 		super.onStop();
 	}
 	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		
+		Bundle extras = data.getExtras();
+		switch (requestCode) {
+		    case (REQUEST_NEW_PARAMS) : {
+		    	if (resultCode == Activity.RESULT_OK)
+		    		createCondEvent(extras);
+		    }
+		    break;
+		    case (REQUEST_EDIT_PARAMS) : {
+		    	if (resultCode == Activity.RESULT_OK)
+		    		editCondEvent(extras);
+		    }
+		    break;
+		}
+	}
+	
+	public void createCondEvent(Bundle extras) {
+		Log.d("HOME.createCondEvent(data)", 
+				"call database method to create cond-event");
+		//Here may like this:		
+		//Database.createCondEvent(extras); or deliver context to it
+		getOrRefreshDate();
+		setListAdapter(adapter);
+	}
+	
+	public void editCondEvent(Bundle extras) {
+		Log.d("HOME.editCondEvent(data)", 
+				"call database method to edit cond-event");
+		//Here may like this:
+		//Database.editCondEvent(extras); or deliver context to it
+		getOrRefreshDate();
+		setListAdapter(adapter);
+	}
+	
 	public void getOrRefreshDate() {
 		groupContent = getGroupContent();
         if (groupContent == null)
@@ -98,11 +156,26 @@ public class Home extends ExpandableListActivity {
         adapter.setCondEventID(condEventId);
 	}
 	
-	public void deleteData(final int groupId) {
+	public void toDeleteCondEvent(final int groupPosition) {
 		//invoke database method to delete
-		//    the cond-event which id is condEventId.get(groupId)
+		//    the cond-event which id is condEventId.get(groupPosition)
 		getOrRefreshDate();
 		setListAdapter(adapter);
+	}
+	
+	public void toEditCondEvent(final int groupPosition) {
+		int ecid = condEventId.get(groupPosition);
+		Intent intent = new Intent(Home.this, NewCondEvent.class);
+		Bundle extras = getCondEventData(ecid);
+		extras.putInt(MODE, MODE_EDIT);
+		intent.putExtras(extras);
+		startActivityForResult(intent, REQUEST_EDIT_PARAMS);
+	}
+	
+	public Bundle getCondEventData(int ceid) {
+		//get Bundle data from database
+		Bundle data = new Bundle();
+		return data;
 	}
 	
 	public ArrayList<String> getGroupContent() {
@@ -120,7 +193,8 @@ public class Home extends ExpandableListActivity {
 		return new ArrayList<Integer>();
 	}
 	
-	public boolean onCreateOptionMenu(Menu menu) {
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
 		super.onCreateOptionsMenu(menu);
 		
 		
@@ -136,7 +210,8 @@ public class Home extends ExpandableListActivity {
 			public boolean onMenuItemClick(MenuItem item) {
 				// TODO Auto-generated method stub
 				Intent intent = new Intent(Home.this, NewCondEvent.class);
-				startActivityForResult(intent, REQUEST_NEW);
+				intent.putExtra(MODE, MODE_NEW);
+				startActivityForResult(intent, REQUEST_NEW_PARAMS);
 				return true;
 			}
 		});

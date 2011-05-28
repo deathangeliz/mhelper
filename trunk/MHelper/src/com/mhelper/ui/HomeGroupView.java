@@ -28,16 +28,6 @@ public class HomeGroupView extends LinearLayout {
 		
 		homeGroupText = (TextView)findViewById(R.id.homeGroupText);
 		homeGroupImage = (ImageView)findViewById(R.id.homeGroupImage);
-		
-		homeGroupImage.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				// TODO Auto-generated method stub
-				//delete group
-				
-			}
-		});
 	}
 	
 	public void setHomeText(String str) {
@@ -51,7 +41,7 @@ public class HomeGroupView extends LinearLayout {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				((Home)ctx).deleteData(groupPosition);
+				((Home)ctx).toDeleteCondEvent(groupPosition);
 			}
 		});
 	}

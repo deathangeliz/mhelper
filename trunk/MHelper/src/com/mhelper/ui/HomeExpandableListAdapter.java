@@ -90,6 +90,7 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 		synchronized (childrenLock) {
 			HomeChildView view = new HomeChildView(context);
 			view.setHomeText((String)getChild(groupPosition, childPosition));
+			view.setEditListenner(groupPosition);
 			return view;
 		}	
 	}
