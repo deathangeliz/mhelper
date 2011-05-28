@@ -24,4 +24,8 @@ public class NewNotificationMessageChildView extends LinearLayout {
 	public String getEditText() {
 		return newNotificationEdit.getText().toString();
 	}
+	
+	public void setEditText(String str) {
+		newNotificationEdit.setText(str);
+	}
 }

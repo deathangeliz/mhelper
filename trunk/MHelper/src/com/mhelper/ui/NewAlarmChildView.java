@@ -76,7 +76,7 @@ public class NewAlarmChildView extends LinearLayout {
 					public void onTimeSet(TimePicker arg0, int arg1, int arg2) {
 						NewCondSettings newCondSettings = (NewCondSettings)context;
 						newCondSettings.condAlarmHour = arg1;
-						newCondSettings.condAlramMitute = arg2;
+						newCondSettings.condAlramMinute = arg2;
 						String timeStr = arg1 + ":";
 						if(arg2 < 10){
 							timeStr = timeStr + "0" + arg2;

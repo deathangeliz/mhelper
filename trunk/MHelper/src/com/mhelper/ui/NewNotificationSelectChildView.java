@@ -54,4 +54,9 @@ public class NewNotificationSelectChildView extends LinearLayout {
 	public int getSelectedType(){
 		return selectedType;
 	}
+	
+	public void setSelectedType(int type) {
+		selectedType = type;
+		newNotificationSpinner.setSelection(selectedType);
+	}
 }
