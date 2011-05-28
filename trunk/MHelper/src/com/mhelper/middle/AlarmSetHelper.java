@@ -17,7 +17,7 @@ public class AlarmSetHelper {
 	{   
 		if(setStart)
 		{
-			Intent intent =new Intent("condition");
+			Intent intent =new Intent("MHelperBroadcast");
 	        intent.putExtra("id", condition.getId());
 	        intent.putExtra("title", condition.getTitle());
 	        PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition.getId(), intent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -26,7 +26,7 @@ public class AlarmSetHelper {
 	    }
 		if(setFinish)
 		{
-			Intent intent2 =new Intent("condition1");
+			Intent intent2 =new Intent("MHelperBroadcast");
 	        intent2.putExtra("id", condition.getId());
 	        intent2.putExtra("title", condition.getTitle());
 	        PendingIntent PI2 = PendingIntent.getBroadcast(thiscontext, condition.getId(), intent2,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -38,7 +38,7 @@ public class AlarmSetHelper {
 	public void cancelAlarm(TimeCondition condition2, boolean setStart, boolean setFinish){
 		if(setStart)
 		{
-	    Intent intent3 =new Intent("condition");
+	    Intent intent3 =new Intent("MHelperBroadcast");
         
         PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition2.getId(), intent3,PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
@@ -46,7 +46,7 @@ public class AlarmSetHelper {
 			
 		}
 		if(setFinish)
-		{Intent intent4 =new Intent("condition");
+		{Intent intent4 =new Intent("MHelperBroadcast");
         
         PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition2.getId(), intent4,PendingIntent.FLAG_UPDATE_CURRENT);
         AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
