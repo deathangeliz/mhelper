@@ -19,7 +19,7 @@ public class NewCondEvent extends TabActivity {
 	    tabHost.addTab(tabHost.newTabSpec("conditions").setIndicator("Conditions",
                 res.getDrawable(R.drawable.new_tab_cond))
                 .setContent(new Intent(this, NewCondSettings.class)));
-
+        
 	    tabHost.addTab(tabHost.newTabSpec("events").setIndicator("Events",
                 res.getDrawable(R.drawable.new_tab_event))
                 .setContent(new Intent(this, NewEventSettings.class)));
