@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  android:layout_width="match_parent"
-  android:layout_height="wrap_content">
-    <EditText android:id="@+id/newAlarmDate" android:editable="false" android:layout_weight="1" android:layout_width="wrap_content" android:layout_gravity="left" android:text="date" android:layout_height="64dp"></EditText>
-    <EditText android:layout_gravity="center" android:id="@+id/newAlarmTime" android:editable="false" android:layout_weight="1" android:layout_width="wrap_content" android:text="time" android:layout_height="64dp"></EditText>
-    <ImageView 
-      android:layout_width="wrap_content" 
-      android:src="@drawable/icon" 
-      android:id="@+id/newAlarmImage" 
-      android:layout_height="64dp" android:layout_gravity="right|center_vertical">
-    </ImageView>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="wrap_content">
+	<Button android:id="@+id/dateButton"
+		android:layout_width="wrap_content" android:layout_gravity="left"
+		android:layout_weight="1" android:layout_height="64dp" android:text="Date"></Button>
+	<Button android:id="@+id/timeButton"
+		android:layout_width="wrap_content" android:layout_gravity="left"
+		android:layout_weight="1" android:layout_height="64dp" android:text="Time"></Button>
+	<ImageView android:layout_width="wrap_content" android:src="@drawable/icon"
+		android:id="@+id/newAlarmImage" android:layout_height="64dp"
+		android:layout_gravity="right|center_vertical">
+	</ImageView>
 </LinearLayout>
