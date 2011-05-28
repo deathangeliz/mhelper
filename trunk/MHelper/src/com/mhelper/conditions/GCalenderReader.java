@@ -27,6 +27,7 @@ public class GCalenderReader {
 	}
 	
 	public ArrayList<TimeCondition> readCalendar(Calendar time){
+		ArrayList<TimeCondition> timeCondList = new ArrayList<TimeCondition>();
 		String contentProviderFirst = "";
 		String []contentProviderLast = new String[]{"calendar", "calendarEx"};
 		Calendar firstTime = (Calendar) time.clone();
@@ -94,8 +95,10 @@ public class GCalenderReader {
 			Calendar finishCalendar = Calendar.getInstance();
 			finishCalendar.setTimeInMillis(timeCursor.getLong(2));
 			timecondition.setFinishTime(finishCalendar);
+			timeCondList.add(timecondition);
 			//EventsDBAdapter.insertEvent(event);
 		}
+		return timeCondList;
 	}
 	
 
