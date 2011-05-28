@@ -16,9 +16,11 @@ public class NewMessageChildView extends LinearLayout {
 	Spinner newMessageSpinner;
 	TextView newMessageText;
 	int messageType = 0;
+	Context context;
 	
-	public NewMessageChildView(Context context) {
-		super(context);
+	public NewMessageChildView(Context _context) {
+		super(_context);
+		context = _context;
 		// TODO Auto-generated constructor stub
 		String infService = Context.LAYOUT_INFLATER_SERVICE;
 		LayoutInflater li;
@@ -29,7 +31,7 @@ public class NewMessageChildView extends LinearLayout {
 		newMessageText = (TextView)findViewById(R.id.newMessageText);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                context, R.array.message_type, android.R.layout.simple_spinner_item);
+                _context, R.array.message_type, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		newMessageSpinner.setAdapter(adapter);
 		newMessageSpinner.setOnItemSelectedListener(
@@ -38,11 +40,13 @@ public class NewMessageChildView extends LinearLayout {
 					public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
                         messageType = position;
+                        ((NewCondSettings)context).typeToMessage = messageType;
                     }
 
                     @Override
 					public void onNothingSelected(AdapterView<?> parent) {
                         messageType = 0;
+                        ((NewCondSettings)context).typeToMessage = messageType;
                     }
                 });
 	}
@@ -53,5 +57,10 @@ public class NewMessageChildView extends LinearLayout {
 	
 	public int getSelectedMessageType() {
 		return messageType;
+	}
+	
+	public void setSelectedMessageType(int type) {
+		messageType = type;
+		newMessageSpinner.setSelection(messageType);
 	}
 }
