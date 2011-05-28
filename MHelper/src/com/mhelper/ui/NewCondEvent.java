@@ -7,8 +7,12 @@ import android.app.Dialog;
 import android.app.TabActivity;
 import android.app.TimePickerDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MenuItem.OnMenuItemClickListener;
 import android.widget.DatePicker;
 import android.widget.TabHost;
 import android.widget.TimePicker;
@@ -18,7 +22,11 @@ public class NewCondEvent extends TabActivity {
 	static final public int MODE_EDIT = 1;
 	static final public String MODE = "mode";
 	public int mode = 0;
+	static final private int REQUEST_NEW_PARAMS = 0;
+	static final private int REQUEST_EDIT_PARAMS = 1;
 	
+	static final private int SAVE_MENU_ITEM = Menu.FIRST;
+	static final private int RETURN_MENU_ITEM = Menu.FIRST + 1;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -44,7 +52,41 @@ public class NewCondEvent extends TabActivity {
 	    tabHost.addTab(tabHost.newTabSpec("events").setIndicator("Events",
                 res.getDrawable(R.drawable.new_tab_event))
                 .setContent(intent));
-	    tabHost.setCurrentTabByTag("events");
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		super.onCreateOptionsMenu(menu);
+		
+		
+		MenuItem saveItem = menu.add(0, SAVE_MENU_ITEM,
+				Menu.NONE, "Save");
+		MenuItem returnItem = menu.add(0, RETURN_MENU_ITEM,
+				Menu.NONE, "Return");
+		
+		//add icon
+		saveItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				// TODO Auto-generated method stub
+				setResult(RESULT_OK);
+				finish();
+				return true;
+			}
+		});
+		returnItem.setOnMenuItemClickListener(new OnMenuItemClickListener() {
+			
+			@Override
+			public boolean onMenuItemClick(MenuItem item) {
+				// TODO Auto-generated method stub
+				setResult(RESULT_CANCELED);
+				finish();
+				return true;
+			}
+		});
+		
+		return true;
 	}
 	
 }

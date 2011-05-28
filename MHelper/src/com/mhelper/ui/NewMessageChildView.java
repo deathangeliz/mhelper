@@ -3,6 +3,8 @@ package com.mhelper.ui;
 import com.mhelper.R;
 
 import android.content.Context;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -41,12 +43,19 @@ public class NewMessageChildView extends LinearLayout {
                             AdapterView<?> parent, View view, int position, long id) {
                         messageType = position;
                         ((NewCondSettings)context).typeToMessage = messageType;
+                        Editor editor = PreferenceManager.getDefaultSharedPreferences(
+								context.getApplicationContext()).edit();
+                        editor.putInt("typeToMessage", ((NewCondSettings)context).typeToMessage);
                     }
 
                     @Override
 					public void onNothingSelected(AdapterView<?> parent) {
                         messageType = 0;
                         ((NewCondSettings)context).typeToMessage = messageType;
+                        ((NewCondSettings)context).typeToMessage = messageType;
+                        Editor editor = PreferenceManager.getDefaultSharedPreferences(
+								context.getApplicationContext()).edit();
+                        editor.putInt("typeToMessage", ((NewCondSettings)context).typeToMessage);
                     }
                 });
 	}
