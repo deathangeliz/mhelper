@@ -7,7 +7,7 @@ import android.widget.BaseExpandableListAdapter;
 
 public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 
-	private Context context;
+	public Context context;
 	
 	private String[] group = { "Alarm", "Google Calendar", "Message" };
 	private final int GROUP_COUNT = 3;
@@ -39,7 +39,7 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		if (convertView != null) {
+		/*if (convertView != null) {
 			if (groupPosition == 0) {
 				if (convertView instanceof NewAlarmChildView)
 					return convertView;
@@ -61,7 +61,7 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 					//In this we should throw exception, but now just return null.
 					return null;
 			}
-		}	
+		}*/	
 		if (groupPosition == 0) {
 			View view = new NewAlarmChildView(context);
 			return view;
@@ -106,13 +106,15 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		if (convertView != null){
-			if (convertView instanceof NewGroupView)
+		/*if (convertView != null){
+			if (convertView instanceof NewGroupView) {
+				((NewGroupView)convertView).setGroupText(group[groupPosition]);
 				return convertView;
+			}
 			else 
 				//In this we should throw exception, but now just return null.
 			    return null;
-		}
+		}*/
 		
 		NewGroupView ngv = new NewGroupView(context);
 		ngv.setGroupText(group[groupPosition]);
