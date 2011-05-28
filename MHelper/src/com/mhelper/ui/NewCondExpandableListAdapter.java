@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
+import com.mhelper.R;
+
 public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 
 	public Context context;
@@ -118,20 +120,19 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 		
 		NewGroupView ngv = new NewGroupView(context);
 		ngv.setGroupText(group[groupPosition]);
-		/*set the newGroupImage src 
 		switch (groupPosition) {
 		case 0:
-		    ngv.setGroupImage(xxxx);
+		    ngv.setGroupImage(context.getResources().getDrawable(R.drawable.alarm));
 			break;
 		case 1:
-		    ngv.setGroupImage(xxxx);
+			ngv.setGroupImage(context.getResources().getDrawable(R.drawable.calender));
 			break;
 		case 2:
-		    ngv.setGroupImage(xxxx);
+			ngv.setGroupImage(context.getResources().getDrawable(R.drawable.messages));
 			break;
 		default:
 			break;
-		}*/
+		}
 		
 		return ngv;
 	}

@@ -5,6 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
+import com.mhelper.R;
+
 public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 
 	public Context context;
@@ -148,8 +150,20 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 		
 		NewGroupView ngv = new NewGroupView(context);
 		ngv.setGroupText(group[groupPosition]);
-		/*set the newGroupImage src 
-		switch (groupPosition) */
+		switch (groupPosition) {
+		    case 0:
+		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.shut));
+		    	break;
+		    case 1:
+		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.slient));
+		    	break;
+		    case 2:
+		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.zhendong));
+		    	break;
+		    case 3:
+		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.change));
+		    	break;
+		}
 		
 		return ngv;
 	}
