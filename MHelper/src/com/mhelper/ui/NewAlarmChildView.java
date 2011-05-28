@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 public class NewAlarmChildView extends LinearLayout {
-	TextView newAlarmText;
-	EditText newAlarmEdit;
+	TextView newAlarmDate;
+	EditText newAlarmTime;
 	ImageView newAlarmImage;
 	
 	public NewAlarmChildView(Context context) {
@@ -23,17 +25,17 @@ public class NewAlarmChildView extends LinearLayout {
 		li = (LayoutInflater)getContext().getSystemService(infService);
 		li.inflate(R.layout.new_alarm_child, this, true);
 		
-		newAlarmText = (TextView)findViewById(R.id.newAlarmText);
-		newAlarmEdit = (EditText)findViewById(R.id.newAlarmEdit);
+		newAlarmDate = (EditText)findViewById(R.id.newAlarmDate);
+		newAlarmTime = (EditText)findViewById(R.id.newAlarmTime);
 		newAlarmImage = (ImageView)findViewById(R.id.newAlarmImage);
 	}
 
-	public void setAlarmText(String str){
-		newAlarmText.setText(str);
+	public void setAlarmDate(String str){
+		newAlarmDate.setText(str);
 	}
 	
-	public void setAlarmEdit(String str) {
-		newAlarmEdit.setText(str);
+	public void setAlarmTime(String str) {
+		newAlarmTime.setText(str);
 	}
 	
 	public void setAlarm(Drawable drawable) {
