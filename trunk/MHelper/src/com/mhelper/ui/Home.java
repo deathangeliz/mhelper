@@ -4,6 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+<<<<<<< .mine
+import com.mhelper.DatebaseAdapter.CondEventAdapter;
+import com.mhelper.DatebaseAdapter.DetailCondAdapter;
+
+import android.R;
+import android.R.integer;
+=======
+>>>>>>> .r54
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -13,10 +21,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+<<<<<<< .mine
+import android.database.Cursor;
+=======
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+>>>>>>> .r54
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
@@ -64,6 +76,9 @@ public class Home extends ExpandableListActivity {
 	static final public int EVENT_CHANGE_WALLPAPER = 5;
 	
 	SharedPreferences prefs;
+	
+	private Cursor mDCACursor;
+	private CondEventAdapter mCEAHelper;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -197,6 +212,9 @@ public class Home extends ExpandableListActivity {
 	public Bundle getCondEventData(int ceid) {
 		//get Bundle data from database
 		Bundle data = new Bundle();
+		mDCACursor = mCEAHelper.getCondEvent(ceid);
+		data.putInt("CTYPE", mDCACursor.getShort(0));
+		data.putInt("ETYPE",mDCACursor.getShort(1));
 		return data;
 	}
 	
