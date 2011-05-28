@@ -24,7 +24,7 @@ public class NotificationEvent extends Activity{
 		Bundle bundle= intent.getExtras();
 
 		Context context= getApplicationContext();
-		String msg;
+		String msg = "";
 		int duration=Toast.LENGTH_LONG;	
 		Toast toast=Toast.makeText(context,msg, duration);
 		int offsetX=0;
@@ -39,7 +39,7 @@ public class NotificationEvent extends Activity{
 		
 		String svcName=Context.NOTIFICATION_SERVICE;
 		NotificationManager notificationManager=(NotificationManager)getSystemService(svcName);
-		String tickerText;
+		String tickerText = "";
 		long when=System.currentTimeMillis();
 		Notification notification=new Notification(0, tickerText,when);
 		notification.number++;

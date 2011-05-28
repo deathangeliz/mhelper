@@ -2,6 +2,11 @@ package com.mhelper.conditions;
 
 import java.util.Calendar;
 
+import com.mhelper.R;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
+
 public class TimeCondition {
 	private String title;
 	private String description;
@@ -9,12 +14,18 @@ public class TimeCondition {
 	private Calendar finishTime;
 	private boolean point;
 	private int eventid;
-	private    int id;
-	private static long condEventld=0;
+	private int id;
+	private long condEventld=0;
 	
 	
-	public TimeCondition()
-	{   condEventld++;}
+	public TimeCondition(Context context){
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences.Editor editor = pref.edit();
+		int lastConEventId = pref.getInt(context.getString(R.string.COND_EVENT_ID_KEY), 1);
+		lastConEventId ++;
+		this.condEventld = lastConEventId;
+		editor.putInt(context.getString(R.string.COND_EVENT_ID_KEY), lastConEventId);
+	}
 	
 	public void setDescription(String description) {
 		this.description = description;
