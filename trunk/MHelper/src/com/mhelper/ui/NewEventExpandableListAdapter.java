@@ -9,18 +9,17 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 
 	public Context context;
 	
-	private String[] group = { "Shut Down", "Slient Mode", "Vibrator Mode", "Air Mode", "Notification", "Change Wallpaper", };
-	private final int GROUP_COUNT = 6;
+	private String[] group = { "Shut Down", "Change Mode", "Notification", "Change Wallpaper", };
+	private final int GROUP_COUNT = 4;
 	
 	private String[][] children = {
 			{ "Auto shut down your phone" },
-			{ "Auto Slient" },
-			{ "Auto Vibration" },
-			{ "Auto Air Mode" },
-			{ "Message Type", "Message Content" },
+			{ "Change Mode" },
+			{ "Notification Type", "Notification Content" },
 			{ "Image Directory" }
 	};
-	private final int[] CHILDREN_COUNT = { 1, 1, 1, 1, 2, 1};
+	
+	private final int[] CHILDREN_COUNT = { 0, 1, 2, 1};
 	
 	public NewEventExpandableListAdapter(Context ctx){
 		context = ctx;
@@ -91,22 +90,19 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 			return view;
 		}
 		else if (groupPosition == 1) {
-			View view = new NewSlientChildView(context);
+			View view = new NewModeChildView(context);
 			return view;
 		}
 		else if (groupPosition == 2) {
-			View view = new NewVibrationChildView(context);
-			return view;
+			if (childPosition == 0) {
+				View view = new NewNotificationSelectChildView(context);		
+				return view;
+			} else if (childPosition == 1) {
+				View view = new NewNotificationMessageChildView(context);		
+				return view;
+			}
 		}
 		else if (groupPosition == 3) {
-			View view = new NewAirmodeChildView(context);
-			return view;
-		}
-		else if (groupPosition == 4) {
-			View view = new NewNotificationSelectChildView(context);
-			return view;
-		}
-		else if (groupPosition == 5) {
 			View view = new NewWallpaperChildView(context);
 			return view;
 		}

@@ -14,8 +14,6 @@ import android.widget.TimePicker;
 public class NewCondSettings extends ExpandableListActivity {
 	ExpandableListAdapter condAdapter;
 	
-	static final int TIME_DIALOG_ID = 0;
-    static final int DATE_DIALOG_ID = 1;
 	public int condAlramYear;
 	public int condAlarmMonth;
 	public int condAlarmDay;
