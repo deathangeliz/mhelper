@@ -63,7 +63,7 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 			}
 		}*/	
 		if (groupPosition == 0) {
-			View view = new NewAlarmChildView(context);
+			View view = new NewAlarmChildView(context, childPosition);
 			return view;
 		}
 		else if (groupPosition == 1) {
