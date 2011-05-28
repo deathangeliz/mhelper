@@ -23,5 +23,6 @@ public class NewCondEvent extends TabActivity {
 	    tabHost.addTab(tabHost.newTabSpec("events").setIndicator("Events",
                 res.getDrawable(R.drawable.new_tab_event))
                 .setContent(new Intent(this, NewEventSettings.class)));
+	    tabHost.setCurrentTabByTag("events");
 	}
 }

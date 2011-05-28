@@ -12,9 +12,11 @@ import android.widget.TextView;
 public class HomeChildView extends LinearLayout {
 	TextView homeChildText;
 	ImageView homeChildImage;
+	Context ctx;
 	
 	public HomeChildView(Context context) {
 		super(context);
+		ctx = context;
 		// TODO Auto-generated constructor stub
 		String infService = Context.LAYOUT_INFLATER_SERVICE;
 		LayoutInflater li;
@@ -38,4 +40,14 @@ public class HomeChildView extends LinearLayout {
 		homeChildText.setText(str);
 	}
 
+	public void setEditListenner(final int groupPosition) {
+		homeChildImage.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				((Home)ctx).toEditCondEvent(groupPosition);
+			}
+		});
+	}
 }
