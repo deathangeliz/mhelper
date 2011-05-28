@@ -128,8 +128,4 @@ public class NewEventSettings extends ExpandableListActivity {
 		}
        
     }
-	
-	public void damnIt() {
-		
-	}
 }

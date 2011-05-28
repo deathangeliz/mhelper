@@ -172,6 +172,10 @@ public class Home extends ExpandableListActivity {
         adapter.setGroupContent(groupContent);
         adapter.setChildrenContent(childrenContent);
         adapter.setCondEventID(condEventId);
+        if (groupContent.size() == 0)
+        	setTitle("MHelper -Click menu to add.");
+        else
+        	setTitle("MHelper");
 	}
 	
 	public void toDeleteCondEvent(final int groupPosition) {
