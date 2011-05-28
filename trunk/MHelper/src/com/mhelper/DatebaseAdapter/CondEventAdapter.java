@@ -30,10 +30,10 @@ public class CondEventAdapter {
 		}, null, null, null, null, null);
 	}
 
-	public Cursor getCondEvent(int et) throws SQLException {
+	public Cursor getCondEvent(int eventtype) throws SQLException {
 		mDbHelper.open();
 		Cursor mCursor =
-			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE3, new String[] { MDBHelperAdapter.KEY_CONDTYPE, MDBHelperAdapter.KEY_EVENTTYPE},  MDBHelperAdapter.KEY_CEID + "=" + et, null, null,
+			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE3, new String[] { MDBHelperAdapter.KEY_CONDTYPE, MDBHelperAdapter.KEY_EVENTTYPE},  MDBHelperAdapter.KEY_CEID + "=" + eventtype, null, null,
 				null, null, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
