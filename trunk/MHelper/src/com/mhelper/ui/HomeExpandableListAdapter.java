@@ -80,8 +80,9 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		if (convertView != null) {
-			if (convertView instanceof HomeChildView)
+			if (convertView instanceof HomeChildView) {
 				return convertView;
+			}
 			else {
 				////In this we should throw exception, but now just return null.
 				return null;

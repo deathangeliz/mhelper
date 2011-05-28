@@ -7,7 +7,7 @@ import android.widget.BaseExpandableListAdapter;
 
 public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 
-	private Context context;
+	public Context context;
 	
 	private String[] group = { "Shut Down", "Slient Mode", "Vibrator Mode", "Air Mode", "Notification", "Change Wallpaper", };
 	private final int GROUP_COUNT = 6;
@@ -42,7 +42,7 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		if (convertView != null) {
+		/*if (convertView != null) {
 			if (groupPosition == 0) {
 				if (convertView instanceof NewShutdownChildView)
 					return convertView;
@@ -85,7 +85,7 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 					//In this we should throw exception, but now just return null.
 					return null;
 			}
-		}	
+		}	*/
 		if (groupPosition == 0) {
 			View view = new NewShutdownChildView(context);
 			return view;
@@ -142,13 +142,13 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		if (convertView != null){
+		/*if (convertView != null){
 			if (convertView instanceof NewGroupView)
 				return convertView;
 			else 
 				//In this we should throw exception, but now just return null.
 			    return null;
-		}
+		}*/
 		
 		NewGroupView ngv = new NewGroupView(context);
 		ngv.setGroupText(group[groupPosition]);
