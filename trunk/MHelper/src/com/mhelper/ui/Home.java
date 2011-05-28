@@ -1,18 +1,22 @@
 package com.mhelper.ui;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 
-import android.R;
-import android.R.integer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ExpandableListActivity;
+import android.app.WallpaperManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
@@ -28,6 +32,8 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
+
+import com.mhelper.R;
 
 public class Home extends ExpandableListActivity {
 	HomeExpandableListAdapter adapter;
@@ -63,11 +69,11 @@ public class Home extends ExpandableListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Set up our adapter
-        //Bitmap bitmap = this.getResources().getDrawable(R.drawable.gro);
-        //setWallpaper(bitmap);
-        
+        Drawable drawable = getResources().getDrawable(R.drawable.gro);
+        getExpandableListView().setBackgroundDrawable(drawable);
+
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+     // Set up our adapter
         adapter = new HomeExpandableListAdapter(Home.this);
         getOrRefreshDate();
         setListAdapter(adapter);
