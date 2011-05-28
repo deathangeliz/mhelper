@@ -12,6 +12,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
@@ -63,6 +64,9 @@ public class Home extends ExpandableListActivity {
         super.onCreate(savedInstanceState);
 
         // Set up our adapter
+        //Bitmap bitmap = this.getResources().getDrawable(R.drawable.gro);
+        //setWallpaper(bitmap);
+        
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         adapter = new HomeExpandableListAdapter(Home.this);
         getOrRefreshDate();
@@ -113,23 +117,22 @@ public class Home extends ExpandableListActivity {
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		
-		Bundle extras = data.getExtras();
 		switch (requestCode) {
 		    case (REQUEST_NEW_PARAMS) : {
 		    	if (resultCode == Activity.RESULT_OK)
-		    		createCondEvent(extras);
+		    		createCondEvent();
 		    }
 		    break;
 		    case (REQUEST_EDIT_PARAMS) : {
 		    	if (resultCode == Activity.RESULT_OK)
-		    		editCondEvent(extras);
+		    		editCondEvent();
 		    }
 		    break;
 		}
 	}
 	
-	public void createCondEvent(Bundle extras) {
-		Log.d("HOME.createCondEvent(data)", 
+	public void createCondEvent() {
+		Log.d("HOME.createCondEvent()", 
 				"call database method to create cond-event");
 		//Here may like this:		
 		//prefs.getInt("eType", -1);
@@ -139,8 +142,8 @@ public class Home extends ExpandableListActivity {
 		setListAdapter(adapter);
 	}
 	
-	public void editCondEvent(Bundle extras) {
-		Log.d("HOME.editCondEvent(data)", 
+	public void editCondEvent() {
+		Log.d("HOME.editCondEvent()", 
 				"call database method to edit cond-event");
 		//Here may like this:
 		//Database.editCondEvent(extras); or deliver context to it
