@@ -12,7 +12,7 @@ public class NewEventSettings extends ExpandableListActivity {
         super.onCreate(savedInstanceState);
 
         // Set up our adapter
-        eventAdapter = new NewCondExpandableListAdapter(NewEventSettings.this);
+        eventAdapter = new NewEventExpandableListAdapter(NewEventSettings.this);
         setListAdapter(eventAdapter);
     }
 }

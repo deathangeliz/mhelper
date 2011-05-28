@@ -1,6 +1,5 @@
 package com.mhelper.events;
 import com.mhelper.R;
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Notification;
 import android.app.NotificationManager;
