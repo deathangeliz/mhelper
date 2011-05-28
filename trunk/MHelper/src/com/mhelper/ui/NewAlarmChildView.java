@@ -2,7 +2,6 @@ package com.mhelper.ui;
 
 import com.mhelper.R;
 
-import android.R.drawable;
 import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;

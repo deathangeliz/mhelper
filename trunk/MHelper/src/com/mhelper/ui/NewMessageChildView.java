@@ -34,12 +34,14 @@ public class NewMessageChildView extends LinearLayout {
 		newMessageSpinner.setAdapter(adapter);
 		newMessageSpinner.setOnItemSelectedListener(
                 new OnItemSelectedListener() {
-                    public void onItemSelected(
+                    @Override
+					public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
                         messageType = position;
                     }
 
-                    public void onNothingSelected(AdapterView<?> parent) {
+                    @Override
+					public void onNothingSelected(AdapterView<?> parent) {
                         messageType = 0;
                     }
                 });
