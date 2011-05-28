@@ -1,13 +1,16 @@
 package com.mhelper.ui;
 
 import android.app.ExpandableListActivity;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.ExpandableListAdapter;
 
 public class NewEventSettings extends ExpandableListActivity {
     ExpandableListAdapter eventAdapter;
+    public SharedPreferences prefs;
     
     static final public int MODE_NEW = 0;
 	static final public int MODE_EDIT = 1;
@@ -17,7 +20,7 @@ public class NewEventSettings extends ExpandableListActivity {
 	public int eType;
 	
 	public int notificationType;
-	public StringBuilder notificationContent;
+	public String notificationContent;
 	
 	public String imageUri;
 	
@@ -25,6 +28,7 @@ public class NewEventSettings extends ExpandableListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
 			Log.d("NewEventSettings.onCreate()", "extras == null");
@@ -35,7 +39,7 @@ public class NewEventSettings extends ExpandableListActivity {
         //set data
         if (mode == MODE_NEW) {
         	notificationType = 0;
-        	notificationContent = new StringBuilder();
+        	notificationContent = "";
         	
         	imageUri = null;
         } else if (mode == MODE_EDIT) {
@@ -49,10 +53,13 @@ public class NewEventSettings extends ExpandableListActivity {
 			} else if (eType == 3) {
 				
 			} else if (eType == 4) {
-				notificationType = extras.getInt("notificationType");
-				notificationContent = new StringBuilder(extras.getString("notificationContent"));
+				//notificationType = extras.getInt("notificationType");
+				//notificationContent = new StringBuilder(extras.getString("notificationContent"));
+				notificationType = prefs.getInt("notificationType", 0);
+				notificationContent = prefs.getString("notificationContent", "no message");
 			} else if (eType == 5) {
-				imageUri = extras.getString("imageUri");
+				//imageUri = extras.getString("imageUri");
+				imageUri = prefs.getString("imageUri", null);
 			}
         }
         
@@ -82,7 +89,9 @@ public class NewEventSettings extends ExpandableListActivity {
         	} else if (eType == 5) {
         		
         	}
-        }
+        } else {
+			finish();
+		}
         setListAdapter(eventAdapter);
     }
 	

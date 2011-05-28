@@ -3,6 +3,9 @@ package com.mhelper.ui;
 import com.mhelper.R;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,9 +19,11 @@ public class NewNotificationSelectChildView extends LinearLayout {
 	TextView newNotificationText;
 	Spinner newNotificationSpinner;
 	int selectedType = 0;
+	Context context;
 
-	public NewNotificationSelectChildView(Context context) {
-		super(context);
+	public NewNotificationSelectChildView(Context _context) {
+		super(_context);
+		context = _context;
 		// TODO Auto-generated constructor stub
 		String infService = Context.LAYOUT_INFLATER_SERVICE;
 		LayoutInflater li;
@@ -38,11 +43,19 @@ public class NewNotificationSelectChildView extends LinearLayout {
 					public void onItemSelected(
                             AdapterView<?> parent, View view, int position, long id) {
                     	selectedType = position;
+                    	((NewEventSettings)context).notificationType = selectedType;
+                    	Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                    			context.getApplicationContext()).edit();
+                    	editor.putInt("notificationType", selectedType);
                     }
 
                     @Override
 					public void onNothingSelected(AdapterView<?> parent) {
                     	selectedType = 0;
+                    	((NewEventSettings)context).notificationType = selectedType;
+                    	Editor editor = PreferenceManager.getDefaultSharedPreferences(
+                    			context.getApplicationContext()).edit();
+                    	editor.putInt("notificationType", selectedType);
                     }
                 });
 	}

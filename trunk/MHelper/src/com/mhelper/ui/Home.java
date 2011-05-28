@@ -10,9 +10,11 @@ import android.app.Dialog;
 import android.app.ExpandableListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
 import android.os.Bundle;
 import android.preference.EditTextPreference;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
@@ -45,7 +47,7 @@ public class Home extends ExpandableListActivity {
 	static final public String COND_TYPE = "cond_type";
 	static final public int COND_TIME = 0;
 	static final public int COND_CALENDAR = 1;
-	static final public int COND_MESSAGE = 3;
+	static final public int COND_MESSAGE = 2;
 	static final public String EVENT_TYPE = "event_type";
 	static final public int EVENT_SHUTDOWM = 0;
 	static final public int EVENT_SLIENT = 1;
@@ -54,11 +56,14 @@ public class Home extends ExpandableListActivity {
 	static final public int EVENT_NOTIFICATION = 4;
 	static final public int EVENT_CHANGE_WALLPAPER = 5;
 	
+	SharedPreferences prefs;
+	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         // Set up our adapter
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         adapter = new HomeExpandableListAdapter(Home.this);
         getOrRefreshDate();
         setListAdapter(adapter);
@@ -127,7 +132,9 @@ public class Home extends ExpandableListActivity {
 		Log.d("HOME.createCondEvent(data)", 
 				"call database method to create cond-event");
 		//Here may like this:		
-		//Database.createCondEvent(extras); or deliver context to it
+		//prefs.getInt("eType", -1);
+		//prefs.getInt("cType", -1);
+		//use pref to get params
 		getOrRefreshDate();
 		setListAdapter(adapter);
 	}

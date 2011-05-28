@@ -8,7 +8,9 @@ import android.app.DatePickerDialog.OnDateSetListener;
 import android.app.TimePickerDialog;
 import android.app.TimePickerDialog.OnTimeSetListener;
 import android.content.Context;
+import android.content.SharedPreferences.Editor;
 import android.graphics.drawable.Drawable;
+import android.preference.PreferenceManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -57,6 +59,12 @@ public class NewAlarmChildView extends LinearLayout {
 						newCondSettings.condAlarmDay = arg1;
 						newCondSettings.condAlarmMonth = arg2;
 						newCondSettings.condAlarmDay = arg3;
+						Editor editor = PreferenceManager.getDefaultSharedPreferences(
+								context.getApplicationContext()).edit();
+						editor.putInt("condAlarmDay", newCondSettings.condAlarmDay);
+						editor.putInt("condAlarmMonth", newCondSettings.condAlarmMonth);
+						editor.putInt("condAlarmDay", newCondSettings.condAlarmDay);
+						editor.commit();
 						String dateStr = arg1 + "/" + (arg2+1) + "/" + arg3;
 						setAlarmDate(dateStr);
 					}
@@ -77,6 +85,11 @@ public class NewAlarmChildView extends LinearLayout {
 						NewCondSettings newCondSettings = (NewCondSettings)context;
 						newCondSettings.condAlarmHour = arg1;
 						newCondSettings.condAlramMinute = arg2;
+						Editor editor = PreferenceManager.getDefaultSharedPreferences(
+								context.getApplicationContext()).edit();
+						editor.putInt("condAlarmHour", newCondSettings.condAlarmHour);
+						editor.putInt("condAlramMinute", newCondSettings.condAlramMinute);
+						editor.commit();
 						String timeStr = arg1 + ":";
 						if(arg2 < 10){
 							timeStr = timeStr + "0" + arg2;

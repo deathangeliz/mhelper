@@ -6,7 +6,9 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ExpandableListActivity;
 import android.app.TimePickerDialog;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.widget.DatePicker;
 import android.widget.ExpandableListAdapter;
@@ -14,6 +16,7 @@ import android.widget.TimePicker;
 
 public class NewCondSettings extends ExpandableListActivity {
 	ExpandableListAdapter condAdapter;
+	public SharedPreferences prefs;
 	
 	static final public int MODE_NEW = 0;
 	static final public int MODE_EDIT = 1;
@@ -33,6 +36,8 @@ public class NewCondSettings extends ExpandableListActivity {
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Bundle extras = getIntent().getExtras();
 		if (extras == null) {
 			Log.d("NewCondSettings.onCreate()", "extras == null");
@@ -53,17 +58,23 @@ public class NewCondSettings extends ExpandableListActivity {
         } else if (mode == MODE_EDIT) {
 			cType = extras.getInt(CTYPE);
 			if (cType == 0) {
-				condAlramYear = extras.getInt("year");
+				/*condAlramYear = extras.getInt("year");
 				condAlarmMonth = extras.getInt("month");
-				condAlarmDay = extras.getInt("dat");
+				condAlarmDay = extras.getInt("day");
 				condAlarmHour = extras.getInt("hour");
-				condAlramMinute = extras.getInt("minute");
+				condAlramMinute = extras.getInt("minute");*/
+				condAlramYear = prefs.getInt("year", 2011);
+				condAlarmMonth = prefs.getInt("month", 1);
+				condAlarmDay = prefs.getInt("day", 1);
+				condAlarmHour = prefs.getInt("hour", 0);
+				condAlramMinute = prefs.getInt("minute", 0);
 			}
 			else if (cType == 1){
 				
 			}
 			else if (cType == 2) {
-				typeToMessage = extras.getInt("typeToMessage");
+				//typeToMessage = extras.getInt("typeToMessage");
+				typeToMessage = prefs.getInt("typeToMessage", 0);
 			}
 		} else 
 			finish();

@@ -2,7 +2,6 @@
 <LinearLayout
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent"
-  android:background="@drawable/gro"
   android:orientation="horizontal" 
   android:layout_height="wrap_content" 
   android:paddingLeft="4dp" 
@@ -12,7 +11,7 @@
     android:layout_width="wrap_content" 
     android:layout_height="wrap_content" 
     android:id="@+id/homeGroupText" 
-    android:layout_weight="1" android:layout_gravity="left|center_vertical" android:padding="4dp">
+    android:layout_weight="1" android:layout_gravity="left|center_vertical" android:paddingLeft="16dp">
   </TextView>
   <ImageView 
     android:src="@drawable/delete" 
