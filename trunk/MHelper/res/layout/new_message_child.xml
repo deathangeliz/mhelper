@@ -3,14 +3,11 @@
   xmlns:android="http://schemas.android.com/apk/res/android"
   android:layout_width="match_parent" 
   android:layout_height="64dp">
-    <TextView android:text="TextView" 
-      android:layout_height="64dp" 
-      android:layout_width="wrap_content" 
-      android:id="@+id/newMessageText">
+    <TextView android:layout_width="wrap_content" 
+      android:id="@+id/newMessageText" android:text="Choose" android:padding="10dp" android:layout_height="wrap_content" android:layout_gravity="center_vertical">
     </TextView>
     <Spinner 
       android:id="@+id/newMessageSpinner" 
-      android:layout_height="64dp" 
-      android:layout_width="match_parent">
+      android:layout_width="match_parent" android:layout_height="wrap_content">
     </Spinner>
 </LinearLayout>

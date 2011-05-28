@@ -30,7 +30,6 @@ public class NewAlarmChildView extends LinearLayout {
 	private TimePickerDialog tpd;
 	TextView alarmDate;
 	TextView alarmTime;
-	ImageView newAlarmImage;
 	int position = 0;
 	
 	public NewAlarmChildView(Context _context, int position){
@@ -45,7 +44,6 @@ public class NewAlarmChildView extends LinearLayout {
 		
 		alarmDate = (TextView)findViewById(R.id.dateButton);
 		alarmTime = (TextView)findViewById(R.id.timeButton);
-		newAlarmImage = (ImageView)findViewById(R.id.newAlarmImage);
 		
 		alarmDate.setOnClickListener(new OnClickListener() {
 			
@@ -113,8 +111,5 @@ public class NewAlarmChildView extends LinearLayout {
 		alarmTime.setText(str);
 	}
 	
-	public void setAlarmImage(Drawable drawable) {
-		newAlarmImage.setImageDrawable(drawable);
-	}
 	
 }
