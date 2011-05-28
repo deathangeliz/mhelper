@@ -34,7 +34,24 @@ public class AlarmSetHelper {
 	        alarms2.set(AlarmManager.RTC, condition.getFinishTime().getTimeInMillis(), PI2);
 		}
 	}
-
+   
+	public void cancelAlarm(TimeCondition condition2, boolean setStart, boolean setFinish){
+		if(setStart)
+		{
+	    Intent intent3 =new Intent("condition");
+        
+        PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition2.getId(), intent3,PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
+        alarms.cancel(PI);
+			
+		}
+		if(setFinish)
+		{Intent intent4 =new Intent("condition");
+        
+        PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition2.getId(), intent4,PendingIntent.FLAG_UPDATE_CURRENT);
+        AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
+        alarms.cancel(PI);}
+	}
 	public void setThiscontext(Context thiscontext) {
 		this.thiscontext = thiscontext;
 	}
