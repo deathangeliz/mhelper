@@ -2,5 +2,8 @@
 <resources>
     <string name="hello">Hello World, Main!</string>
     <string name="app_name">MHelper</string>
+    
+    <string name="home_new_menuitem">New</string>
+    <string name="home_about_menuitem">About</string>
     <string name="Read_calendar_unsuccessfully_words">error in calendar</string>
 </resources>
