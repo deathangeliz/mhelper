@@ -3,9 +3,15 @@ package com.mhelper.ui;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import com.mhelper.DatebaseAdapter.CondEventAdapter;
+import com.mhelper.DatebaseAdapter.ConditionsAdapter;
 import com.mhelper.DatebaseAdapter.DetailCondAdapter;
+import com.mhelper.DatebaseAdapter.DetailEventAdapter;
+import com.mhelper.DatebaseAdapter.EventsAdapter;
+import com.mhelper.DatebaseAdapter.MDBHelperAdapter;
+import com.mhelper.conditions.TimeCondition;
 
 import android.R.integer;
 
@@ -75,9 +81,12 @@ public class Home extends ExpandableListActivity {
 	SharedPreferences prefs;
 	
 	private Cursor mCEACursor;
-	private CondEventAdapter mCEAHelper;
+	private CondEventAdapter mCEAHelper; 
 	private Cursor mDCACursor;
 	private DetailCondAdapter mDCAHelper;
+	private ConditionsAdapter mCAHelper;
+	private EventsAdapter mEAHelper;
+	private DetailEventAdapter mDEAHelper;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,7 +96,13 @@ public class Home extends ExpandableListActivity {
         getExpandableListView().setBackgroundDrawable(drawable);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-     // Set up our adapter
+        // Set up our adapter
+        /*mCEAHelper = new CondEventAdapter(Home.this);
+        mDCAHelper = new DetailCondAdapter(Home.this);
+        mCAHelper = new ConditionsAdapter(Home.this);
+        mEAHelper = new EventsAdapter(Home.this);
+        mDEAHelper = new DetailEventAdapter(this);*/
+        
         adapter = new HomeExpandableListAdapter(Home.this);
         getOrRefreshDate();
         setListAdapter(adapter);
@@ -160,6 +175,31 @@ public class Home extends ExpandableListActivity {
 		//use pref to get params
 		Log.d("Home.createCondEvent()", "cType=" + prefs.getInt("cType", -1));
 		Log.d("Home.createCondEvent()", "eType=" + prefs.getInt("eType", -1));
+		
+		/*int cType = prefs.getInt("cType", -1);
+		int eType = prefs.getInt("eType", -1);
+		if (cType == 0 && (eType > 0 && eType < 4)) {
+				mCAHelper.insertCondition("" + prefs.getInt("condAlarmHour", 0)
+						+ " : " + prefs.getInt("condAlramMinute", 0));
+				mEAHelper.insertEvent("change mode");
+				int id = (int)mCEAHelper.insertCondEvent(1, 2);
+				mDCAHelper.insertDetailCondition("mode ", "change to mode" + eType, 
+						"start time", "finish time", 1, id);
+				mDEAHelper.insertDetailEvent(id, 0);
+			   
+			TimeCondition tCondition = new TimeCondition(this);
+			tCondition.setDescription("time desc");
+			Calendar c = Calendar.getInstance();
+			int condAlramYear = prefs.getInt("condAlramYear", 2011);
+			int condAlarmMonth = prefs.getInt("condAlarmMonth", 9);
+			int condAlarmDay = prefs.getInt("condAlarmDay", 1);
+			int condAlarmHour = prefs.getInt("condAlarmHour", 0);
+			int condAlramMinute = prefs.getInt("condAlramMinute", 0);
+			c.set(condAlramYear, condAlarmMonth, condAlarmDay, condAlarmHour, condAlramMinute);
+		    tCondition.setStartTime(c);
+		    tCondition.setPoint(false);
+		    tCondition.setId(id);
+		}*/
 		getOrRefreshDate();
 		setListAdapter(adapter);
 	}
@@ -211,44 +251,44 @@ public class Home extends ExpandableListActivity {
 	public Bundle getCondEventData(int ceid) {
 		//get Bundle data from database
 		Bundle data = new Bundle();
-		mDCACursor = mCEAHelper.getCondEvent(ceid);
+		/*mDCACursor = mCEAHelper.getCondEvent(ceid);
 		data.putInt("CTYPE", mDCACursor.getShort(0));
-		data.putInt("ETYPE",mDCACursor.getShort(1));
+		data.putInt("ETYPE",mDCACursor.getShort(1));*/
 		return data;
 	}
 	
 	public ArrayList<String> getGroupContent() {
 		//invoke database method
 		ArrayList<String> AL=new ArrayList<String>();
-		mCEACursor = mCEAHelper.getAllCondEvent();
+		/*mCEACursor = mCEAHelper.getAllCondEvent();
 		mCEACursor.moveToFirst();
 		while(mCEACursor.isAfterLast()==false)
 		{
 			AL.add(mCEACursor.getString(2));
-		}
+		}*/
 		return AL;
 	}
 	
 	public ArrayList<ArrayList<String>> getChildrenContent() {
 		//invoke database method
 		ArrayList<String> AL=new ArrayList<String>();
-		mDCACursor =mDCAHelper.getAllDetailCondition();
+		/*mDCACursor =mDCAHelper.getAllDetailCondition();
 		while(mCEACursor.isAfterLast()==false)
 		{
 			AL.add(mCEACursor.getString(1));
-		}
+		}*/
 		return new ArrayList<ArrayList<String>>();
 	}
 	
 	public ArrayList<Integer> getCondEventId() {
 		//invoke database method
 		ArrayList<Integer> AL=new ArrayList<Integer>();
-		mCEACursor = mCEAHelper.getAllCondEvent();
+		/*mCEACursor = mCEAHelper.getAllCondEvent();
 		mCEACursor.moveToFirst();
 		while(mCEACursor.isAfterLast()==false)
 		{
 			AL.add((int)mCEACursor.getShort(2));
-		}
+		}*/
 		return AL;
 	}
 	

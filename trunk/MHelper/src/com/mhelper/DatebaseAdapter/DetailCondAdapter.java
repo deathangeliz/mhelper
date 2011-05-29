@@ -25,6 +25,7 @@ public class DetailCondAdapter {
 		mDbHelper.open();
 		return MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE4, null, initialValues);
 	}
+	
 	public boolean deleteCondition(int ceID) {
 		mDbHelper.open();
 		return MDBHelperAdapter.getDBHelper().delete(MDBHelperAdapter.DATABASE_TABLE4, MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceID, null) > 0;
