@@ -44,13 +44,13 @@ public class NewCondEvent extends TabActivity {
 	    intent = new Intent(NewCondEvent.this, NewCondSettings.class);
 	    intent.putExtras(extras);
 	    tabHost.addTab(tabHost.newTabSpec("conditions").setIndicator("Conditions",
-                res.getDrawable(R.drawable.settings))
+                res.getDrawable(R.drawable.new_tab_cond))
                 .setContent(intent));
         
 	    intent = new Intent(NewCondEvent.this, NewEventSettings.class);
 	    intent.putExtras(extras);
 	    tabHost.addTab(tabHost.newTabSpec("events").setIndicator("Events",
-                res.getDrawable(R.drawable.camera))
+                res.getDrawable(R.drawable.new_tab_event))
                 .setContent(intent));
 	}
 	

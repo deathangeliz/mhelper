@@ -125,7 +125,7 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 		    ngv.setGroupImage(context.getResources().getDrawable(R.drawable.alarm));
 			break;
 		case 1:
-			ngv.setGroupImage(context.getResources().getDrawable(R.drawable.calender));
+			ngv.setGroupImage(context.getResources().getDrawable(R.drawable.calendar));
 			break;
 		case 2:
 			ngv.setGroupImage(context.getResources().getDrawable(R.drawable.messages));

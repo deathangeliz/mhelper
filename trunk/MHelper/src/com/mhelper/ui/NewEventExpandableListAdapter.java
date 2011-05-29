@@ -155,13 +155,13 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.shut));
 		    	break;
 		    case 1:
-		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.slient));
+		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.mode));
 		    	break;
 		    case 2:
-		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.zhendong));
+		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.talk));
 		    	break;
 		    case 3:
-		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.change));
+		    	ngv.setGroupImage(context.getResources().getDrawable(R.drawable.gallery));
 		    	break;
 		}
 		
