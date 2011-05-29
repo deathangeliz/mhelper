@@ -25,7 +25,6 @@ import java.util.Calendar;
 
 public class NewAlarmChildView extends LinearLayout {
 	private Context context;
-	private AlertDialog.Builder ad;
 	private DatePickerDialog dpd;
 	private TimePickerDialog tpd;
 	TextView alarmDate;
@@ -55,7 +54,7 @@ public class NewAlarmChildView extends LinearLayout {
 					public void onDateSet(DatePicker arg0, int arg1, int arg2, int arg3) {
 						NewCondSettings newCondSettings = (NewCondSettings)context;
 						newCondSettings.condAlarmDay = arg1;
-						newCondSettings.condAlarmMonth = arg2;
+						newCondSettings.condAlarmMonth = arg2 + 1;
 						newCondSettings.condAlarmDay = arg3;
 						Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
@@ -67,8 +66,8 @@ public class NewAlarmChildView extends LinearLayout {
 						setAlarmDate(dateStr);
 					}
 				};
-				Calendar nowTime = Calendar.getInstance();
-				dpd = new DatePickerDialog(context, listener, nowTime.get(Calendar.YEAR), nowTime.get(Calendar.MONTH), nowTime.get(Calendar.DAY_OF_MONTH));
+				NewCondSettings newCondSettings = (NewCondSettings)context;
+				dpd = new DatePickerDialog(context, listener, newCondSettings.condAlramYear, newCondSettings.condAlarmMonth, newCondSettings.condAlarmDay);
 				dpd.show();
 			}
 		});
@@ -96,8 +95,8 @@ public class NewAlarmChildView extends LinearLayout {
 						setAlarmTime(timeStr);
 					}
 				};
-				Calendar nowTime = Calendar.getInstance();
-				tpd = new TimePickerDialog(context, listener, nowTime.get(Calendar.HOUR_OF_DAY), nowTime.get(Calendar.MINUTE), false);
+				NewCondSettings newCondSettings = (NewCondSettings)context;
+				tpd = new TimePickerDialog(context, listener, newCondSettings.condAlarmHour, newCondSettings.condAlramMinute, false);
 				tpd.show();
 			}
 		});
