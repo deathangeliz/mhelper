@@ -217,11 +217,19 @@ public class Home extends ExpandableListActivity {
 	
 	public ArrayList<String> getGroupContent() {
 		//invoke database method
-		return new ArrayList<String>();
+		ArrayList<String> AL=new ArrayList<String>();
+		mDCACursor = mCEAHelper.getAllCondEvent();
+		mDCACursor.moveToFirst();
+		while(mDCACursor.isAfterLast()==false)
+		{
+			AL.add(mDCACursor.getString(2));
+		}
+		return AL;
 	}
 	
 	public ArrayList<ArrayList<String>> getChildrenContent() {
 		//invoke database method
+		
 		return new ArrayList<ArrayList<String>>();
 	}
 	

@@ -26,7 +26,7 @@ public class CondEventAdapter {
 	}
 	public Cursor getAllCondEvent() {
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE3, new String[] { MDBHelperAdapter.KEY_CONDTYPE, MDBHelperAdapter.KEY_EVENTTYPE
+		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE3, new String[] { MDBHelperAdapter.KEY_CONDTYPE, MDBHelperAdapter.KEY_EVENTTYPE,MDBHelperAdapter.KEY_CEID
 		}, null, null, null, null, null);
 	}
 
