@@ -32,14 +32,42 @@ public class EventBroadcastReceiver extends BroadcastReceiver{
 		sort=mDEACursor.getShort(1);
 		if(sort==0)
 		{
-			NoneDetail();
+			//关机事件
 		}
-	}
-	
-	
-	private void NoneDetail()
-	{
-		//TODO 关机
+		else if(sort==1)
+		{
+			if(extras.getShort("flag")==1)
+			{
+				//开启静音
+			}
+			if(extras.getShort("flag")==0)
+			{
+				//关闭静音
+			}
+		}
+		else if(sort==2)
+		{
+			if(extras.getShort("flag")==1)
+			{
+				//开启飞行模式
+			}
+			if(extras.getShort("flag")==0)
+			{
+				//关闭静音模式
+			}
+		}
+		else if(sort==3)
+		{
+			if(extras.getShort("flag")==1)
+			{
+				//开启震动
+			}
+			if(extras.getShort("flag")==0)
+			{
+				//关闭震动
+			}
+		}
+		
 		
 	}
 	
