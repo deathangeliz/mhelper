@@ -4,14 +4,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-<<<<<<< .mine
 import com.mhelper.DatebaseAdapter.CondEventAdapter;
 import com.mhelper.DatebaseAdapter.DetailCondAdapter;
 
-import android.R;
 import android.R.integer;
-=======
->>>>>>> .r54
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -21,14 +18,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
-<<<<<<< .mine
+
 import android.database.Cursor;
-=======
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
->>>>>>> .r54
+
 import android.os.Bundle;
 import android.preference.EditTextPreference;
 import android.preference.PreferenceManager;
@@ -46,6 +42,7 @@ import android.widget.Toast;
 import android.widget.ExpandableListView.ExpandableListContextMenuInfo;
 
 import com.mhelper.R;
+
 
 public class Home extends ExpandableListActivity {
 	HomeExpandableListAdapter adapter;
