@@ -42,6 +42,11 @@ public class DetailCondAdapter {
 		return mCursor;
 	}
 
+	public Cursor getAllDetailCondition() {
+		mDbHelper.open();
+		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT,MDBHelperAdapter.KEY_CONDEVENTID
+		}, null, null, null, null, null);
+	}
 	
 	public boolean updateDetailCondition(String title, String description, String startTime, String finishTime,int point,int condEventid) {
 		mDbHelper.open();
