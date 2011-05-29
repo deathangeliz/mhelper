@@ -32,7 +32,7 @@ public class EventBroadcastReceiver extends BroadcastReceiver{
 		sort=mDEACursor.getShort(1);
 		if(sort==0)
 		{
-			//NoneDetail();
+			NoneDetail();
 		}
 	}
 	
