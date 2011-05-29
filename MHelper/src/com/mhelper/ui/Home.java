@@ -74,8 +74,10 @@ public class Home extends ExpandableListActivity {
 	
 	SharedPreferences prefs;
 	
-	private Cursor mDCACursor;
+	private Cursor mCEACursor;
 	private CondEventAdapter mCEAHelper;
+	private Cursor mDCACursor;
+	private DetailCondAdapter mDCAHelper;
 	
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -218,24 +220,36 @@ public class Home extends ExpandableListActivity {
 	public ArrayList<String> getGroupContent() {
 		//invoke database method
 		ArrayList<String> AL=new ArrayList<String>();
-		mDCACursor = mCEAHelper.getAllCondEvent();
-		mDCACursor.moveToFirst();
-		while(mDCACursor.isAfterLast()==false)
+		mCEACursor = mCEAHelper.getAllCondEvent();
+		mCEACursor.moveToFirst();
+		while(mCEACursor.isAfterLast()==false)
 		{
-			AL.add(mDCACursor.getString(2));
+			AL.add(mCEACursor.getString(2));
 		}
 		return AL;
 	}
 	
 	public ArrayList<ArrayList<String>> getChildrenContent() {
 		//invoke database method
-		
+		ArrayList<String> AL=new ArrayList<String>();
+		mDCACursor =mDCAHelper.getAllDetailCondition();
+		while(mCEACursor.isAfterLast()==false)
+		{
+			AL.add(mCEACursor.getString(1));
+		}
 		return new ArrayList<ArrayList<String>>();
 	}
 	
 	public ArrayList<Integer> getCondEventId() {
 		//invoke database method
-		return new ArrayList<Integer>();
+		ArrayList<Integer> AL=new ArrayList<Integer>();
+		mCEACursor = mCEAHelper.getAllCondEvent();
+		mCEACursor.moveToFirst();
+		while(mCEACursor.isAfterLast()==false)
+		{
+			AL.add((int)mCEACursor.getShort(2));
+		}
+		return AL;
 	}
 	
 	@Override
