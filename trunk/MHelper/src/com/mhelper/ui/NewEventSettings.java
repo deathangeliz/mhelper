@@ -1,22 +1,15 @@
 package com.mhelper.ui;
 
-import java.security.spec.EllipticCurve;
-
 import android.app.ExpandableListActivity;
-import android.content.SharedPreferences;
-import android.content.SharedPreferences.Editor;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.text.TextUtils.EllipsizeCallback;
 import android.util.Log;
 import android.view.View;
 import android.widget.ExpandableListAdapter;
-import android.widget.ExpandableListView;
 
 public class NewEventSettings extends ExpandableListActivity {
     ExpandableListAdapter eventAdapter;
-    public SharedPreferences prefs;
     
     static final public int MODE_NEW = 0;
 	static final public int MODE_EDIT = 1;
@@ -26,7 +19,7 @@ public class NewEventSettings extends ExpandableListActivity {
 	public int eType;
 	
 	public int notificationType;
-	public String notificationContent;
+	public StringBuilder notificationContent;
 	
 	public String imageUri;
 	
@@ -34,7 +27,6 @@ public class NewEventSettings extends ExpandableListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         Bundle extras = getIntent().getExtras();
         if (extras == null) {
 			Log.d("NewEventSettings.onCreate()", "extras == null");
@@ -45,11 +37,11 @@ public class NewEventSettings extends ExpandableListActivity {
         //set data
         if (mode == MODE_NEW) {
         	notificationType = 0;
-        	notificationContent = "";
+        	notificationContent = new StringBuilder();
         	
         	imageUri = null;
         } else if (mode == MODE_EDIT) {
-        	eType = prefs.getInt("eType", -1);
+        	eType = extras.getInt(ETYPE);
         	if (eType == 0) {
         		
         	} else if (eType == 1) {
@@ -59,19 +51,15 @@ public class NewEventSettings extends ExpandableListActivity {
 			} else if (eType == 3) {
 				
 			} else if (eType == 4) {
-				//notificationType = extras.getInt("notificationType");
-				//notificationContent = new StringBuilder(extras.getString("notificationContent"));
-				notificationType = prefs.getInt("notificationType", 0);
-				notificationContent = prefs.getString("notificationContent", "no message");
+				notificationType = extras.getInt("notificationType");
+				notificationContent = new StringBuilder(extras.getString("notificationContent"));
 			} else if (eType == 5) {
-				//imageUri = extras.getString("imageUri");
-				imageUri = prefs.getString("imageUri", null);
+				imageUri = extras.getString("imageUri");
 			}
         }
         
         // Set up our adapter
         eventAdapter = new NewEventExpandableListAdapter(NewEventSettings.this);
-        setListAdapter(eventAdapter);
         
         if (mode == MODE_NEW) {
         	
@@ -96,36 +84,20 @@ public class NewEventSettings extends ExpandableListActivity {
         	} else if (eType == 5) {
         		
         	}
-        	getExpandableListView().setOnGroupClickListener(
-        			new ExpandableListView.OnGroupClickListener() {
-						
-						@Override
-						public boolean onGroupClick(ExpandableListView parent, View v,
-								int groupPosition, long id) {
-							// TODO Auto-generated method stub
-							if (groupPosition == 0) {
-								eType = 0;
-							} else if (groupPosition == 1){
-								eType = 1;
-							} else if (groupPosition == 2){
-								eType = 4;
-							} else if (groupPosition == 3){
-								eType = 5;
-							} 
-							Editor editor = prefs.edit();
-							editor.putInt("eType", eType);
-							editor.commit();
-							if (parent.isGroupExpanded(groupPosition))
-								parent.collapseGroup(groupPosition);
-							else {
-								parent.expandGroup(groupPosition);
-							}
-							return true;
-						}
-					});
-        } else {
-			finish();
-		}
-       
+        }
+        setListAdapter(eventAdapter);
     }
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data){
+		if (resultCode == RESULT_OK){
+			if (requestCode == NewWallpaperChildView.REQUEST_CODE){
+				Uri uri = data.getData();
+				View view = eventAdapter.getChildView(3, 0, true, null, null);
+				if (view != null && view instanceof NewWallpaperChildView){
+					((NewWallpaperChildView)view).setString(uri.toString());
+					//此处需要把 uri 存起来
+				}
+			}
+		}
+	}
 }
