@@ -4,6 +4,7 @@ import android.app.Service;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
+import android.util.Log;
 
 public class SilentEvent extends Service{
 
@@ -30,6 +31,7 @@ public class SilentEvent extends Service{
 		AudioManager audioMgr=null;
 		int ringerMode = AudioManager.RINGER_MODE_SILENT;
 		audioMgr.setRingerMode(ringerMode);
+		Log.i("SlientEvent.onStartCommand()", "start");
 		return START_NOT_STICKY;
 	}     
 

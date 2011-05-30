@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.util.Log;
 
 /*TODO
  <receiver android:name="EventBroadcastReceiver">
@@ -16,6 +17,7 @@ import android.os.Bundle;
 					android:name="com.mhelper.action.EVENTBROADCASTRECEIVER"/>
 			</intent-filter>
 		</receiver>*/ 
+
 public class EventBroadcastReceiver extends BroadcastReceiver{
 	private Context context;
 	private Cursor mDEACursor;
@@ -27,8 +29,12 @@ public class EventBroadcastReceiver extends BroadcastReceiver{
 		this.context = context;
 		//TODO intent.putExtra(MDBHelperAdapter.KEY_CONDEVENTID, "3");
 		Bundle extras = intent.getExtras();
-		
-		mDEACursor=mDEAHelper.getDetailEvent(extras.getShort(MDBHelperAdapter.KEY_CONDEVENTID));
+		if (extras == null) {
+			Log.i("BroadcastReceiver.onReceive()", "extras == null");
+			return;
+		}		
+			
+		/*mDEACursor=mDEAHelper.getDetailEvent(extras.getShort(MDBHelperAdapter.KEY_CONDEVENTID));
 		sort=mDEACursor.getShort(1);
 		if(sort==0)
 		{
@@ -66,7 +72,7 @@ public class EventBroadcastReceiver extends BroadcastReceiver{
 			{
 				//¹Ø±ÕÕð¶¯
 			}
-		}
+		}*/
 		
 		
 	}
