@@ -25,12 +25,17 @@
         <activity android:name=".ui.NewCondSettings"></activity>
         <activity android:name=".ui.NewEventSettings"></activity>
         <activity android:name=".ui.NewCondEvent"></activity>
-        <receiver android:name="EventBroadcastReceiver">
+<!--        <receiver android:name="EventBroadcastReceiver">-->
+<!--			<intent-filter>-->
+<!--				<action-->
+<!--					android:name="Condition_BROADCAST"/>-->
+<!--			</intent-filter>-->
+<!--		</receiver>-->
+        <receiver android:name=".middle.MHelperBroadcastReceiver">
 			<intent-filter>
 				<action
-					android:name="Condition_BROADCAST"/>
+					android:name="com.mhelper.action.MHELPER_BROADCAST"/>
 			</intent-filter>
-		</receiver>
-
+		</receiver> 
     </application>
 </manifest>

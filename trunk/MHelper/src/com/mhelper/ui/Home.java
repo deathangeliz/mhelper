@@ -12,6 +12,7 @@ import com.mhelper.DatebaseAdapter.DetailEventAdapter;
 import com.mhelper.DatebaseAdapter.EventsAdapter;
 import com.mhelper.DatebaseAdapter.MDBHelperAdapter;
 import com.mhelper.conditions.TimeCondition;
+import com.mhelper.events.ChangeWallpaperEvent;
 import com.mhelper.middle.AlarmSetHelper;
 
 import android.R.id;
@@ -96,8 +97,8 @@ public class Home extends ExpandableListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Drawable drawable = getResources().getDrawable(R.drawable.gro);
-        //getExpandableListView().setBackgroundDrawable(drawable);
+        Drawable drawable = getResources().getDrawable(R.drawable.background);
+        getExpandableListView().setBackgroundDrawable(drawable);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // Set up our adapter
@@ -185,14 +186,13 @@ public class Home extends ExpandableListActivity {
 	    switch (cType) {
 		case 0:
 			if (eType > 0 && eType < 4) {
-				AlarmSetHelper ash = new AlarmSetHelper(this);
 				int ceid = condEventId.size();
 				condEventId.add(ceid);
 				int id = ids.size();
 				ids.add(id);
 				Calendar st = getSettingStartTime();
-				ash.startToAlarm(st, null, false, eType, 
-						id, ceid, false);
+				AlarmSetHelper ash = new AlarmSetHelper(this);
+				ash.startToAlarm(st, null, false, eType, id, ceid, false);
 				String timeStr = "Alarm";
 				String modeStr = "";
 				switch (eType) {
@@ -211,7 +211,8 @@ public class Home extends ExpandableListActivity {
 				}
 				groupContent.add(timeStr + " - " + modeStr);
 				Log.i("Home.createCondEvent", "" + groupContent.size());
-				String childrenStr = "startTime: " + st.toString();
+				String childrenStr = "tartTime: " + st.getTime().toString()
+				                   + "\n" + "Change mode: " + modeStr;
 				ArrayList<String> addStrings = new ArrayList<String>();
 				addStrings.add(childrenStr);
 				childrenContent.add(addStrings);
