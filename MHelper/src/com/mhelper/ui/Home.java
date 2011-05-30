@@ -211,7 +211,7 @@ public class Home extends ExpandableListActivity {
 				}
 				groupContent.add(timeStr + " - " + modeStr);
 				Log.i("Home.createCondEvent", "" + groupContent.size());
-				String childrenStr = "tartTime: " + st.getTime().toString()
+				String childrenStr = "StartTime: " + st.getTime().toString()
 				                   + "\n" + "Change mode: " + modeStr;
 				ArrayList<String> addStrings = new ArrayList<String>();
 				addStrings.add(childrenStr);
@@ -255,7 +255,7 @@ public class Home extends ExpandableListActivity {
 	public Calendar getSettingStartTime() {
 		Calendar c = Calendar.getInstance();
 		int condAlramYear = prefs.getInt("condAlramYear", 2011);
-		int condAlarmMonth = prefs.getInt("condAlarmMonth", 9);
+		int condAlarmMonth = prefs.getInt("condAlarmMonth", 9) - 1;
 		int condAlarmDay = prefs.getInt("condAlarmDay", 1);
 		int condAlarmHour = prefs.getInt("condAlarmHour", 0);
 		int condAlramMinute = prefs.getInt("condAlramMinute", 0);

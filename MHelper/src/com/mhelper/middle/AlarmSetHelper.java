@@ -8,6 +8,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 public class AlarmSetHelper {
 	
 	public  AlarmSetHelper(Context context){
@@ -42,6 +43,7 @@ public class AlarmSetHelper {
 	        PendingIntent PI = PendingIntent.getBroadcast(thiscontext, condition.getId(), intent,PendingIntent.FLAG_UPDATE_CURRENT);
 	        AlarmManager alarms = (AlarmManager)thiscontext.getSystemService(thiscontext.ALARM_SERVICE);
 	        alarms.set(AlarmManager.RTC, condition.getStartTime().getTimeInMillis(), PI);
+	        Log.i("ALarmSetHelper.addToAlarm()", "sendBroadcast");
 	    }
 		if(setFinish)
 		{
