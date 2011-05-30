@@ -12,8 +12,11 @@ import com.mhelper.DatebaseAdapter.DetailEventAdapter;
 import com.mhelper.DatebaseAdapter.EventsAdapter;
 import com.mhelper.DatebaseAdapter.MDBHelperAdapter;
 import com.mhelper.conditions.TimeCondition;
+import com.mhelper.middle.AlarmSetHelper;
 
+import android.R.id;
 import android.R.integer;
+import android.R.string;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -55,6 +58,7 @@ public class Home extends ExpandableListActivity {
 	ArrayList<String> groupContent;
 	ArrayList<ArrayList<String>> childrenContent;
 	ArrayList<Integer> condEventId;
+	ArrayList<Integer> ids;
 	
 	static final private int NEW_MENU_ITEM = Menu.FIRST;
 	static final private int ABOUT_MENU_ITEM = Menu.FIRST + 1;
@@ -92,8 +96,8 @@ public class Home extends ExpandableListActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Drawable drawable = getResources().getDrawable(R.drawable.gro);
-        getExpandableListView().setBackgroundDrawable(drawable);
+        //Drawable drawable = getResources().getDrawable(R.drawable.gro);
+        //getExpandableListView().setBackgroundDrawable(drawable);
 
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // Set up our adapter
@@ -176,6 +180,49 @@ public class Home extends ExpandableListActivity {
 		Log.d("Home.createCondEvent()", "cType=" + prefs.getInt("cType", -1));
 		Log.d("Home.createCondEvent()", "eType=" + prefs.getInt("eType", -1));
 		
+		int cType = prefs.getInt("cType", -1);
+		int eType = prefs.getInt("eType", -1);
+	    switch (cType) {
+		case 0:
+			if (eType > 0 && eType < 4) {
+				AlarmSetHelper ash = new AlarmSetHelper(this);
+				int ceid = condEventId.size();
+				condEventId.add(ceid);
+				int id = ids.size();
+				ids.add(id);
+				Calendar st = getSettingStartTime();
+				ash.startToAlarm(st, null, false, eType, 
+						id, ceid, false);
+				String timeStr = "Alarm";
+				String modeStr = "";
+				switch (eType) {
+				case 1:
+					modeStr = "Slient";
+					break;
+				case 2:
+					modeStr = "Vibration";
+					break;
+				case 3:
+					modeStr = "AirMode";
+					break;
+				default:
+					Log.i("Home.creatCondEvent()", "noThisEvent");
+					break;
+				}
+				groupContent.add(timeStr + " - " + modeStr);
+				Log.i("Home.createCondEvent", "" + groupContent.size());
+				String childrenStr = "startTime: " + st.toString();
+				ArrayList<String> addStrings = new ArrayList<String>();
+				addStrings.add(childrenStr);
+				childrenContent.add(addStrings);
+				getOrRefreshDate();
+				setListAdapter(adapter);
+			}
+			break;
+
+		default:
+			break;
+		}
 		/*int cType = prefs.getInt("cType", -1);
 		int eType = prefs.getInt("eType", -1);
 		if (cType == 0 && (eType > 0 && eType < 4)) {
@@ -204,6 +251,17 @@ public class Home extends ExpandableListActivity {
 		setListAdapter(adapter);
 	}
 	
+	public Calendar getSettingStartTime() {
+		Calendar c = Calendar.getInstance();
+		int condAlramYear = prefs.getInt("condAlramYear", 2011);
+		int condAlarmMonth = prefs.getInt("condAlarmMonth", 9);
+		int condAlarmDay = prefs.getInt("condAlarmDay", 1);
+		int condAlarmHour = prefs.getInt("condAlarmHour", 0);
+		int condAlramMinute = prefs.getInt("condAlramMinute", 0);
+		c.set(condAlramYear, condAlarmMonth, condAlarmDay, condAlarmHour, condAlramMinute);
+		return c;
+	}
+	
 	public void editCondEvent() {
 		Log.d("HOME.editCondEvent()", 
 				"call database method to edit cond-event");
@@ -223,6 +281,9 @@ public class Home extends ExpandableListActivity {
         condEventId = getCondEventId();
         if (condEventId == null)
         	condEventId = new ArrayList<Integer>();
+        ids = getIds();
+        if (ids == null)
+        	ids = new ArrayList<Integer>();
         adapter.setGroupContent(groupContent);
         adapter.setChildrenContent(childrenContent);
         adapter.setCondEventID(condEventId);
@@ -259,37 +320,46 @@ public class Home extends ExpandableListActivity {
 	
 	public ArrayList<String> getGroupContent() {
 		//invoke database method
-		ArrayList<String> AL=new ArrayList<String>();
+		if (groupContent == null)
+			groupContent = new ArrayList<String>();
 		/*mCEACursor = mCEAHelper.getAllCondEvent();
 		mCEACursor.moveToFirst();
 		while(mCEACursor.isAfterLast()==false)
 		{
 			AL.add(mCEACursor.getString(2));
 		}*/
-		return AL;
+		return groupContent;
 	}
 	
 	public ArrayList<ArrayList<String>> getChildrenContent() {
 		//invoke database method
-		ArrayList<String> AL=new ArrayList<String>();
+		if (childrenContent == null)
+			childrenContent = new ArrayList<ArrayList<String>>();
 		/*mDCACursor =mDCAHelper.getAllDetailCondition();
 		while(mCEACursor.isAfterLast()==false)
 		{
 			AL.add(mCEACursor.getString(1));
 		}*/
-		return new ArrayList<ArrayList<String>>();
+		return childrenContent;
 	}
 	
 	public ArrayList<Integer> getCondEventId() {
 		//invoke database method
-		ArrayList<Integer> AL=new ArrayList<Integer>();
+		if (condEventId == null)
+			condEventId = new ArrayList<Integer>();
 		/*mCEACursor = mCEAHelper.getAllCondEvent();
 		mCEACursor.moveToFirst();
 		while(mCEACursor.isAfterLast()==false)
 		{
 			AL.add((int)mCEACursor.getShort(2));
 		}*/
-		return AL;
+		return condEventId;
+	}
+	
+	public ArrayList<Integer> getIds() {
+		if (ids == null)
+			ids = new ArrayList<Integer>();
+		return ids;
 	}
 	
 	@Override

@@ -1,5 +1,7 @@
 package com.mhelper.middle;
 
+import java.util.Calendar;
+
 import com.mhelper.conditions.TimeCondition;
 
 import android.app.AlarmManager;
@@ -12,6 +14,19 @@ public class AlarmSetHelper {
 		setThiscontext(context);
 	}
 	private Context thiscontext;
+	
+	public void startToAlarm(Calendar startTime, Calendar finishTime, boolean point, 
+			int eventid, int id, long condEventId, boolean setFinish) {
+		TimeCondition tc = new TimeCondition(thiscontext);
+		tc.setStartTime(startTime);
+		tc.setFinishTime(finishTime);
+		tc.setPoint(point);
+		tc.setEventid(eventid);
+		tc.setId(id);
+		tc.setCondEventld(condEventId);
+		
+		addToAlarm(tc, true, setFinish);
+	}
 	
 	public void addToAlarm(TimeCondition condition, boolean setStart, boolean setFinish)
 	{   

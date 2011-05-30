@@ -19,12 +19,13 @@ public class TimeCondition {
 	
 	
 	public TimeCondition(Context context){
-		/*SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
 		SharedPreferences.Editor editor = pref.edit();
 		int lastConEventId = pref.getInt(context.getString(R.string.COND_EVENT_ID_KEY), 1);
 		lastConEventId ++;
 		this.condEventld = lastConEventId;
-		editor.putInt(context.getString(R.string.COND_EVENT_ID_KEY), lastConEventId);*/
+		editor.putInt(context.getString(R.string.COND_EVENT_ID_KEY), lastConEventId);
+		editor.commit();
 	}
 	
 	public void setDescription(String description) {
