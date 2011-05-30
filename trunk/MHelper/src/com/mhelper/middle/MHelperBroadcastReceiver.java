@@ -37,18 +37,21 @@ public class MHelperBroadcastReceiver extends BroadcastReceiver {
 			int time_cond_type = extras.getInt("TIME_COND_TYPE");
 			Log.i("BroadcastReceiver.onReceive()", "time_cond_type=" + time_cond_type);
 			int time_cond_id = extras.getInt("TIME_COND_ID");
-			Log.i("BroadcastReceiver.onReceive()", "time_cond_type=" + time_cond_type);
+			Log.i("BroadcastReceiver.onReceive()", "time_cond_id=" + time_cond_id);
 			
 			if (time_cond_type == 1) {
-				switch (cond_type) {
+				switch (event_type) {
 				case 1:
 					context.startService(new Intent(this.context, SilentEvent.class));
+					Log.i("BroadcastReceiver.onReceive()", "SilentEvent");
 					break;
 				case 2:
 					context.startService(new Intent(this.context, VibratorEvent.class));
+					Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
 					break;
 				case 3:
-					context.startService(new Intent(this.context, PlaneEvent.class));
+					context.startService(new Intent(this.context, VibratorEvent.class));
+					Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
 					break;
 				default:
 					break;
