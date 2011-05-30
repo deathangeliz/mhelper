@@ -18,8 +18,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".RemindEvent"></activity>
-        <service android:name=".SilentEvent"></service>
-        <service android:name=".VibratorEvent"></service>
+        <service android:name=".eventss.VibratorEvent"></service>
         <service android:name=".PlaneEvent"></service>
         <service android:name=".ChangeWallpaperEvent"/>
         <activity android:name=".ui.NewCondSettings"></activity>
@@ -36,6 +35,7 @@
 				<action
 					android:name="com.mhelper.action.MHELPER_BROADCAST"/>
 			</intent-filter>
-		</receiver> 
+		</receiver>
+        <service android:name=".events.SilentEvent"></service> 
     </application>
 </manifest>
