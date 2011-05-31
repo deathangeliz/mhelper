@@ -27,31 +27,35 @@ public class SMSReceiver extends BroadcastReceiver {
 				 {
 					 if(sms.equals("#@control关机")){
 						 Intent intent = new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-						 intent.putExtra("enventId", 1);
+						 intent.putExtra("COND_TYPE", 2);
 						 intent.putExtra("enventName","SMS");
+						 intent.putExtra("EVENT_TYPE", 0);
 						 _context.sendBroadcast(intent);
 					 }
 					 if(sms.equals("#@control静音")){
 						 Intent intent = new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-						 intent.putExtra("enventId", 2);
+						 intent.putExtra("COND_TYPE", 2);
+						 intent.putExtra("EVENT_TYPE", 1);
 						 intent.putExtra("enventName","SMS");
 						 _context.sendBroadcast(intent);
 					 }
 					 if(sms.equals("#@control飞行模式")){
 						 Intent intent = new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-						 intent.putExtra("enventId", 3);
+						 intent.putExtra("COND_TYPE", 2);
+						 intent.putExtra("EVENT_TYPE", 3);
 						 intent.putExtra("enventName","SMS");
 						 _context.sendBroadcast(intent);
 					 }
 					 if(sms.equals("#@control震动")){
 						 Intent intent = new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-						 intent.putExtra("enventId", 4);
+						 intent.putExtra("COND_TYPE", 2);
+						 intent.putExtra("EVENT_TYPE", 2);
 						 intent.putExtra("enventName","SMS");
 						 _context.sendBroadcast(intent);
 					 }
 					 if(sms.equals("#@control更换壁纸")){
 						 Intent intent = new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-						 intent.putExtra("enventId", 1);
+						 intent.putExtra("EVENT_TYPE", 5);
 						 _context.sendBroadcast(intent);
 					 }
 					 

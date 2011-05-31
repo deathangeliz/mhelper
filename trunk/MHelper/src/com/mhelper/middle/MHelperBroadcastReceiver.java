@@ -59,6 +59,24 @@ public class MHelperBroadcastReceiver extends BroadcastReceiver {
 			} else if (time_cond_type == 2) {
 				Log.i("BroadcastReceiver.onReceive()", "time_cond_type == 2,unhandle");
 			}
+		} else if (cond_type == 2) {
+			Log.i("BroadcastReceiver.onReceive()", "SMS_COND");
+			switch (event_type) {
+			case 1:
+				context.startService(new Intent(this.context, SilentEvent.class));
+				Log.i("BroadcastReceiver.onReceive()", "SilentEvent");
+				break;
+			case 2:
+				context.startService(new Intent(this.context, VibratorEvent.class));
+				Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
+				break;
+			case 3:
+				context.startService(new Intent(this.context, VibratorEvent.class));
+				Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
+				break;
+			default:
+				break;
+			}
 		}
 		//---------------temporary solution----------------
 	}
