@@ -9,4 +9,5 @@
     <string name="COND_EVENT_ID_KEY">COND_EVENT_ID</string>
     <string name="DIALOG_TITLE">MHelper</string>
     <string name="IMAGE_URI_KEY">IMAGE_URI</string>
+
 </resources>
