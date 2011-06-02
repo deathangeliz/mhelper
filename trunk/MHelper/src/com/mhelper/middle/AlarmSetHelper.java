@@ -18,11 +18,11 @@ public class AlarmSetHelper {
 	
 	public void startToAlarm(Calendar startTime, Calendar finishTime, boolean point, 
 			int eventid, int id, long condEventId, boolean setFinish) {
-		TimeCondition tc = new TimeCondition(context);
+		TimeCondition tc = new TimeCondition();
 		tc.setStartTime(startTime);
 		tc.setFinishTime(finishTime);
 		tc.setPoint(point);
-		tc.setEventid(eventid);
+		//tc.setEventid(eventid);
 		tc.setId(id);
 		tc.setCondEventld(condEventId);
 		
@@ -31,7 +31,7 @@ public class AlarmSetHelper {
 	
 	void startTimeCondition(long condEventId, Calendar startTime, Calendar endTime, Boolean shouldEnd)
 	{
-		TimeCondition tc = new TimeCondition(context);
+		TimeCondition tc = new TimeCondition();
 		tc.setStartTime(startTime);
 		tc.setFinishTime(endTime);
 		tc.setPoint(!shouldEnd);

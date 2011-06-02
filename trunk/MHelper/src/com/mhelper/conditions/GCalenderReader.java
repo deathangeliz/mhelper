@@ -74,7 +74,7 @@ public class GCalenderReader {
 	        return null;
 		}
 		while (timeCursor.moveToNext()) {
-			TimeCondition timecondition = new TimeCondition(context);
+			TimeCondition timecondition = new TimeCondition();
 			Cursor cursor = contentResolver
 					.query(Uri
 							.parse("content://" + contentProviderFirst + strStore + "/events"),

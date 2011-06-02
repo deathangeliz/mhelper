@@ -13,19 +13,11 @@ public class TimeCondition {
 	private Calendar startTime;
 	private Calendar finishTime;
 	private boolean point;
-	private int eventid;
-	private int id;
+	private int id = 0;
 	private long condEventld=0;
 	
 	
-	public TimeCondition(Context context){
-		SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-		SharedPreferences.Editor editor = pref.edit();
-		int lastConEventId = pref.getInt(context.getString(R.string.COND_EVENT_ID_KEY), 1);
-		lastConEventId ++;
-		this.condEventld = lastConEventId;
-		editor.putInt(context.getString(R.string.COND_EVENT_ID_KEY), lastConEventId);
-		editor.commit();
+	public TimeCondition(){
 	}
 	
 	public void setDescription(String description) {
@@ -69,14 +61,6 @@ public class TimeCondition {
 	}
 	public String getTitle() {
 		return title;
-	}
-
-	public void setEventid(int eventid) {
-		this.eventid = eventid;
-	}
-
-	public int getEventid() {
-		return eventid;
 	}
 	
 	
