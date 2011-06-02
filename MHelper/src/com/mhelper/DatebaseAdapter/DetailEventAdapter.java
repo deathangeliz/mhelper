@@ -42,18 +42,18 @@ public class DetailEventAdapter {
 		return mCursor;
 	}
 
-	public boolean updateEvents(int ceid, int sort) {
+	public boolean updateDetailEvent(int ceid, int sort) {
 		mDbHelper.open();
 		ContentValues args = new ContentValues();
 		args.put(MDBHelperAdapter.KEY_CONDEVENTID, ceid);
 		args.put(MDBHelperAdapter.KEY_DETAILEVENTSORT, sort);
 		return MDBHelperAdapter.getDBHelper().update(MDBHelperAdapter.DATABASE_TABLE5, args, MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceid, null) > 0;
 	}
-	public void dropEvents(){
+	public void dropDetailEvent(){
 		mDbHelper.open();
 		mDbHelper.dropTable(MDBHelperAdapter.DATABASE_TABLE5);
 	}
-	public void recreateEvents()
+	public void recreateDetailEvent()
 	{
 		mDbHelper.open();
 		mDbHelper.recreateTable(5);

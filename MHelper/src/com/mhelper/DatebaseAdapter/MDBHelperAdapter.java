@@ -23,6 +23,7 @@ public class MDBHelperAdapter {
 	public static final String KEY_DETAILEVENTSORT="detaileventsort";
 	public static final String KEY_NOTIFICATIONTYPE="notificationtype";
 	public static final String KEY_NOTIFICATIONMESSAGE="notificationmessage";
+	public static final String KEY_WALLPAPERURI="wallpaperuri";
 	private static DatabaseHelper mDbHelper;
 	private static SQLiteDatabase mDb;
 	
@@ -33,7 +34,7 @@ public class MDBHelperAdapter {
 	public static final String DATABASE_TABLE4 = "detailcond";	
 	public static final String DATABASE_TABLE5 = "detailevent";	
 	public static final String DATABASE_TABLE6 = "noficationevent";	
-	
+	public static final String DATABASE_TABLE7 = "wallpaperevent";
 	public static final int DATABASE_VERSION = 1;
 	private final Context mCtx;
 	private static final String DATABASE_CREATE1 = "create table conditions (ctype INTEGER  primary key autoincrement, "
@@ -59,6 +60,9 @@ public class MDBHelperAdapter {
 		+ "noficationtype integer not null,"
 		+"noficationmessage test not null, "
 		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid));";
+	private static final String DATABASE_CREATE7 = "create table wallpaperevent (condeventid INTEGER primary key, "
+		+"wallpaperuri test not null, "
+		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid));";
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 		DatabaseHelper(Context context) {
 			super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -71,6 +75,7 @@ public class MDBHelperAdapter {
 			db.execSQL(DATABASE_CREATE4);
 			db.execSQL(DATABASE_CREATE5);
 			db.execSQL(DATABASE_CREATE6);
+			db.execSQL(DATABASE_CREATE7);
 		}
 		@Override
 		public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -114,6 +119,8 @@ public class MDBHelperAdapter {
 		{table="detailevent";database_create=DATABASE_CREATE5;}
 		else if(i==6)
 		{table="noficationevent";database_create=DATABASE_CREATE6;}
+		else if(i==7)
+		{table="wallpaperevent";database_create=DATABASE_CREATE7;}
 		try {
 			MDBHelperAdapter.getDBHelper().execSQL("DROP TABLE IF EXISTS "+table);
 			mDb.execSQL(database_create);
