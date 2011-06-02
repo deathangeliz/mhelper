@@ -91,7 +91,7 @@ public class GCalenderReader {
 			Calendar startCalendar = Calendar.getInstance();
 			startCalendar.setTimeInMillis(timeCursor.getLong(1));
 		    timecondition.setStartTime(startCalendar);
-
+            timecondition.setPoint(false);
 			Calendar finishCalendar = Calendar.getInstance();
 			finishCalendar.setTimeInMillis(timeCursor.getLong(2));
 			timecondition.setFinishTime(finishCalendar);
