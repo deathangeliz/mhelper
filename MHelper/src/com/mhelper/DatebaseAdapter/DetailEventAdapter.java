@@ -17,7 +17,7 @@ public class DetailEventAdapter {
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(MDBHelperAdapter.KEY_CONDEVENTID, ceid);
-		initialValues.put(MDBHelperAdapter.KEY_DETAILSORT, sort);
+		initialValues.put(MDBHelperAdapter.KEY_DETAILEVENTSORT, sort);
 		mDbHelper.open();
 		return MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE5, null, initialValues);
 	}
@@ -27,14 +27,14 @@ public class DetailEventAdapter {
 	}
 	public Cursor getAllDetailEvents() {
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE5, new String[] { MDBHelperAdapter.KEY_CONDEVENTID, MDBHelperAdapter.KEY_DETAILSORT
+		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE5, new String[] { MDBHelperAdapter.KEY_CONDEVENTID, MDBHelperAdapter.KEY_DETAILEVENTSORT
 		}, null, null, null, null, null);
 	}
 
 	public Cursor getDetailEvent(int ceid) throws SQLException {
 		mDbHelper.open();
 		Cursor mCursor =
-			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE5, new String[] { MDBHelperAdapter.KEY_CONDEVENTID, MDBHelperAdapter.KEY_DETAILSORT},  MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceid, null, null,
+			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE5, new String[] { MDBHelperAdapter.KEY_CONDEVENTID, MDBHelperAdapter.KEY_DETAILEVENTSORT},  MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceid, null, null,
 				null, null, null);
 		if (mCursor != null) {
 			mCursor.moveToFirst();
@@ -46,7 +46,7 @@ public class DetailEventAdapter {
 		mDbHelper.open();
 		ContentValues args = new ContentValues();
 		args.put(MDBHelperAdapter.KEY_CONDEVENTID, ceid);
-		args.put(MDBHelperAdapter.KEY_DETAILSORT, sort);
+		args.put(MDBHelperAdapter.KEY_DETAILEVENTSORT, sort);
 		return MDBHelperAdapter.getDBHelper().update(MDBHelperAdapter.DATABASE_TABLE5, args, MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceid, null) > 0;
 	}
 	public void dropEvents(){

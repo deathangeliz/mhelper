@@ -34,7 +34,7 @@ public class DetailCondAdapter {
 	public Cursor getDetailCondition(int ceID) throws SQLException {
 		mDbHelper.open();
 		Cursor mCursor =
-			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT,MDBHelperAdapter.KEY_CONDEVENTID}, 
+			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_CONDEVENTID,MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT}, 
 				MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceID, null, null,
 				null, null, null);
 		if (mCursor != null) {
@@ -45,8 +45,8 @@ public class DetailCondAdapter {
 
 	public Cursor getAllDetailCondition() {
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT,MDBHelperAdapter.KEY_CONDEVENTID
-		}, null, null, null, null, null);
+		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_CONDEVENTID,MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT}, 
+				null, null, null, null, null);
 	}
 	
 	public boolean updateDetailCondition(String title, String description, String startTime, String finishTime,int point,int condEventid) {
