@@ -21,17 +21,17 @@ public class NoficationEventAdapter {
 		mDbHelper.open();
 		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE6, null, initialValues);
 	}
-	public boolean deleteDetailEvent(int ceid) {
+	public boolean deleteNoficationEvent(int ceid) {
 		mDbHelper.open();
 		return MDBHelperAdapter.getDBHelper().delete(MDBHelperAdapter.DATABASE_TABLE6, MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceid, null) > 0;
 	}
-	public Cursor getAllDetailEvents() {
+	public Cursor getAllNoficationEvents() {
 		mDbHelper.open();
 		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE6, new String[] { MDBHelperAdapter.KEY_CONDEVENTID, MDBHelperAdapter.KEY_NOTIFICATIONTYPE,MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE
 		}, null, null, null, null, null);
 	}
 
-	public Cursor getDetailEvent(int ceid) throws SQLException {
+	public Cursor getNoficationEvent(int ceid) throws SQLException {
 		mDbHelper.open();
 		Cursor mCursor =
 			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE6, new String[] { MDBHelperAdapter.KEY_CONDEVENTID, MDBHelperAdapter.KEY_NOTIFICATIONTYPE,MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE},  MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceid, null, null,
@@ -42,7 +42,7 @@ public class NoficationEventAdapter {
 		return mCursor;
 	}
 
-	public boolean updateEvents(int ceid, int ntfctype,String message) {
+	public boolean updateNoficationEvent(int ceid, int ntfctype,String message) {
 		mDbHelper.open();
 		ContentValues args = new ContentValues();
 		args.put(MDBHelperAdapter.KEY_CONDEVENTID, ceid);
@@ -50,11 +50,11 @@ public class NoficationEventAdapter {
 		args.put(MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE, message);
 		return MDBHelperAdapter.getDBHelper().update(MDBHelperAdapter.DATABASE_TABLE6, args, MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceid, null) > 0;
 	}
-	public void dropEvents(){
+	public void dropNoficationEvents(){
 		mDbHelper.open();
 		mDbHelper.dropTable(MDBHelperAdapter.DATABASE_TABLE6);
 	}
-	public void recreateEvents()
+	public void recreateNoficationEvents()
 	{
 		mDbHelper.open();
 		mDbHelper.recreateTable(6);
