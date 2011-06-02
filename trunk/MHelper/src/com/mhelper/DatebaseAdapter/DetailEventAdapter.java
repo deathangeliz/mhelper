@@ -13,13 +13,13 @@ public class DetailEventAdapter {
 		mDbHelper=new MDBHelperAdapter(ctx);
 	}
 	
-	public long insertDetailEvent(int ceid,int sort)
+	public int insertDetailEvent(int ceid,int sort)
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(MDBHelperAdapter.KEY_CONDEVENTID, ceid);
 		initialValues.put(MDBHelperAdapter.KEY_DETAILEVENTSORT, sort);
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE5, null, initialValues);
+		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE5, null, initialValues);
 	}
 	public boolean deleteDetailEvent(int ceid) {
 		mDbHelper.open();

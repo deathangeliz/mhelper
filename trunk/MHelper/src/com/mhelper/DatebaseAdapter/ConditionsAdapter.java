@@ -13,12 +13,12 @@ public class ConditionsAdapter {
 		mDbHelper=new MDBHelperAdapter(ctx);
 	}
 	
-	public long insertCondition(String cdesc)
+	public int insertCondition(String cdesc)
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(MDBHelperAdapter.KEY_CDESC, cdesc);
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE1, null, initialValues);
+		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE1, null, initialValues);
 	}
 	public boolean deleteCondition(int ct) {
 		mDbHelper.open();

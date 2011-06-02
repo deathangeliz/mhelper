@@ -13,7 +13,7 @@ public class DetailCondAdapter {
 		mDbHelper=new MDBHelperAdapter(ctx);
 	}
 	
-	public long insertDetailCondition(String title, String description, String startTime, String finishTime,int point,int condEventid)
+	public int insertDetailCondition(String title, String description, String startTime, String finishTime,int point,int condEventid)
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(MDBHelperAdapter.KEY_TITLE, title);
@@ -23,7 +23,7 @@ public class DetailCondAdapter {
 		initialValues.put(MDBHelperAdapter.KEY_POINT, point);
 		initialValues.put(MDBHelperAdapter.KEY_CONDEVENTID, condEventid);
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE4, null, initialValues);
+		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE4, null, initialValues);
 	}
 	
 	public boolean deleteCondition(int ceID) {

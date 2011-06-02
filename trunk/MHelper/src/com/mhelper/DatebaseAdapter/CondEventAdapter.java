@@ -17,13 +17,13 @@ public class CondEventAdapter {
 		DCHelper=new DetailCondAdapter(ctx);
 	}
 	
-	public long insertCondEvent(int condtype,int eventtype)
+	public int insertCondEvent(int condtype,int eventtype)
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(MDBHelperAdapter.KEY_CONDTYPE, condtype);
 		initialValues.put(MDBHelperAdapter.KEY_EVENTTYPE, eventtype);
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE3, null, initialValues);
+		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE3, null, initialValues);
 	}
 	public boolean deleteCondEvent(int ceid) {
 		mDbHelper.open();
