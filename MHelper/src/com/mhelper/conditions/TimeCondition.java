@@ -8,11 +8,11 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
 public class TimeCondition {
-	private String title;
-	private String description;
-	private Calendar startTime;
-	private Calendar finishTime;
-	private boolean point;
+	private String title = "";
+	private String description = "";
+	private Calendar startTime = Calendar.getInstance();
+	private Calendar finishTime = Calendar.getInstance();
+	private boolean point = true;
 	private int id = 0;
 	private long condEventld=0;
 	
@@ -62,7 +62,7 @@ public class TimeCondition {
 	public String getTitle() {
 		return title;
 	}
-	
-	
-
+	public String toString(){
+		return null;
+	}
 }
