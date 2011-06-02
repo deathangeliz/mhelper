@@ -20,7 +20,7 @@ public class MDBHelperAdapter {
 	public static final String KEY_POINT="point";
 	public static final String KEY_CONDEVENTID="condeventid";
 	public static final String KEY_CDID="cdid"; 
-	public static final String KEY_DETAILSORT="detailsort";
+	public static final String KEY_DETAILEVENTSORT="detaileventsort";
 	private static DatabaseHelper mDbHelper;
 	private static SQLiteDatabase mDb;
 	
@@ -50,7 +50,7 @@ public class MDBHelperAdapter {
 		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid)"
 		+ ");";
 	private static final String DATABASE_CREATE5 = "create table detailevent (condeventid INTEGER primary key, "
-		+ "detailsort integer not null,"
+		+ "detaileventsort integer not null,"
 		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid));";
 	private static class DatabaseHelper extends SQLiteOpenHelper {
 		DatabaseHelper(Context context) {
