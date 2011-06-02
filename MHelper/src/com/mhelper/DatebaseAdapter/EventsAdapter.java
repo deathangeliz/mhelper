@@ -13,12 +13,12 @@ public class EventsAdapter {
 		mDbHelper=new MDBHelperAdapter(ctx);
 	}
 	
-	public long insertEvent(String edesc)
+	public int insertEvent(String edesc)
 	{
 		ContentValues initialValues = new ContentValues();
 		initialValues.put(MDBHelperAdapter.KEY_EDESC, edesc);
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE2, null, initialValues);
+		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE2, null, initialValues);
 	}
 	public boolean deleteEvent(int et) {
 		mDbHelper.open();
