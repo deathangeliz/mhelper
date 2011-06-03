@@ -1,6 +1,9 @@
 package com.mhelper.ui;
 
 import java.util.Calendar;
+
+import com.mhelper.middle.MHelperStrings;
+
 import android.widget.ExpandableListView.OnGroupClickListener;
 
 import android.R.integer;
@@ -53,41 +56,75 @@ public class NewCondSettings extends ExpandableListActivity {
 		
 		//set data
         if (mode == MODE_NEW) {
+        	//initiate alarm params
         	final Calendar c = Calendar.getInstance();
     	    condAlramYear = c.get(Calendar.YEAR);
     	    condAlarmMonth = c.get(Calendar.MONTH);
     	    condAlarmDay = c.get(Calendar.DAY_OF_MONTH);
     	    condAlarmHour = c.get(Calendar.HOUR_OF_DAY);
     	    condAlramMinute = c.get(Calendar.MINUTE);
+    	    //initiate calendar params
     	    
+    	    //initiate message params
     	    typeToMessage = 0;
         } else if (mode == MODE_EDIT) {
-			cType = prefs.getInt("cType", -1);
+        	//get ctype
+			cType = prefs.getInt(MHelperStrings.UI_COND_TYPE, 0);
 			if (cType == 0) {
-				/*condAlramYear = extras.getInt("year");
-				condAlarmMonth = extras.getInt("month");
-				condAlarmDay = extras.getInt("day");
-				condAlarmHour = extras.getInt("hour");
-				condAlramMinute = extras.getInt("minute");*/
-				condAlramYear = prefs.getInt("condAlramYear", 2011);
-				condAlarmMonth = prefs.getInt("condAlarmMonth", 1);
-				condAlarmDay = prefs.getInt("condAlarmDay", 1);
-				condAlarmHour = prefs.getInt("condAlarmHour", 0);
-				condAlramMinute = prefs.getInt("condAlramMinute", 0);
+				//get alarm params
+				condAlramYear = prefs.getInt(MHelperStrings.UI_START_YEAR, 2011);
+				condAlarmMonth = prefs.getInt(MHelperStrings.UI_START_MONTH, 1);
+				condAlarmDay = prefs.getInt(MHelperStrings.UI_START_DAY, 1);
+				condAlarmHour = prefs.getInt(MHelperStrings.UI_START_HOUR, 0);
+				condAlramMinute = prefs.getInt(MHelperStrings.UI_START_MINUTE, 0);
 			}
 			else if (cType == 1){
-				
+				//get calendar params
 			}
 			else if (cType == 2) {
-				//typeToMessage = extras.getInt("typeToMessage");
-				typeToMessage = prefs.getInt("typeToMessage", 0);
+				//get message params
+				typeToMessage = prefs.getInt(MHelperStrings.UI_MESSAGE_TYPE, 0);
 			}
 		} else 
 			finish();
 
         // Set up our adapter
-        condAdapter = new NewCondExpandableListAdapter(NewCondSettings.this);
+        if (condAdapter == null || !(condAdapter instanceof NewCondExpandableListAdapter))
+            condAdapter = new NewCondExpandableListAdapter(NewCondSettings.this);
         setListAdapter(condAdapter);
+        getExpandableListView().setOnGroupClickListener(
+    			new ExpandableListView.OnGroupClickListener() {
+					
+					@Override
+					public boolean onGroupClick(ExpandableListView parent, View v,
+							int groupPosition, long id) {
+						// TODO Auto-generated method stub
+						cType = groupPosition;
+						Editor editor = prefs.edit();
+						editor.putInt(MHelperStrings.UI_COND_TYPE, cType);
+						editor.commit();
+						for (int i = 0; i < 3; i++) {
+							if (i == groupPosition) {
+								if (parent.isGroupExpanded(groupPosition))
+									parent.collapseGroup(groupPosition);
+								else {
+									parent.expandGroup(groupPosition);
+								}
+							}
+							else {
+								parent.collapseGroup(i);
+							}
+						}
+						
+						return true;
+					}
+				});
+    }
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+        // set up ui
         if (mode == MODE_NEW) {
         	NewAlarmChildView alramView = (NewAlarmChildView)condAdapter.getChildView(0, 0, 
         			false, null, null);
@@ -111,26 +148,6 @@ public class NewCondSettings extends ExpandableListActivity {
         	else {
         		messageView.setSelectedMessageType(typeToMessage);
         	}
-        	
-        	getExpandableListView().setOnGroupClickListener(
-        			new ExpandableListView.OnGroupClickListener() {
-						
-						@Override
-						public boolean onGroupClick(ExpandableListView parent, View v,
-								int groupPosition, long id) {
-							// TODO Auto-generated method stub
-							cType = groupPosition;
-							Editor editor = prefs.edit();
-							editor.putInt("cType", cType);
-							editor.commit();
-							if (parent.isGroupExpanded(groupPosition))
-								parent.collapseGroup(groupPosition);
-							else {
-								parent.expandGroup(groupPosition);
-							}
-							return true;
-						}
-					});
         } else if (mode == MODE_EDIT){
 			if (cType == 0) {
 				NewAlarmChildView alramView = (NewAlarmChildView)condAdapter.getChildView(0, 0, 
@@ -147,8 +164,6 @@ public class NewCondSettings extends ExpandableListActivity {
 	    				timeStr = timeStr + condAlramMinute;
 	    			alramView.setAlarmTime(timeStr);
 	        	}    
-	        	
-	        	
 			} else if (cType == 1){
 				
 			} else if (cType == 2) {
@@ -160,11 +175,13 @@ public class NewCondSettings extends ExpandableListActivity {
 	        		messageView.setSelectedMessageType(typeToMessage);
 	        	}
 			}
+			getExpandableListView().expandGroup(cType);
 			//set other group cannot collapse
 		} else {
 			finish();
 		}
-    }
+        setListAdapter(condAdapter);
+	}
 	
 	public void expandOneGroupAndCollapseOthers(int group) {
 		ExpandableListView view = getExpandableListView();

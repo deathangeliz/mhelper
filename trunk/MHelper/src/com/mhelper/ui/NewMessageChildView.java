@@ -25,7 +25,7 @@ public class NewMessageChildView extends LinearLayout {
 		context = _context;
 		// TODO Auto-generated constructor stub
 		String infService = Context.LAYOUT_INFLATER_SERVICE;
-		LayoutInflater li;
+   		LayoutInflater li;
 		li = (LayoutInflater)getContext().getSystemService(infService);
 		li.inflate(R.layout.new_message_child, this, true);
 		

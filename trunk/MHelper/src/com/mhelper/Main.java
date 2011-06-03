@@ -32,7 +32,7 @@ public class Main extends Activity {
        DCA.recreateCondictions();
        CA.recreateConditions();
        EA.recreateEvents();
-       DEA.recreateEvents();
+       DEA.recreateDetailEvent();
        CEA.recreateCondEvent();
        
        CA.insertCondition("在三点五十分");

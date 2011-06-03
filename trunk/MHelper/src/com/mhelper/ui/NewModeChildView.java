@@ -1,6 +1,7 @@
 package com.mhelper.ui;
 
 import com.mhelper.R;
+import com.mhelper.middle.MHelperStrings;
 
 import android.content.Context;
 import android.content.SharedPreferences.Editor;
@@ -42,18 +43,22 @@ public class NewModeChildView extends LinearLayout {
 					public void onItemSelected(
 	                        AdapterView<?> parent, View view, int position, long id) {
 	                	modeType = position;
+	                	((NewEventSettings)context).notificationType = modeType + 1;
 	                	Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
-	                	editor.putInt("eType", modeType + 1);
+	                	//editor.putInt("eType", modeType + 1);
+	                	editor.putInt(MHelperStrings.UI_EVENT_TYPE, modeType + 1);
 	                	editor.commit();
 	                }
 
 	                @Override
 					public void onNothingSelected(AdapterView<?> parent) {
 	                	modeType = 0;
+	                	((NewEventSettings)context).notificationType = modeType + 1;
 	                	Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
-	                	editor.putInt("eType", modeType + 1);
+	                	//editor.putInt("eType", modeType + 1);
+	                	editor.putInt(MHelperStrings.UI_NOTIFICATION_TYPE, modeType + 1);
 	                	editor.commit();
 	                }
 	            });
