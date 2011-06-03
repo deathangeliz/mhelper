@@ -2,19 +2,25 @@ package com.mhelper.DatebaseAdapter;
 
 import java.util.ArrayList;
 
+import android.R.bool;
 import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
+import android.os.Bundle;
 
 public class CondEventAdapter {
 	private static MDBHelperAdapter mDbHelper;
 	private DetailCondAdapter DCHelper;
+	private NotificationEventAdapter NEHelper;
+	private WallpaperEventAdapter WEHelper;
 	public CondEventAdapter(Context ctx)
 	{
 		mDbHelper=new MDBHelperAdapter(ctx);
 		DCHelper=new DetailCondAdapter(ctx);
+		NEHelper=new NotificationEventAdapter(ctx);
+		WEHelper=new WallpaperEventAdapter(ctx);
 	}
 	
 	public int insertCondEvent(int condtype,int eventtype)
@@ -141,5 +147,31 @@ public class CondEventAdapter {
 			CECursor.moveToNext();
 		}
 		return lst;
+	}
+	public int createCondEvent(int cType,int eType,Bundle params)
+	{
+		int ceid;
+		int nfct;
+		String nfmessage;
+		String uri;
+		ceid=insertCondEvent(cType,eType);
+		if(eType==4)//this is a NotificationEvent
+		{
+			nfct=params.getInt(MDBHelperAdapter.KEY_NOTIFICATIONTYPE);
+			nfmessage=params.getString(MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE);
+			NEHelper.insertNotificationEvent(ceid, nfct, nfmessage);
+		}
+		else if(eType==5)//this is a WallpaperEvent
+		{
+			uri=params.getString(MDBHelperAdapter.KEY_WALLPAPERURI);
+			WEHelper.insertWallpaperEvent(ceid, uri);
+		}
+		return ceid;
+	}
+	public boolean removeCondEvent(int ceid)
+	{
+		
+		return deleteCondEvent(ceid) && (NEHelper.deleteNotificationEvent(ceid) || WEHelper.deleteWallpaperEvent(ceid));
+		
 	}
 }
