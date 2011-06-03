@@ -1,6 +1,7 @@
 package com.mhelper.ui;
 
 import com.mhelper.R;
+import com.mhelper.middle.MHelperStrings;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -46,7 +47,8 @@ public class NewNotificationSelectChildView extends LinearLayout {
                     	((NewEventSettings)context).notificationType = selectedType;
                     	Editor editor = PreferenceManager.getDefaultSharedPreferences(
                     			context.getApplicationContext()).edit();
-                    	editor.putInt("notificationType", selectedType);
+                    	//editor.putInt("notificationType", selectedType);
+                    	editor.putInt(MHelperStrings.UI_NOTIFICATION_TYPE, selectedType);
                     	editor.commit();
                     }
 
@@ -56,7 +58,8 @@ public class NewNotificationSelectChildView extends LinearLayout {
                     	((NewEventSettings)context).notificationType = selectedType;
                     	Editor editor = PreferenceManager.getDefaultSharedPreferences(
                     			context.getApplicationContext()).edit();
-                    	editor.putInt("notificationType", selectedType);
+                    	//ditor.putInt("notificationType", selectedType);
+                    	editor.putInt(MHelperStrings.UI_NOTIFICATION_TYPE, selectedType);
                     	editor.commit();
                     }
                 });

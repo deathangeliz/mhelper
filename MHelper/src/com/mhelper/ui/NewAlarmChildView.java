@@ -1,6 +1,7 @@
 package com.mhelper.ui;
 
 import com.mhelper.R;
+import com.mhelper.middle.MHelperStrings;
 
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -58,9 +59,12 @@ public class NewAlarmChildView extends LinearLayout {
 						newCondSettings.condAlarmDay = arg3;
 						Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
-						editor.putInt("condAlarmDay", newCondSettings.condAlarmDay);
+						/*editor.putInt("condAlarmDay", newCondSettings.condAlarmDay);
 						editor.putInt("condAlarmMonth", newCondSettings.condAlarmMonth);
-						editor.putInt("condAlarmDay", newCondSettings.condAlarmDay);
+						editor.putInt("condAlarmDay", newCondSettings.condAlarmDay);*/
+						editor.putInt(MHelperStrings.UI_START_DAY, newCondSettings.condAlarmDay);
+						editor.putInt(MHelperStrings.UI_START_MONTH, newCondSettings.condAlarmMonth);
+						editor.putInt(MHelperStrings.UI_START_YEAR, newCondSettings.condAlramYear);
 						editor.commit();
 						String dateStr = arg1 + "/" + (arg2+1) + "/" + arg3;
 						setAlarmDate(dateStr);
@@ -84,8 +88,10 @@ public class NewAlarmChildView extends LinearLayout {
 						newCondSettings.condAlramMinute = arg2;
 						Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
-						editor.putInt("condAlarmHour", newCondSettings.condAlarmHour);
-						editor.putInt("condAlramMinute", newCondSettings.condAlramMinute);
+						/*editor.putInt("condAlarmHour", newCondSettings.condAlarmHour);
+						editor.putInt("condAlramMinute", newCondSettings.condAlramMinute);*/
+						editor.putInt(MHelperStrings.UI_START_HOUR, newCondSettings.condAlarmHour);
+						editor.putInt(MHelperStrings.UI_START_MINUTE, newCondSettings.condAlramMinute);
 						editor.commit();
 						String timeStr = arg1 + ":";
 						if(arg2 < 10){

@@ -133,8 +133,11 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 			View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
 		if (convertView != null) {
-			if (convertView instanceof HomeGroupView)
+			if (convertView instanceof HomeGroupView) {
+				((HomeGroupView)convertView).setHomeText((String)getGroup(groupPosition));
+				((HomeGroupView)convertView).setDeleteListener(groupPosition);
 				return convertView;
+			}
 			else {
 				////In this we should throw exception, but now just return null.
 				return null;
@@ -142,8 +145,6 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 		}
 		synchronized (groupLock) {
 			HomeGroupView view = new HomeGroupView(context);
-			view.setHomeText((String)getGroup(groupPosition));
-			view.setDeleteListener(groupPosition);
 			return view;
 		}	
 	}

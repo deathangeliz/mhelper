@@ -11,7 +11,7 @@ import android.widget.TextView;
 
 public class HomeChildView extends LinearLayout {
 	TextView homeChildText;
-	ImageView homeChildImage;
+	ImageView homeChildDelete;
 	Context ctx;
 	
 	public HomeChildView(Context context) {
@@ -24,15 +24,16 @@ public class HomeChildView extends LinearLayout {
 		li.inflate(R.layout.home_child, this, true);
 		
 		homeChildText = (TextView)findViewById(R.id.homeChildText);
-		homeChildImage = (ImageView)findViewById(R.id.homeChildImage);
+		homeChildDelete = (ImageView)findViewById(R.id.homeChildImage);
 		
-		homeChildImage.setOnClickListener(new OnClickListener() {
+		homeChildDelete.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				
-			}
+				Home home = (Home)ctx;
+				home.toEditCondEvent(home.selectedGroup);
+				}
 		});
 	}
 	
@@ -41,7 +42,7 @@ public class HomeChildView extends LinearLayout {
 	}
 
 	public void setEditListenner(final int groupPosition) {
-		homeChildImage.setOnClickListener(new OnClickListener() {
+		homeChildDelete.setOnClickListener(new OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
