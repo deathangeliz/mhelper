@@ -33,7 +33,7 @@ public class MDBHelperAdapter {
 	public static final String DATABASE_TABLE3 = "cond_event";
 	public static final String DATABASE_TABLE4 = "detailcond";	
 	public static final String DATABASE_TABLE5 = "detailevent";	
-	public static final String DATABASE_TABLE6 = "noficationevent";	
+	public static final String DATABASE_TABLE6 = "notificationevent";	
 	public static final String DATABASE_TABLE7 = "wallpaperevent";
 	public static final int DATABASE_VERSION = 1;
 	private final Context mCtx;
@@ -56,7 +56,7 @@ public class MDBHelperAdapter {
 	private static final String DATABASE_CREATE5 = "create table detailevent (condeventid INTEGER primary key, "
 		+ "detaileventsort integer not null,"
 		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid));";
-	private static final String DATABASE_CREATE6 = "create table noficationevent (condeventid INTEGER primary key, "
+	private static final String DATABASE_CREATE6 = "create table notificationevent (condeventid INTEGER primary key, "
 		+ "noficationtype integer not null,"
 		+"noficationmessage test not null, "
 		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid));";
@@ -118,7 +118,7 @@ public class MDBHelperAdapter {
 		else if(i==5)
 		{table="detailevent";database_create=DATABASE_CREATE5;}
 		else if(i==6)
-		{table="noficationevent";database_create=DATABASE_CREATE6;}
+		{table="notificationevent";database_create=DATABASE_CREATE6;}
 		else if(i==7)
 		{table="wallpaperevent";database_create=DATABASE_CREATE7;}
 		try {
