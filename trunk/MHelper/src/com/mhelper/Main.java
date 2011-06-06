@@ -1,5 +1,7 @@
 package com.mhelper;
 
+import java.util.ArrayList;
+
 import com.mhelper.DatebaseAdapter.*;
 
 import android.app.Activity;
@@ -40,9 +42,11 @@ public class Main extends Activity {
        CEA.insertCondEvent(1, 1);
        DCA.insertDetailCondition("关机", "关机描述", "开始时间", "结束时间", 1,1);
        DEA.insertDetailEvent(1, 0);
-       TextCursor=DEA.getDetailEvent(1);
+       //TextCursor=DEA.getDetailEvent(1);
+       ArrayList<String> lst=new ArrayList();
+       lst=CEA.getGroupData();
        TextView tv =(TextView)findViewById(R.id.CAtextview);
-       tv.setText(TextCursor.getString(1));
+       tv.setText(lst.get(1));
        
       
    }
