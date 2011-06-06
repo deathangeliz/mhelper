@@ -1,5 +1,6 @@
 package com.mhelper.DatebaseAdapter;
 
+import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -23,12 +24,16 @@ public class DetailCondAdapter {
 		initialValues.put(MDBHelperAdapter.KEY_POINT, point);
 		initialValues.put(MDBHelperAdapter.KEY_CONDEVENTID, condEventid);
 		mDbHelper.open();
-		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE4, null, initialValues);
+		int i = (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE4, null, initialValues);
+		mDbHelper.closeclose();
+		return i;
 	}
 	
 	public boolean deleteCondition(int ceID) {
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().delete(MDBHelperAdapter.DATABASE_TABLE4, MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceID, null) > 0;
+		boolean b = MDBHelperAdapter.getDBHelper().delete(MDBHelperAdapter.DATABASE_TABLE4, MDBHelperAdapter.KEY_CONDEVENTID + "=" + ceID, null) > 0;
+		mDbHelper.closeclose();
+		return b;
 	}
 
 	public Cursor getDetailCondition(int ceID) throws SQLException {
@@ -40,13 +45,16 @@ public class DetailCondAdapter {
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
+		mDbHelper.closeclose();
 		return mCursor;
 	}
 
 	public Cursor getAllDetailCondition() {
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_CONDEVENTID,MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT}, 
+		Cursor cursor = MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_CONDEVENTID,MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT}, 
 				null, null, null, null, null);
+		mDbHelper.closeclose();
+		return cursor;
 	}
 	
 	public boolean updateDetailCondition(String title, String description, String startTime, String finishTime,int point,int condEventid) {
@@ -58,15 +66,19 @@ public class DetailCondAdapter {
 		args.put(MDBHelperAdapter.KEY_FINISHTIME, finishTime);
 		args.put(MDBHelperAdapter.KEY_POINT, point);
 		args.put(MDBHelperAdapter.KEY_CONDEVENTID, condEventid);
-		return MDBHelperAdapter.getDBHelper().update(MDBHelperAdapter.DATABASE_TABLE4, args, MDBHelperAdapter.KEY_CONDEVENTID + "=" + condEventid, null) > 0;
+		boolean b = MDBHelperAdapter.getDBHelper().update(MDBHelperAdapter.DATABASE_TABLE4, args, MDBHelperAdapter.KEY_CONDEVENTID + "=" + condEventid, null) > 0;
+		mDbHelper.closeclose();
+		return b;
 	}
 	public void dropConditions(){
 		mDbHelper.open();
 		mDbHelper.dropTable(MDBHelperAdapter.DATABASE_TABLE4);
+		mDbHelper.closeclose();
 	}
 	public void recreateCondictions()
 	{
 		mDbHelper.open();
 		mDbHelper.recreateTable(4);
+		mDbHelper.closeclose();
 	}
 }

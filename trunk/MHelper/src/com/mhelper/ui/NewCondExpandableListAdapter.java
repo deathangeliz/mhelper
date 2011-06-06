@@ -41,29 +41,9 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		/*if (convertView != null) {
-			if (groupPosition == 0) {
-				if (convertView instanceof NewAlarmChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-			else if (groupPosition == 1) {
-				if (convertView instanceof NewGCalendarChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-			else if (groupPosition == 2) {
-				if (convertView instanceof NewMessageChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-		}*/	
+		if (convertView != null) 
+			convertView = null;
+
 		if (groupPosition == 0) {
 			View view = new NewAlarmChildView(context, childPosition);
 			return view;
@@ -108,15 +88,28 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		/*if (convertView != null){
+		if (convertView != null){
 			if (convertView instanceof NewGroupView) {
 				((NewGroupView)convertView).setGroupText(group[groupPosition]);
+				switch (groupPosition) {
+				case 0:
+					((NewGroupView)convertView).setGroupImage(context.getResources().getDrawable(R.drawable.alarm));
+					break;
+				case 1:
+					((NewGroupView)convertView).setGroupImage(context.getResources().getDrawable(R.drawable.calendar));
+					break;
+				case 2:
+					((NewGroupView)convertView).setGroupImage(context.getResources().getDrawable(R.drawable.messages));
+					break;
+				default:
+					break;
+				}
 				return convertView;
 			}
 			else 
 				//In this we should throw exception, but now just return null.
 			    return null;
-		}*/
+		}
 		
 		NewGroupView ngv = new NewGroupView(context);
 		ngv.setGroupText(group[groupPosition]);

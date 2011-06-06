@@ -43,50 +43,9 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getChildView(int groupPosition, int childPosition,
 			boolean isLastChild, View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		/*if (convertView != null) {
-			if (groupPosition == 0) {
-				if (convertView instanceof NewShutdownChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-			else if (groupPosition == 1) {
-				if (convertView instanceof NewSlientChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-			else if (groupPosition == 2) {
-				if (convertView instanceof NewVibrationChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-			else if (groupPosition == 3) {
-				if (convertView instanceof NewAirmodeChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-			else if (groupPosition == 4) {
-				if (convertView instanceof NewNotificationSelectChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-			else if (groupPosition == 5) {
-				if (convertView instanceof NewWallpaperChildView)
-					return convertView;
-				else 
-					//In this we should throw exception, but now just return null.
-					return null;
-			}
-		}	*/
+		if (convertView != null) 
+			convertView = null;
+
 		if (groupPosition == 0) {
 			View view = new NewShutdownChildView(context);
 			return view;
@@ -140,13 +99,29 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 	public View getGroupView(int groupPosition, boolean isExpanded,
 			View convertView, ViewGroup parent) {
 		// TODO Auto-generated method stub
-		/*if (convertView != null){
-			if (convertView instanceof NewGroupView)
+		if (convertView != null){
+			if (convertView instanceof NewGroupView) {
+				((NewGroupView)convertView).setGroupText(group[groupPosition]);
+				switch (groupPosition) {
+			    case 0:
+			    	((NewGroupView)convertView).setGroupImage(context.getResources().getDrawable(R.drawable.shut));
+			    	break;
+			    case 1:
+			    	((NewGroupView)convertView).setGroupImage(context.getResources().getDrawable(R.drawable.mode));
+			    	break;
+			    case 2:
+			    	((NewGroupView)convertView).setGroupImage(context.getResources().getDrawable(R.drawable.talk));
+			    	break;
+			    case 3:
+			    	((NewGroupView)convertView).setGroupImage(context.getResources().getDrawable(R.drawable.gallery));
+			    	break;
+			}
 				return convertView;
+			}		
 			else 
 				//In this we should throw exception, but now just return null.
 			    return null;
-		}*/
+		}
 		
 		NewGroupView ngv = new NewGroupView(context);
 		ngv.setGroupText(group[groupPosition]);

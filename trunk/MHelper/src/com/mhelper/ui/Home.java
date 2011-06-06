@@ -9,6 +9,7 @@ import com.mhelper.DatebaseAdapter.DetailCondAdapter;
 import com.mhelper.DatebaseAdapter.DetailEventAdapter;
 import com.mhelper.DatebaseAdapter.EventsAdapter;
 import com.mhelper.DatebaseAdapter.MDBHelperAdapter;
+import com.mhelper.DatebaseAdapter.TimeDetailCondAdapter;
 import com.mhelper.conditions.TimeCondition;
 import com.mhelper.events.ChangeWallpaperEvent;
 import com.mhelper.middle.AlarmSetHelper;
@@ -95,13 +96,36 @@ public class Home extends ExpandableListActivity {
 	
 	public int selectedGroup;
 	
+	private CondEventAdapter condEventAdapter;
+	private TimeDetailCondAdapter timeDetailCondAdapter;
+	//-------------debug-------------------
+	private ConditionsAdapter CA;
+	private DetailCondAdapter DCA;
+	private EventsAdapter EA;
+	private DetailEventAdapter DEA;
+	//--------------------------------
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         Drawable drawable = getResources().getDrawable(R.drawable.background);
         getExpandableListView().setBackgroundDrawable(drawable);
-
+        //initiate database adapter
+        condEventAdapter = new CondEventAdapter(getApplicationContext());
+        timeDetailCondAdapter = new TimeDetailCondAdapter(getApplicationContext());
+        //-----------------debug----------------
+        CA=new ConditionsAdapter(this);
+        DCA=new DetailCondAdapter(this);
+        EA=new EventsAdapter(this);
+        DEA=new DetailEventAdapter(this);
+        
+        DCA.recreateCondictions();
+        CA.recreateConditions();
+        EA.recreateEvents();
+        DEA.recreateDetailEvent();
+        condEventAdapter.recreateCondEvent();
+        //---------------------------------------
+        
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         // Set up our adapter
         /*mCEAHelper = new CondEventAdapter(Home.this);
@@ -111,7 +135,9 @@ public class Home extends ExpandableListActivity {
         mDEAHelper = new DetailEventAdapter(this);*/
         
         adapter = new HomeExpandableListAdapter(Home.this);
-        getOrRefreshData();
+        groupContent = new ArrayList<String>();
+        childrenContent = new ArrayList<ArrayList<String>>();
+        condEventId = new ArrayList<Integer>();
         setListAdapter(adapter);
         getExpandableListView().setOnGroupClickListener(new OnGroupClickListener() {
 			
@@ -155,9 +181,9 @@ public class Home extends ExpandableListActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		getOrRefreshData();
-		setListAdapter(adapter);
-		adapter.notifyDataSetChanged();
+		//getOrRefreshData();
+		//setListAdapter(adapter);
+		//adapter.notifyDataSetChanged();
 	}
 	
 	@Override
@@ -206,11 +232,14 @@ public class Home extends ExpandableListActivity {
 		int cType = prefs.getInt(MHelperStrings.UI_COND_TYPE, -1);
 		int eType = prefs.getInt(MHelperStrings.UI_EVENT_TYPE, -1);
 	    switch (cType) {
-		case 0:
+		case 0: {
+			int ceid;
+			Bundle params = new Bundle();
 			if (eType == 0) {
 				
 			} else if (eType > 0 && eType < 4) {
-				int ceid = condEventId.size();
+				/*int ceid = condEventId.size();
+				//int _ceid = 
 				condEventId.add(ceid);
 				int id = ids.size();
 				ids.add(id);
@@ -239,14 +268,34 @@ public class Home extends ExpandableListActivity {
 				                   + "\n" + "Change mode: " + modeStr;
 				ArrayList<String> addStrings = new ArrayList<String>();
 				addStrings.add(childrenStr);
-				childrenContent.add(addStrings);
+				childrenContent.add(addStrings);*/
 			} else if (eType == 4) {
-				
+				int nt = prefs.getInt(MHelperStrings.UI_NOTIFICATION_TYPE, -1);
+				if (nt == -1)
+					Log.i("Home.createCondEvent()", "NOTIFICATION_TYPE=-1");
+				params.putInt(MDBHelperAdapter.KEY_NOTIFICATIONTYPE, 
+						nt);
+				params.putString(MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE, 
+						prefs.getString(MHelperStrings.UI_NOTIFICATION_CONTENT, ""));
 			} else if (eType == 5) {
-				
+				params.putString(MDBHelperAdapter.KEY_WALLPAPERURI, 
+						MHelperStrings.UI_WALLPAPER_URI);
 			}
+			ceid = condEventAdapter.createCondEvent(cType, eType, params);	
+			//deliver ceid and time params to time cond and start
+			Calendar startTime = getSettingStartTime();
+			TimeCondition tc = setTimeCondition(ceid, startTime, Calendar.getInstance(), false);
+			AlarmSetHelper ash = new AlarmSetHelper(this);
+			ash.addToAlarm(tc, true, false);
+			timeDetailCondAdapter.open(getApplicationContext());
+			timeDetailCondAdapter.insertTimeCond(tc);	
+			timeDetailCondAdapter.close();
+		}
 			break;
-
+		case 1:
+			break;
+		case 2:
+			break;
 		default:
 			break;
 		}
@@ -303,9 +352,9 @@ public class Home extends ExpandableListActivity {
 		groupContent = getGroupContent();
         childrenContent = getChildrenContent();
         condEventId = getCondEventId();
-        ids = getIds();
+        /*ids = getIds();
         if (ids == null)
-        	ids = new ArrayList<Integer>();
+        	ids = new ArrayList<Integer>();*/
         adapter.setGroupContent(groupContent);
         adapter.setChildrenContent(childrenContent);
         adapter.setCondEventID(condEventId);
@@ -318,9 +367,14 @@ public class Home extends ExpandableListActivity {
 	public void toDeleteCondEvent(final int groupPosition) {
 		//invoke database method to delete
 		//    the cond-event which id is condEventId.get(groupPosition)
-		groupContent.remove(groupPosition);
+		/*groupContent.remove(groupPosition);
 		childrenContent.remove(groupPosition);
-		condEventId.remove(groupPosition);
+		condEventId.remove(groupPosition);*/
+		int ceid = condEventId.get(groupPosition);
+		condEventAdapter.deleteCondEvent(ceid);
+		AlarmSetHelper ash = new AlarmSetHelper(this);
+		ash.cancelAlarm(ceid, true, false);
+		timeDetailCondAdapter.removeTimeCond(ceid);
 		getOrRefreshData();
 		setListAdapter(adapter);
 		adapter.notifyDataSetChanged();
@@ -346,40 +400,17 @@ public class Home extends ExpandableListActivity {
 	
 	public ArrayList<String> getGroupContent() {
 		//invoke database method
-		if (groupContent == null)
-			groupContent = new ArrayList<String>();
-		/*mCEACursor = mCEAHelper.getAllCondEvent();
-		mCEACursor.moveToFirst();
-		while(mCEACursor.isAfterLast()==false)
-		{
-			AL.add(mCEACursor.getString(2));
-		}*/
-		return groupContent;
+		return condEventAdapter.getGroupData();
 	}
 	
 	public ArrayList<ArrayList<String>> getChildrenContent() {
 		//invoke database method
-		if (childrenContent == null)
-			childrenContent = new ArrayList<ArrayList<String>>();
-		/*mDCACursor =mDCAHelper.getAllDetailCondition();
-		while(mCEACursor.isAfterLast()==false)
-		{
-			AL.add(mCEACursor.getString(1));
-		}*/
-		return childrenContent;
+		return condEventAdapter.getChildrenData();
 	}
 	
 	public ArrayList<Integer> getCondEventId() {
 		//invoke database method
-		if (condEventId == null)
-			condEventId = new ArrayList<Integer>();
-		/*mCEACursor = mCEAHelper.getAllCondEvent();
-		mCEACursor.moveToFirst();
-		while(mCEACursor.isAfterLast()==false)
-		{
-			AL.add((int)mCEACursor.getShort(2));
-		}*/
-		return condEventId;
+		return condEventAdapter.getCondEventId();
 	}
 	
 	public ArrayList<Integer> getIds() {
@@ -444,5 +475,13 @@ public class Home extends ExpandableListActivity {
 		
 	}
 	
-	///////
+	public TimeCondition setTimeCondition(long condEventId, Calendar startTime, 
+			Calendar endTime, Boolean shouldEnd) {
+		TimeCondition tc = new TimeCondition();
+		tc.setStartTime(startTime);
+		tc.setFinishTime(endTime);
+		tc.setPoint(!shouldEnd);
+		tc.setCondEventld(condEventId);
+		return tc;
+	}
 }

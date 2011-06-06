@@ -46,7 +46,7 @@ public class Main extends Activity {
        ArrayList<String> lst=new ArrayList();
        lst=CEA.getGroupData();
        TextView tv =(TextView)findViewById(R.id.CAtextview);
-       tv.setText(lst.get(1));
+       tv.setText(lst.get(0));
        
       
    }

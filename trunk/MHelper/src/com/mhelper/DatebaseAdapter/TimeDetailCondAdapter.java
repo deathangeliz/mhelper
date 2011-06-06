@@ -48,7 +48,7 @@ public class TimeDetailCondAdapter {
 	private SQLiteDatabase db = null;
 	private myDBHelper dbHelper = null;
 	
-	private TimeDetailCondAdapter(Context context){
+	public TimeDetailCondAdapter(Context context){
 		this.context = context;
 		dbHelper = new myDBHelper(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}
