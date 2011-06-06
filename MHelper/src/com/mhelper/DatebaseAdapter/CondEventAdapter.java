@@ -77,24 +77,26 @@ public class CondEventAdapter {
 		String groupData;
 		String EventName=new String();
 		
-		CECursor= getAllCondEvent();
+		CECursor= this.getAllCondEvent();
+		CECursor.moveToFirst();
 		
-		while(CECursor.moveToLast()==true)
+		for(int i=0;i<CECursor.getCount();i++)
 		{
 			DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
 			
 			switch(Integer.valueOf(CECursor.getString(2))){
 			case 0:
-				EventName="shutdown";
+				EventName="Shutdown";
 				break;
 			case 1:
 				EventName="Silent mode";
 				break;
 			//TODO 其他类型的ETYPE
 			default:
+				EventName="其他类型的ETYPE";
 				break;
 			}
-			groupData=DCCursor.getString(0)+EventName+CECursor.getString(0);//条件名＋事件名＋编号
+			groupData=DCCursor.getString(1)+" "+EventName+" "+CECursor.getString(0);//条件名＋事件名＋编号
 			
 			lst.add(groupData);
 			CECursor.moveToNext();
@@ -110,24 +112,26 @@ public class CondEventAdapter {
 		Cursor CECursor;
 		String EventName=new String();
 		CECursor= getAllCondEvent();
+		CECursor.moveToFirst();
 		
-		while(CECursor.moveToLast()==true)
+		for(int i=0;i<CECursor.getCount();i++)
 		{
 			DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
 			
 			switch(Integer.valueOf(CECursor.getString(2))){
 			case 0:
-				EventName="shutdown";
+				EventName="Shutdown";
 				break;
 			case 1:
 				EventName="Silent mode";
 				break;
 			//TODO 其他类型的ETYPE
 			default:
+				EventName="其他类型的ETYPE";
 				break;
 			}
 			lstc.clear();
-			lstc.add(DCCursor.getString(2)+DCCursor.getString(3)+EventName);//开始时间＋结束时间＋事件名称
+			lstc.add(DCCursor.getString(2)+" "+DCCursor.getString(3)+" "+EventName);//开始时间＋结束时间＋事件名称
 			
 			lst.add(lstc);
 			

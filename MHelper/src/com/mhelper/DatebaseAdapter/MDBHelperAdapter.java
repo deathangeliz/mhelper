@@ -30,7 +30,7 @@ public class MDBHelperAdapter {
 	public static final String DATABASE_NAME = "MDB";
 	public static final String DATABASE_TABLE1 = "conditions";
 	public static final String DATABASE_TABLE2 = "events";
-	public static final String DATABASE_TABLE3 = "cond_event";
+	public static final String DATABASE_TABLE3 = "condevent";
 	public static final String DATABASE_TABLE4 = "detailcond";	
 	public static final String DATABASE_TABLE5 = "detailevent";	
 	public static final String DATABASE_TABLE6 = "notificationevent";	
