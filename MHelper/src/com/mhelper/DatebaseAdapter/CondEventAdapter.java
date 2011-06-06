@@ -29,16 +29,24 @@ public class CondEventAdapter {
 		initialValues.put(MDBHelperAdapter.KEY_CONDTYPE, condtype);
 		initialValues.put(MDBHelperAdapter.KEY_EVENTTYPE, eventtype);
 		mDbHelper.open();
-		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE3, null, initialValues);
+		int i = (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE3, null, initialValues);
+		mDbHelper.closeclose();
+		return i;
 	}
 	public boolean deleteCondEvent(int ceid) {
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().delete(MDBHelperAdapter.DATABASE_TABLE3, MDBHelperAdapter.KEY_CEID + "=" + ceid, null) > 0;
+		boolean b = MDBHelperAdapter.getDBHelper().delete(MDBHelperAdapter.DATABASE_TABLE3, MDBHelperAdapter.KEY_CEID + "=" + ceid, null) > 0;
+		mDbHelper.closeclose();
+		return b;
 	}
 	public Cursor getAllCondEvent() {
 		mDbHelper.open();
-		return MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE3, new String[] { MDBHelperAdapter.KEY_CEID,MDBHelperAdapter.KEY_CONDTYPE, MDBHelperAdapter.KEY_EVENTTYPE
-		}, null, null, null, null, null);
+		//Cursor cursor = MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE3, new String[] { MDBHelperAdapter.KEY_CEID,MDBHelperAdapter.KEY_CONDTYPE, MDBHelperAdapter.KEY_EVENTTYPE
+		//}, null, null, null, null, null);
+		Cursor cursor = MDBHelperAdapter.getDBHelper().query(MDBHelperAdapter.DATABASE_TABLE3, 
+				null, null, null, null, null, null);
+		mDbHelper.closeclose();
+		return cursor;
 	}
 
 	public Cursor getCondEvent(int ceid) throws SQLException {
@@ -49,6 +57,7 @@ public class CondEventAdapter {
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
+		mDbHelper.closeclose();
 		return mCursor;
 	}
 
@@ -57,16 +66,20 @@ public class CondEventAdapter {
 		ContentValues args = new ContentValues();
 		args.put(MDBHelperAdapter.KEY_CONDTYPE, condtype);
 		args.put(MDBHelperAdapter.KEY_EVENTTYPE, eventtype);
-		return MDBHelperAdapter.getDBHelper().update(MDBHelperAdapter.DATABASE_TABLE3, args, MDBHelperAdapter.KEY_CEID + "=" + ceid, null) > 0;
+		boolean b = MDBHelperAdapter.getDBHelper().update(MDBHelperAdapter.DATABASE_TABLE3, args, MDBHelperAdapter.KEY_CEID + "=" + ceid, null) > 0;
+		mDbHelper.closeclose();
+		return b;
 	}
 	public void dropCondEvent(){
 		mDbHelper.open();
 		mDbHelper.dropTable(MDBHelperAdapter.DATABASE_TABLE3);
+		mDbHelper.closeclose();
 	}
 	public void recreateCondEvent()
 	{
 		mDbHelper.open();
 		mDbHelper.recreateTable(3);
+		mDbHelper.closeclose();
 	}
 	
 	public ArrayList<String> getGroupData()
@@ -77,26 +90,25 @@ public class CondEventAdapter {
 		String groupData;
 		String EventName=new String();
 		
-		CECursor= this.getAllCondEvent();
-		CECursor.moveToFirst();
+		CECursor= getAllCondEvent();
 		
-		for(int i=0;i<CECursor.getCount();i++)
+		while(CECursor.moveToLast()==true)
 		{
 			DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
 			
 			switch(Integer.valueOf(CECursor.getString(2))){
 			case 0:
-				EventName="Shutdown";
+				EventName="shutdown";
 				break;
 			case 1:
 				EventName="Silent mode";
 				break;
 			//TODO 其他类型的ETYPE
 			default:
-				EventName="其他类型的ETYPE";
 				break;
 			}
-			groupData=DCCursor.getString(1)+" "+EventName+" "+CECursor.getString(0);//条件名＋事件名＋编号
+			groupData=//DCCursor.getString(0)+
+				EventName+CECursor.getString(0);//条件名＋事件名＋编号
 			
 			lst.add(groupData);
 			CECursor.moveToNext();
@@ -112,26 +124,25 @@ public class CondEventAdapter {
 		Cursor CECursor;
 		String EventName=new String();
 		CECursor= getAllCondEvent();
-		CECursor.moveToFirst();
 		
-		for(int i=0;i<CECursor.getCount();i++)
+		while(CECursor.moveToLast()==true)
 		{
 			DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
 			
 			switch(Integer.valueOf(CECursor.getString(2))){
 			case 0:
-				EventName="Shutdown";
+				EventName="shutdown";
 				break;
 			case 1:
 				EventName="Silent mode";
 				break;
 			//TODO 其他类型的ETYPE
 			default:
-				EventName="其他类型的ETYPE";
 				break;
 			}
 			lstc.clear();
-			lstc.add(DCCursor.getString(2)+" "+DCCursor.getString(3)+" "+EventName);//开始时间＋结束时间＋事件名称
+			lstc.add(//DCCursor.getString(2)+DCCursor.getString(3)+
+					EventName);//开始时间＋结束时间＋事件名称
 			
 			lst.add(lstc);
 			

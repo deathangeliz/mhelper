@@ -29,7 +29,7 @@ public class AlarmSetHelper {
 		addToAlarm(tc, true, setFinish);
 	}
 	
-	void startTimeCondition(long condEventId, Calendar startTime, Calendar endTime, Boolean shouldEnd)
+	public void startTimeCondition(long condEventId, Calendar startTime, Calendar endTime, Boolean shouldEnd)
 	{
 		TimeCondition tc = new TimeCondition();
 		tc.setStartTime(startTime);

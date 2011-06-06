@@ -14,59 +14,45 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 	ArrayList<String> groupContent = new ArrayList<String>();
 	ArrayList<ArrayList<String>> childrenContent = new	ArrayList<ArrayList<String>>();
 	ArrayList<Integer> condEventId = new ArrayList<Integer>();
-	Object groupLock = new Object();
-	Object childrenLock = new Object();
-	Object idLock = new Object();
+	//Object groupLock = new Object();
+	//Object childrenLock = new Object();
+	//Object idLock = new Object();
 	
 	public  HomeExpandableListAdapter(Context ctx) {
 		context = ctx;
 	}
 	
 	public ArrayList<String> getGroupContent() {
-		synchronized (groupLock) {
-			return groupContent;
-		}
+		return groupContent;
 	}
 	
 	public boolean setGroupContent(ArrayList<String> gc) {
-		synchronized (groupLock) {
-		    groupContent = gc;
-		    return true;
-		}
+	    groupContent = gc;
+		return true;
 	}
 	
 	public ArrayList<ArrayList<String>> getChildrenContent() {
-		synchronized (childrenLock) {
-			return childrenContent;
-		}		
+		return childrenContent;	
 	}
 	
 	public boolean setChildrenContent(ArrayList<ArrayList<String>> cc) {
-		synchronized (childrenLock) {
-		    childrenContent = cc;
-		    return true;
-		}
+		childrenContent = cc;
+	    return true;
 	}
 	
 	public ArrayList<Integer> getCondEventId() {
-		synchronized (idLock) {
 			return condEventId;
-		}
 	}
 	
 	public boolean setCondEventID(ArrayList<Integer> ceid) {
-		synchronized (idLock) {
-	        condEventId = ceid;
-	        return true;
-		}
+	    condEventId = ceid;
+	    return true;
 	}
 	
 	@Override
 	public Object getChild(int groupPosition, int childPosition) {
 		// TODO Auto-generated method stub
-		synchronized (childrenLock) {
 			return childrenContent.get(groupPosition).get(childPosition);
-		}		
 	}
 
 	@Override
@@ -81,6 +67,8 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 		// TODO Auto-generated method stub
 		if (convertView != null) {
 			if (convertView instanceof HomeChildView) {
+				((HomeChildView)convertView).setHomeText((String)getChild(groupPosition, childPosition));
+				((HomeChildView)convertView).setEditListenner(groupPosition);
 				return convertView;
 			}
 			else {
@@ -88,44 +76,34 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 				return null;
 			}
 		}
-		synchronized (childrenLock) {
-			HomeChildView view = new HomeChildView(context);
-			view.setHomeText((String)getChild(groupPosition, childPosition));
-			view.setEditListenner(groupPosition);
-			return view;
-		}	
+		HomeChildView view = new HomeChildView(context);
+		view.setHomeText((String)getChild(groupPosition, childPosition));
+		view.setEditListenner(groupPosition);
+		return view;
 	}
 
 	@Override
 	public int getChildrenCount(int groupPosition) {
 		// TODO Auto-generated method stub
-		synchronized (childrenLock) {
-			return childrenContent.get(groupPosition).size();
-		}	
+		return childrenContent.get(groupPosition).size();
 	}
 
 	@Override
 	public Object getGroup(int groupPosition) {
 		// TODO Auto-generated method stub
-		synchronized (groupLock) {
-			return groupContent.get(groupPosition);
-		}		
+		return groupContent.get(groupPosition);	
 	}
 
 	@Override
 	public int getGroupCount() {
 		// TODO Auto-generated method stub
-		synchronized (groupLock) {
-			return groupContent.size();
-		}	
+		return groupContent.size();
 	}
 
 	@Override
 	public long getGroupId(int groupPosition) {
 		// TODO Auto-generated method stub
-		synchronized (groupLock) {
-			return groupPosition;
-		}	
+		return groupPosition;
 	}
 
 	@Override
@@ -143,10 +121,10 @@ public class HomeExpandableListAdapter extends BaseExpandableListAdapter {
 				return null;
 			}
 		}
-		synchronized (groupLock) {
-			HomeGroupView view = new HomeGroupView(context);
-			return view;
-		}	
+		HomeGroupView view = new HomeGroupView(context);
+		view.setHomeText((String)getGroup(groupPosition));
+		view.setDeleteListener(groupPosition);
+		return view;
 	}
 
 	@Override
