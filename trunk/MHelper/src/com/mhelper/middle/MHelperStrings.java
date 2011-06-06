@@ -9,6 +9,10 @@ public class MHelperStrings {
 	
 	//condition strings
 	public static final String FLAG = "flag";//use to distinct whether it is an on/off condition
+	public static final String SMS_SHUTDOWN = "sms_shutdown";
+	public static final String SMS_SLIENT = "sms_slient";
+	public static final String SMS_VIBRATION = "sms_vibration";
+	public static final String SMS_AIRMODE = "sms_airmode";
 	//event strings
 	public static final String NOTIFICATION_TYPE = "notification_type";
 	public static final String NOTIFICATION_CONTENT = "notification_content";
