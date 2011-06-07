@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.media.AudioManager;
 import android.os.IBinder;
+import android.provider.Settings;
 import android.util.Log;
 
 public class NormalEvent extends Service {
@@ -21,6 +22,11 @@ public class NormalEvent extends Service {
 		int ringerMode = AudioManager.RINGER_MODE_NORMAL;
 		audioMgr.setRingerMode(ringerMode);
 		Log.i("SlientEvent.onStartCommand()", "start");
+		Settings.System.putInt(getContentResolver(),
+				Settings.System.AIRPLANE_MODE_ON, 0);
+		Intent i = new Intent(Intent.ACTION_AIRPLANE_MODE_CHANGED);
+		//i.putExtra("state", !isEnabled);
+		sendBroadcast(i);
 		super.onCreate();
 	}
 
