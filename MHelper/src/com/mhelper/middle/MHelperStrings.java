@@ -34,6 +34,7 @@ public class MHelperStrings {
 	public static final String UI_FINISH_DAY = "ui_finish_day";
 	public static final String UI_FINISH_HOUR = "ui_finish_hour";
 	public static final String UI_FINISH_MINUTE = "ui_finish_minute";
+	public static final String UI_SHOULD_FINISH = "ui_should_finish";
 	//calendar condition params
 	//message condition params
 	public static final String UI_MESSAGE_TYPE = "ui_message_type";

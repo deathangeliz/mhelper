@@ -45,14 +45,10 @@ public class AlarmSetHelper {
 		if(setStart)
 		{
 			Intent intent =new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-	        intent.putExtra("COND_EVENT_ID", condition.getCondEventld());
-	        //intent.putExtra("TIME_COND_TYPE", 1);
-	        //intent.putExtra("TIME_COND_ID", condition.getId());
-	        //temporary solution
-	        intent.putExtra("COND_TYPE", 0);
-	        intent.putExtra("START_FLAG", true);
-	        //intent.putExtra("EVENT_TYPE", condition.getEventid());
-	        PendingIntent PI = PendingIntent.getBroadcast(context, condition.getId(), intent,PendingIntent.FLAG_UPDATE_CURRENT);
+	        intent.putExtra(MHelperStrings.COND_EVENT_ID, condition.getCondEventld());
+	        intent.putExtra(MHelperStrings.COND_TYPE, 0);
+	        intent.putExtra(MHelperStrings.FLAG, false);
+	        PendingIntent PI = PendingIntent.getBroadcast(context, (int)(condition.getCondEventld()), intent,PendingIntent.FLAG_UPDATE_CURRENT);
 	        AlarmManager alarms = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
 	        alarms.set(AlarmManager.RTC, condition.getStartTime().getTimeInMillis(), PI);
 	        Log.i("ALarmSetHelper.addToAlarm()", "sendBroadcast");
@@ -60,12 +56,10 @@ public class AlarmSetHelper {
 		if(setFinish)
 		{
 			Intent intent =new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-	        intent.putExtra("COND_EVENT_ID", condition.getCondEventld());
-	        //intent.putExtra("TIME_COND_TYPE", 2);
-	        //intent.putExtra("TIME_COND_ID", condition.getId());
-	        intent.putExtra("START_FLAG", false);
-	        intent.putExtra("COND_TYPE", 0);
-	        PendingIntent PI2 = PendingIntent.getBroadcast(context, condition.getId(), intent,PendingIntent.FLAG_UPDATE_CURRENT);
+	        intent.putExtra(MHelperStrings.COND_EVENT_ID, condition.getCondEventld());
+	        intent.putExtra(MHelperStrings.FLAG, true);
+	        intent.putExtra(MHelperStrings.COND_TYPE, 0);
+	        PendingIntent PI2 = PendingIntent.getBroadcast(context, (int)(condition.getCondEventld()), intent,PendingIntent.FLAG_UPDATE_CURRENT);
 	        AlarmManager alarms2 = (AlarmManager)context.getSystemService(context.ALARM_SERVICE);
 	        alarms2.set(AlarmManager.RTC, condition.getFinishTime().getTimeInMillis(), PI2);
 		}

@@ -27,7 +27,6 @@ public class EventBroadcastReceiver extends BroadcastReceiver{
 	public void onReceive(Context context,Intent intent)
 	{
 		this.context = context;
-		//TODO intent.putExtra(MDBHelperAdapter.KEY_CONDEVENTID, "3");
 		Bundle extras = intent.getExtras();
 		if (extras == null) {
 			Log.i("BroadcastReceiver.onReceive()", "extras == null");
