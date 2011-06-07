@@ -97,12 +97,11 @@ public class Home extends ExpandableListActivity {
 	public int selectedGroup;
 	
 	private CondEventAdapter condEventAdapter;
-	private TimeDetailCondAdapter timeDetailCondAdapter;
 	//-------------debug-------------------
-	private ConditionsAdapter CA;
-	private DetailCondAdapter DCA;
-	private EventsAdapter EA;
-	private DetailEventAdapter DEA;
+	private ConditionsAdapter conditionsAdapter;
+	private DetailCondAdapter detailCondAdapter;
+	private EventsAdapter eventsAdapter;
+	private DetailEventAdapter detailEventAdapter;
 	//--------------------------------
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -112,17 +111,16 @@ public class Home extends ExpandableListActivity {
         getExpandableListView().setBackgroundDrawable(drawable);
         //initiate database adapter
         condEventAdapter = new CondEventAdapter(getApplicationContext());
-        timeDetailCondAdapter = new TimeDetailCondAdapter(getApplicationContext());
         //-----------------debug----------------
-        CA=new ConditionsAdapter(this);
-        DCA=new DetailCondAdapter(this);
-        EA=new EventsAdapter(this);
-        DEA=new DetailEventAdapter(this);
+        conditionsAdapter=new ConditionsAdapter(this);
+        detailCondAdapter=new DetailCondAdapter(this);
+        eventsAdapter=new EventsAdapter(this);
+        detailEventAdapter=new DetailEventAdapter(this);
         
-        DCA.recreateCondictions();
-        CA.recreateConditions();
-        EA.recreateEvents();
-        DEA.recreateDetailEvent();
+        detailCondAdapter.recreateCondictions();
+        conditionsAdapter.recreateConditions();
+        eventsAdapter.recreateEvents();
+        detailEventAdapter.recreateDetailEvent();
         condEventAdapter.recreateCondEvent();
         //---------------------------------------
         
@@ -284,12 +282,47 @@ public class Home extends ExpandableListActivity {
 			ceid = condEventAdapter.createCondEvent(cType, eType, params);	
 			//deliver ceid and time params to time cond and start
 			Calendar startTime = getSettingStartTime();
-			TimeCondition tc = setTimeCondition(ceid, startTime, Calendar.getInstance(), false);
+			boolean shouldFinish = prefs.getBoolean(MHelperStrings.UI_SHOULD_FINISH, false);
+			Calendar finishTime = Calendar.getInstance();
+			if (shouldFinish) {
+				finishTime = getSettingFinishTime();
+				detailCondAdapter.insertDetailCondition("Alarm", 
+						"StartTime: " + startTime.getTime().toString() + "\n" + "FinishTime: " + finishTime.getTime().toString(), 
+						startTime.getTime().toString(), 
+						finishTime.getTime().toString(), 1, ceid);
+			} else {
+				detailCondAdapter.insertDetailCondition("Alarm", 
+						"StartTime: " + startTime.getTime().toString(),
+						startTime.getTime().toString(), 
+						"FinishTime", 0, ceid);
+			}		
+			if (eType < 4) {
+				String modeStr = "";
+				switch (eType) {
+				case 0:
+					modeStr = "Shutdown";
+				case 1:
+					modeStr = "Slient";
+					break;
+				case 2:
+					modeStr = "Vibration";
+					break;
+				case 3:
+					modeStr = "AirMode";
+					break;
+				default:
+					Log.i("Home.creatCondEvent()", "noThisEvent");
+					break;
+				}
+				detailEventAdapter.insertDetailEvent(ceid, eType);
+			} else if (eType == 4) {
+				
+			} else if (eType == 5) {
+				
+			}
+			TimeCondition tc = setTimeCondition(ceid, startTime, finishTime, shouldFinish);
 			AlarmSetHelper ash = new AlarmSetHelper(this);
-			ash.addToAlarm(tc, true, false);
-			timeDetailCondAdapter.open(getApplicationContext());
-			timeDetailCondAdapter.insertTimeCond(tc);	
-			timeDetailCondAdapter.close();
+			ash.addToAlarm(tc, true, shouldFinish);
 		}
 			break;
 		case 1:
@@ -299,30 +332,6 @@ public class Home extends ExpandableListActivity {
 		default:
 			break;
 		}
-		/*int cType = prefs.getInt("cType", -1);
-		int eType = prefs.getInt("eType", -1);
-		if (cType == 0 && (eType > 0 && eType < 4)) {
-				mCAHelper.insertCondition("" + prefs.getInt("condAlarmHour", 0)
-						+ " : " + prefs.getInt("condAlramMinute", 0));
-				mEAHelper.insertEvent("change mode");
-				int id = (int)mCEAHelper.insertCondEvent(1, 2);
-				mDCAHelper.insertDetailCondition("mode ", "change to mode" + eType, 
-						"start time", "finish time", 1, id);
-				mDEAHelper.insertDetailEvent(id, 0);
-			   
-			TimeCondition tCondition = new TimeCondition(this);
-			tCondition.setDescription("time desc");
-			Calendar c = Calendar.getInstance();
-			int condAlramYear = prefs.getInt("condAlramYear", 2011);
-			int condAlarmMonth = prefs.getInt("condAlarmMonth", 9);
-			int condAlarmDay = prefs.getInt("condAlarmDay", 1);
-			int condAlarmHour = prefs.getInt("condAlarmHour", 0);
-			int condAlramMinute = prefs.getInt("condAlramMinute", 0);
-			c.set(condAlramYear, condAlarmMonth, condAlarmDay, condAlarmHour, condAlramMinute);
-		    tCondition.setStartTime(c);
-		    tCondition.setPoint(false);
-		    tCondition.setId(id);
-		}*/
 		getOrRefreshData();
 		setListAdapter(adapter);
 		adapter.notifyDataSetChanged();
@@ -335,6 +344,17 @@ public class Home extends ExpandableListActivity {
 		int condAlarmDay = prefs.getInt(MHelperStrings.UI_START_DAY, 1);
 		int condAlarmHour = prefs.getInt(MHelperStrings.UI_START_HOUR, 0);
 		int condAlramMinute = prefs.getInt(MHelperStrings.UI_START_MINUTE, 0);
+		c.set(condAlramYear, condAlarmMonth, condAlarmDay, condAlarmHour, condAlramMinute, 0);
+		return c;
+	}
+	
+	public Calendar getSettingFinishTime() {
+		Calendar c = Calendar.getInstance();
+		int condAlramYear = prefs.getInt(MHelperStrings.UI_FINISH_YEAR, 2011);
+		int condAlarmMonth = prefs.getInt(MHelperStrings.UI_FINISH_MONTH, 9) - 1;
+		int condAlarmDay = prefs.getInt(MHelperStrings.UI_FINISH_DAY, 1);
+		int condAlarmHour = prefs.getInt(MHelperStrings.UI_FINISH_HOUR, 0);
+		int condAlramMinute = prefs.getInt(MHelperStrings.UI_FINISH_MINUTE, 0);
 		c.set(condAlramYear, condAlarmMonth, condAlarmDay, condAlarmHour, condAlramMinute, 0);
 		return c;
 	}
@@ -374,7 +394,6 @@ public class Home extends ExpandableListActivity {
 		condEventAdapter.deleteCondEvent(ceid);
 		AlarmSetHelper ash = new AlarmSetHelper(this);
 		ash.cancelAlarm(ceid, true, false);
-		timeDetailCondAdapter.removeTimeCond(ceid);
 		getOrRefreshData();
 		setListAdapter(adapter);
 		adapter.notifyDataSetChanged();

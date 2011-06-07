@@ -1,6 +1,7 @@
 package com.mhelper.ui;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -45,8 +46,41 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 			convertView = null;
 
 		if (groupPosition == 0) {
-			View view = new NewAlarmChildView(context, childPosition);
-			return view;
+			if (childPosition == 0) {
+				NewAlarmChildView view = new NewAlarmChildView(context, childPosition);
+				String dateStr = "" + ((NewCondSettings)context).condAlramYear + "/" + 
+				    ((NewCondSettings)context).condAlarmMonth + "/" +
+				    ((NewCondSettings)context).condAlarmDay;
+				view.setAlarmDate(dateStr);
+				String timeStr = "" + ((NewCondSettings)context).condAlarmHour + ":";
+				if(((NewCondSettings)context).condAlramMinute < 10){
+					timeStr = timeStr + "0" + ((NewCondSettings)context).condAlramMinute;
+				}else
+					timeStr = timeStr + ((NewCondSettings)context).condAlramMinute;
+				view.setAlarmTime(timeStr);
+				return view;
+			} else if (childPosition == 1) {
+				NewAlarmFinsihChildView view = new NewAlarmFinsihChildView(context, childPosition);
+				if (((NewCondSettings)context).condAlarmShouldFinish) {
+					view.finishCheckBox.setChecked(true);
+				} else {
+					view.finishCheckBox.setChecked(false);
+				}
+				String dateStr = "" + ((NewCondSettings)context).condAlramFinishYear + "/" + 
+			        ((NewCondSettings)context).condAlarmFinishMonth + "/" +
+			        ((NewCondSettings)context).condAlarmFinishDay;
+			    view.setAlarmDate(dateStr);
+			    String timeStr = "" + ((NewCondSettings)context).condAlarmFinishHour + ":";
+			    if(((NewCondSettings)context).condAlramFinishMinute < 10){
+				    timeStr = timeStr + "0" + ((NewCondSettings)context).condAlramFinishMinute;
+			    }else
+				    timeStr = timeStr + ((NewCondSettings)context).condAlramFinishMinute;
+			    view.setAlarmTime(timeStr);
+				return view;
+			} else {
+	        Log.i("NewCondSettings.getChildView()", "groupPosition==0 error");
+			    return null;
+		    }	
 		}
 		else if (groupPosition == 1) {
 			View view = new NewGCalendarChildView(context);

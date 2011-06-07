@@ -42,9 +42,9 @@ public class MDBHelperAdapter {
 	private static final String DATABASE_CREATE2 = "create table events (etype INTEGER primary key autoincrement, "
 		+ "edesc text not null);";
 	private static final String DATABASE_CREATE3 = "create table condevent (ceid INTEGER primary key autoincrement, "
-		+ "condtype integer not null,eventtype integer not null,"
-		+"FOREIGN KEY (condtype) REFERENCES conditions(ctype),"
-		+"FOREIGN KEY (eventtype) REFERENCES events(etype));";
+		+ "condtype integer not null,eventtype integer not null);";
+		//+"FOREIGN KEY (condtype) REFERENCES conditions(ctype),"
+		//+"FOREIGN KEY (eventtype) REFERENCES events(etype));";
 	private static final String DATABASE_CREATE4 = "create table detailcond (title text not null, "
 		+"description text not null,"
 		+"starttime text not null,"

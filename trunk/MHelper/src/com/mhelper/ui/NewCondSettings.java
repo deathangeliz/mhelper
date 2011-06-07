@@ -6,6 +6,7 @@ import com.mhelper.middle.MHelperStrings;
 
 import android.widget.ExpandableListView.OnGroupClickListener;
 
+import android.R.bool;
 import android.R.integer;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -39,6 +40,12 @@ public class NewCondSettings extends ExpandableListActivity {
 	public int condAlarmDay;
 	public int condAlarmHour;
 	public int condAlramMinute;
+	public int condAlramFinishYear;
+	public int condAlarmFinishMonth;
+	public int condAlarmFinishDay;
+	public int condAlarmFinishHour;
+	public int condAlramFinishMinute;
+	public boolean condAlarmShouldFinish;
 	
 	public int typeToMessage;
 	
@@ -63,6 +70,14 @@ public class NewCondSettings extends ExpandableListActivity {
     	    condAlarmDay = c.get(Calendar.DAY_OF_MONTH);
     	    condAlarmHour = c.get(Calendar.HOUR_OF_DAY);
     	    condAlramMinute = c.get(Calendar.MINUTE);
+    	    condAlramFinishYear = c.get(Calendar.YEAR);
+    	    condAlarmFinishMonth = c.get(Calendar.MONTH);
+    	    condAlarmFinishDay = c.get(Calendar.DAY_OF_MONTH);
+    	    condAlarmFinishHour = c.get(Calendar.HOUR_OF_DAY);
+    	    condAlramFinishMinute = c.get(Calendar.MINUTE);
+    	    condAlarmShouldFinish = false;
+    	    Editor editor = prefs.edit();
+    	    editor.putBoolean(MHelperStrings.UI_SHOULD_FINISH, false);
     	    //initiate calendar params
     	    
     	    //initiate message params
@@ -77,6 +92,14 @@ public class NewCondSettings extends ExpandableListActivity {
 				condAlarmDay = prefs.getInt(MHelperStrings.UI_START_DAY, 1);
 				condAlarmHour = prefs.getInt(MHelperStrings.UI_START_HOUR, 0);
 				condAlramMinute = prefs.getInt(MHelperStrings.UI_START_MINUTE, 0);
+				condAlarmShouldFinish = prefs.getBoolean(MHelperStrings.UI_SHOULD_FINISH, false);
+				if (condAlarmShouldFinish) {
+					condAlramFinishYear = prefs.getInt(MHelperStrings.UI_FINISH_YEAR, 2011);
+					condAlarmFinishMonth = prefs.getInt(MHelperStrings.UI_FINISH_MONTH, 1);
+					condAlarmFinishDay = prefs.getInt(MHelperStrings.UI_FINISH_DAY, 1);
+					condAlarmFinishHour = prefs.getInt(MHelperStrings.UI_FINISH_HOUR, 0);
+					condAlramFinishMinute = prefs.getInt(MHelperStrings.UI_FINISH_MINUTE, 0);
+				}
 			}
 			else if (cType == 1){
 				//get calendar params

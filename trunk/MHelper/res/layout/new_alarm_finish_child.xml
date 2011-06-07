@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent" android:layout_height="wrap_content">
+    <CheckBox android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="1" android:id="@+id/finishCheckBox" android:text="FINISH"></CheckBox>
+	<Button android:id="@+id/finishdateButton"
+		android:layout_gravity="left"
+		android:layout_weight="1" android:text="Finish Date" android:layout_height="wrap_content" android:padding="4dp" android:layout_width="match_parent"></Button>
+	<Button android:id="@+id/finishTimeButton"
+		android:layout_gravity="left"
+		android:layout_weight="1" android:text="Finish Time" android:layout_height="wrap_content" android:padding="4dp" android:layout_width="match_parent"></Button>
+</LinearLayout>
