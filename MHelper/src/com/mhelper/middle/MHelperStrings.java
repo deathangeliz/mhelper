@@ -37,6 +37,17 @@ public class MHelperStrings {
 	public static final String UI_FINISH_MINUTE = "ui_finish_minute";
 	public static final String UI_SHOULD_FINISH = "ui_should_finish";
 	//calendar condition params
+	public static final String UI_GC_START_YEAR = "ui_gc_start_year";
+	public static final String UI_GC_START_MONTH = "ui_gc_start_month";
+	public static final String UI_GC_START_DAY = "ui_gc_start_day";
+	public static final String UI_GC_START_HOUR = "ui_gc_start_hour";
+	public static final String UI_GC_START_MINUTE = "ui_gc_start_minute";
+	public static final String UI_GC_FINISH_YEAR = "ui_gc_finish_year";
+	public static final String UI_GC_FINISH_MONTH = "ui_gc_finish_month";
+	public static final String UI_GC_FINISH_DAY = "ui_gc_finish_day";
+	public static final String UI_GC_FINISH_HOUR = "ui_gc_finish_hour";
+	public static final String UI_GC_FINISH_MINUTE = "ui_gc_finish_minute";
+	public static final String UI_GC_SHOULD_FINISH = "ui_gc_should_finish";
 	//message condition params
 	public static final String UI_MESSAGE_TYPE = "ui_message_type";
 	//notification event params

@@ -12,6 +12,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.ExpandableListActivity;
 import android.app.TimePickerDialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.os.Bundle;
@@ -194,6 +195,33 @@ public class NewCondSettings extends ExpandableListActivity {
 			finish();
 		}
         setListAdapter(condAdapter);
+	}
+	
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		if (resultCode == NewGCalendarRadioGroup.RESULT_SELECT_GC_ITEMS) {
+			condAlramYear = prefs.getInt(MHelperStrings.UI_GC_START_YEAR, 2011);
+			condAlarmMonth = prefs.getInt(MHelperStrings.UI_GC_START_MONTH, 1);
+			condAlarmDay = prefs.getInt(MHelperStrings.UI_GC_START_DAY, 1);
+			condAlarmHour = prefs.getInt(MHelperStrings.UI_GC_START_HOUR, 0);
+			condAlramMinute = prefs.getInt(MHelperStrings.UI_GC_START_MINUTE, 0);
+			condAlarmShouldFinish = true;
+			Editor editor = prefs.edit();
+			editor.putBoolean(MHelperStrings.UI_SHOULD_FINISH, true);
+			editor.commit();
+			if (condAlarmShouldFinish) {
+				condAlramFinishYear = prefs.getInt(MHelperStrings.UI_GC_FINISH_YEAR, 2011);
+				condAlarmFinishMonth = prefs.getInt(MHelperStrings.UI_GC_FINISH_MONTH, 1);
+				condAlarmFinishDay = prefs.getInt(MHelperStrings.UI_GC_FINISH_DAY, 1);
+				condAlarmFinishHour = prefs.getInt(MHelperStrings.UI_GC_FINISH_HOUR, 0);
+				condAlramFinishMinute = prefs.getInt(MHelperStrings.UI_GC_FINISH_MINUTE, 0);
+			}
+			getExpandableListView().collapseGroup(1);
+			getExpandableListView().expandGroup(1);
+		} else {
+			Log.i("NewCondSettings.onActivityResult()", "resultCode == NewGCalendarRadioGroup.RESULT_NO_GC_ITEMS");
+		}
 	}
 	
 	public void expandOneGroupAndCollapseOthers(int group) {
