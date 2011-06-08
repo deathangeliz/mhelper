@@ -92,7 +92,9 @@ public class MHelperBroadcastReceiver extends BroadcastReceiver {
 						NotificationEventAdapter NEHelper = new NotificationEventAdapter(context);
 						Cursor NECursor = NEHelper.getNotificationEvent(cond_event_id);
 						int notificationType = Integer.valueOf(NECursor.getString(1));
-						String notificationMessage = NECursor.getString(2);
+						if (notificationType != 2)
+							notificationType = 0;
+						String notificationMessage = NECursor.getString(2)+ "= =b";
 						NotificationEvent ne = new NotificationEvent(notificationType, 
 								notificationMessage, context, cond_event_id);
 						ne.notifyNotification();
@@ -118,61 +120,6 @@ public class MHelperBroadcastReceiver extends BroadcastReceiver {
 				}
 			}
 		}
-		/*---------------temporary solution----------------
-		
-		int cond_event_id = extras.getInt("COND_EVENT_ID");
-		Log.i("BroadcastReceiver.onReceive()", "cond_event_id=" + cond_event_id);
-		int cond_type = extras.getInt("COND_TYPE");
-		Log.i("BroadcastReceiver.onReceive()", "cond_type=" + cond_type);
-		int event_type = extras.getInt("EVENT_TYPE");
-		Log.i("BroadcastReceiver.onReceive()", "event_type=" + event_type);
-		
-		if (cond_type == 0) {
-			int time_cond_type = extras.getInt("TIME_COND_TYPE");
-			Log.i("BroadcastReceiver.onReceive()", "time_cond_type=" + time_cond_type);
-			int time_cond_id = extras.getInt("TIME_COND_ID");
-			Log.i("BroadcastReceiver.onReceive()", "time_cond_id=" + time_cond_id);
-			
-			if (time_cond_type == 1) {
-				switch (event_type) {
-				case 1:
-					context.startService(new Intent(this.context, SilentEvent.class));
-					Log.i("BroadcastReceiver.onReceive()", "SilentEvent");
-					break;
-				case 2:
-					context.startService(new Intent(this.context, VibratorEvent.class));
-					Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
-					break;
-				case 3:
-					context.startService(new Intent(this.context, VibratorEvent.class));
-					Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
-					break;
-				default:
-					break;
-				}
-			} else if (time_cond_type == 2) {
-				Log.i("BroadcastReceiver.onReceive()", "time_cond_type == 2,unhandle");
-			}
-		} else if (cond_type == 2) {
-			Log.i("BroadcastReceiver.onReceive()", "SMS_COND");
-			switch (event_type) {
-			case 1:
-				context.startService(new Intent(this.context, SilentEvent.class));
-				Log.i("BroadcastReceiver.onReceive()", "SilentEvent");
-				break;
-			case 2:
-				context.startService(new Intent(this.context, VibratorEvent.class));
-				Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
-				break;
-			case 3:
-				context.startService(new Intent(this.context, VibratorEvent.class));
-				Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
-				break;
-			default:
-				break;
-			}
-		}
-		//---------------temporary solution----------------*/
 	}
 
 }

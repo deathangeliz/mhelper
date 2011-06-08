@@ -86,8 +86,8 @@ public class NewAlarmFinsihChildView extends LinearLayout {
 						Editor editor = PreferenceManager.getDefaultSharedPreferences(
 								context.getApplicationContext()).edit();
 						editor.putInt(MHelperStrings.UI_FINISH_DAY, newCondSettings.condAlarmFinishDay);
-						editor.putInt(MHelperStrings.UI_START_MONTH, newCondSettings.condAlarmFinishMonth);
-						editor.putInt(MHelperStrings.UI_START_YEAR, newCondSettings.condAlramFinishYear);
+						editor.putInt(MHelperStrings.UI_FINISH_MONTH, newCondSettings.condAlarmFinishMonth);
+						editor.putInt(MHelperStrings.UI_FINISH_YEAR, newCondSettings.condAlramFinishYear);
 						editor.commit();
 						String dateStr = arg1 + "/" + (arg2+1) + "/" + arg3;
 						setAlarmDate(dateStr);

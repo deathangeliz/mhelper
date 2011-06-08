@@ -33,7 +33,7 @@ public class NotificationEvent{
 			Handler handler = new Handler(Looper.getMainLooper());
 			handler.post(new Runnable() {
 				public void run() {
-					Toast.makeText(context, str+"!!!!!!", Toast.LENGTH_SHORT);
+					Toast.makeText(context, str+"!!!!!!", Toast.LENGTH_SHORT).show();
 				}
 			});
 			break;

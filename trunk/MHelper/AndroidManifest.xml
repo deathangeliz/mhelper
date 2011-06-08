@@ -32,6 +32,7 @@
 		</receiver>
 		 
         <service android:name=".events.SilentEvent"></service>
+        <service android:name=".events.NormalEvent"></service>
         <receiver android:name=".middle.SMSReceiver">
             <intent-filter>
 				<action
