@@ -48,7 +48,10 @@ public class NewCondSettings extends ExpandableListActivity {
 	public boolean condAlarmShouldFinish;
 	
 	public int typeToMessage;
-	
+	public boolean sms_slient;
+	public boolean sms_vibration;
+	public boolean sms_airmode;
+	public boolean sms_normal;
 	@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -164,13 +167,6 @@ public class NewCondSettings extends ExpandableListActivity {
     			alramView.setAlarmTime(timeStr);
         	}    
         	
-        	NewMessageChildView messageView = (NewMessageChildView)condAdapter.getChildView(2, 0, 
-        			false, null, null);
-        	if (messageView == null)
-        		Log.i("NewCondSetting", "messageView == null");
-        	else {
-        		messageView.setSelectedMessageType(typeToMessage);
-        	}
         } else if (mode == MODE_EDIT){
 			if (cType == 0) {
 				NewAlarmChildView alramView = (NewAlarmChildView)condAdapter.getChildView(0, 0, 
@@ -190,13 +186,7 @@ public class NewCondSettings extends ExpandableListActivity {
 			} else if (cType == 1){
 				
 			} else if (cType == 2) {
-				NewMessageChildView messageView = (NewMessageChildView)condAdapter.getChildView(2, 0, 
-	        			false, null, null);
-	        	if (messageView == null)
-	        		Log.i("NewCondSetting", "messageView == null");
-	        	else {
-	        		messageView.setSelectedMessageType(typeToMessage);
-	        	}
+				
 			}
 			getExpandableListView().expandGroup(cType);
 			//set other group cannot collapse

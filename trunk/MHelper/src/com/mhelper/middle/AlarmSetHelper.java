@@ -45,7 +45,7 @@ public class AlarmSetHelper {
 		if(setStart)
 		{
 			Intent intent =new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-	        intent.putExtra(MHelperStrings.COND_EVENT_ID, condition.getCondEventld());
+	        intent.putExtra(MHelperStrings.COND_EVENT_ID, (int)(condition.getCondEventld()));
 	        intent.putExtra(MHelperStrings.COND_TYPE, 0);
 	        intent.putExtra(MHelperStrings.FLAG, false);
 	        PendingIntent PI = PendingIntent.getBroadcast(context, (int)(condition.getCondEventld()), intent,PendingIntent.FLAG_UPDATE_CURRENT);
@@ -56,7 +56,7 @@ public class AlarmSetHelper {
 		if(setFinish)
 		{
 			Intent intent =new Intent(MHelperBroadcastReceiver.MHELPER_BROADCAST);
-	        intent.putExtra(MHelperStrings.COND_EVENT_ID, condition.getCondEventld());
+	        intent.putExtra(MHelperStrings.COND_EVENT_ID, (int)(condition.getCondEventld()));
 	        intent.putExtra(MHelperStrings.FLAG, true);
 	        intent.putExtra(MHelperStrings.COND_TYPE, 0);
 	        PendingIntent PI2 = PendingIntent.getBroadcast(context, (int)(condition.getCondEventld()), intent,PendingIntent.FLAG_UPDATE_CURRENT);

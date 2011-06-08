@@ -33,13 +33,13 @@ public class NotificationEvent{
 			Handler handler = new Handler(Looper.getMainLooper());
 			handler.post(new Runnable() {
 				public void run() {
-					Toast.makeText(context, str, Toast.LENGTH_SHORT);
+					Toast.makeText(context, str+"!!!!!!", Toast.LENGTH_SHORT);
 				}
 			});
 			break;
 		case 1://notification
 			notificationManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
-			Notification notification = new Notification(R.drawable.icon, str, System.currentTimeMillis());
+			Notification notification = new Notification(R.drawable.icon, str+"??????", System.currentTimeMillis());
 			notificationManager.notify(condEventId, notification);
 			break;
 		case 2:// dialog

@@ -2,25 +2,31 @@ package com.mhelper.DatebaseAdapter;
 
 import java.util.ArrayList;
 
+import com.mhelper.middle.MHelperStrings;
+
 import android.R.bool;
 import android.R.integer;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 
 public class CondEventAdapter {
 	private static MDBHelperAdapter mDbHelper;
 	private DetailCondAdapter DCHelper;
 	private NotificationEventAdapter NEHelper;
 	private WallpaperEventAdapter WEHelper;
+	private Context context;
 	public CondEventAdapter(Context ctx)
 	{
 		mDbHelper=new MDBHelperAdapter(ctx);
 		DCHelper=new DetailCondAdapter(ctx);
 		NEHelper=new NotificationEventAdapter(ctx);
 		WEHelper=new WallpaperEventAdapter(ctx);
+		context = ctx;
 	}
 	
 	public int insertCondEvent(int condtype,int eventtype)
@@ -41,7 +47,7 @@ public class CondEventAdapter {
 		}, null, null, null, null, null);
 	}
 
-	public Cursor getCondEvent(int ceid) throws SQLException {
+	public Cursor getCondEvent(int ceid) {
 		mDbHelper.open();
 		Cursor mCursor =
 			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE3, new String[] {  MDBHelperAdapter.KEY_CEID,MDBHelperAdapter.KEY_CONDTYPE, MDBHelperAdapter.KEY_EVENTTYPE},  MDBHelperAdapter.KEY_CEID + "=" + ceid, null, null,
@@ -74,7 +80,7 @@ public class CondEventAdapter {
 		ArrayList<String> lst=new ArrayList();
 		Cursor CECursor;
 		Cursor DCCursor;
-		String groupData;
+		String groupData="";
 		String EventName=new String();
 		
 		CECursor= this.getAllCondEvent();
@@ -82,9 +88,9 @@ public class CondEventAdapter {
 		
 		for(int i=0;i<CECursor.getCount();i++)
 		{
-			DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
-			
-			switch(Integer.valueOf(CECursor.getString(2))){
+			int ctype = Integer.valueOf(CECursor.getString(1));
+			int etype = Integer.valueOf(CECursor.getString(2));
+			switch(etype){
 			case 0:
 				EventName="Shutdown";
 				break;
@@ -97,12 +103,25 @@ public class CondEventAdapter {
 			case 3:
 				EventName="Airmode";
 				break;
+			case 4:
+				EventName="Notification";
+				break;
+			case 5:
+				EventName="Change Wallpaper";
+				break;
 			//TODO 其他类型的ETYPE
 			default:
 				EventName="其他类型的ETYPE";
 				break;
 			}
-			groupData=DCCursor.getString(1)+"-"+EventName+"-"+CECursor.getString(0);//条件名＋事件名＋编号
+			if (ctype == 0) {
+				DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
+				groupData=DCCursor.getString(1)+"-"+EventName+"-"+CECursor.getString(0);//条件名＋事件名＋编号
+			} else if (ctype == 1) {
+				groupData="Google Calendar-"+EventName+"-"+CECursor.getString(0);
+			} else if (ctype == 2){
+				groupData="Message-"+CECursor.getString(0);
+			}			
 			
 			lst.add(groupData);
 			CECursor.moveToNext();
@@ -122,29 +141,75 @@ public class CondEventAdapter {
 		
 		for(int i=0;i<CECursor.getCount();i++)
 		{
-			DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
-			
-			switch(Integer.valueOf(CECursor.getString(2))){
-			case 0:
-				EventName="Shutdown";
-				break;
-			case 1:
-				EventName="Change mode: Silent";
-				break;
-			case 2:
-				EventName="Change mode: Vibration";
-				break;
-			case 3:
-				EventName="Change mode: Airmode";
-				break;
-			//TODO 其他类型的ETYPE
-			default:
-				EventName="其他类型的ETYPE";
-				break;
+			int ceid = Integer.valueOf(CECursor.getString(0));
+			int ctype = Integer.valueOf(CECursor.getString(1));
+			int etype = Integer.valueOf(CECursor.getString(2));
+			if (etype < 4) {
+				switch(Integer.valueOf(CECursor.getString(2))){
+				case 0:
+					EventName="Shutdown";
+					break;
+				case 1:
+					EventName="Change mode: Silent";
+					break;
+				case 2:
+					EventName="Change mode: Vibration";
+					break;
+				case 3:
+					EventName="Change mode: Airmode";
+					break;
+				//TODO 其他类型的ETYPE
+				default:
+					EventName="其他类型的ETYPE";
+					break;
+				}
+			} else if (etype == 4) {
+				Cursor NECursor = NEHelper.getNotificationEvent(ceid);
+				int notificationType = Integer.valueOf(NECursor.getString(1));
+				String ntString = "";
+				switch (notificationType) {
+				case 0:
+					ntString = "Toast";
+					break;
+				case 1:
+					ntString = "Notification";
+					break;
+				case 2:
+					ntString = "Dialog";
+					break;
+				default:
+					break;
+				}
+				String notificationMessage = NECursor.getString(2);
+				EventName = "Notification Type: " + ntString + "\n" + 
+				    "Notification Message: " + notificationMessage;
+			} else if (etype == 5) {
+				Cursor WECursor = WEHelper.getWallpaperEvent(ceid);
+				EventName = "Wallpaper Uri: " + WECursor.getString(1);
 			}
-			lstc.clear();
-			lstc.add(DCCursor.getString(2)+"\n"+EventName);
-			lst.add(lstc);
+			if (ctype == 0) {
+				DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
+				lstc.clear();
+				lstc.add(DCCursor.getString(2)+"\n"+EventName);
+				lst.add(lstc);
+			} else if (ctype == 1) {
+				lstc.clear();
+				lstc.add("Google Calendar \n"+EventName);
+				lst.add(lstc);
+			} else if (ctype == 2) {
+				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+				boolean slient = prefs.getBoolean(MHelperStrings.SMS_SLIENT, false);
+				boolean vibration = prefs.getBoolean(MHelperStrings.SMS_VIBRATION, false);
+				boolean airmode = prefs.getBoolean(MHelperStrings.SMS_AIRMODE, false);
+				boolean normal = prefs.getBoolean(MHelperStrings.SMS_NORMAL, false);
+				String str = "Slient: " + (slient ? "On" : "Off") + 
+				    "  Vibration: " + (vibration ? "On" : "Off") + "\n" +
+				    "Airmode: " + (airmode ? "On" : "Off") +
+				    " Normal: " + (normal ? "On" : "Off");
+				lstc.clear();
+				lstc.add(str);
+				lst.add(lstc);
+			} 
 			
 			CECursor.moveToNext();
 		}

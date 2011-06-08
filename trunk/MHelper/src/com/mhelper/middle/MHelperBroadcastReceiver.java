@@ -1,6 +1,11 @@
 package com.mhelper.middle;
 
 import com.mhelper.DatebaseAdapter.CondEventAdapter;
+import com.mhelper.DatebaseAdapter.NotificationEventAdapter;
+import com.mhelper.DatebaseAdapter.WallpaperEventAdapter;
+import com.mhelper.events.ChangeWallpaperEvent;
+import com.mhelper.events.NormalEvent;
+import com.mhelper.events.NotificationEvent;
 import com.mhelper.events.PlaneEvent;
 import com.mhelper.events.SilentEvent;
 import com.mhelper.events.VibratorEvent;
@@ -9,6 +14,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 
@@ -45,7 +51,7 @@ public class MHelperBroadcastReceiver extends BroadcastReceiver {
 		Log.i("BroadcastReceiver.onReceive()", "event_type=" + event_type);
 		
 		if (cond_type == 0) {
-			if (event_type >= 0 && event_type < 4) {
+			if (event_type >= 0 && event_type < 6) {
 				switch (event_type) {
 				case 0: {
 					if (!flag) {
@@ -60,7 +66,7 @@ public class MHelperBroadcastReceiver extends BroadcastReceiver {
 						context.startService(new Intent(this.context, SilentEvent.class));
 						Log.i("BroadcastReceiver.onReceive()", "SilentEvent");
 					} else {
-						
+						context.startService(new Intent(this.context, NormalEvent.class));
 					}
 					break;
 				}				
@@ -69,13 +75,39 @@ public class MHelperBroadcastReceiver extends BroadcastReceiver {
 						context.startService(new Intent(this.context, VibratorEvent.class));
 						Log.i("BroadcastReceiver.onReceive()", "VibratorEvent");
 					} else {
-						
+						context.startService(new Intent(this.context, NormalEvent.class));
 					}
 					break;
 				}
 				case 3: {
 					if (!flag) {
+						context.startService(new Intent(this.context, PlaneEvent.class));
+					} else {
+						context.startService(new Intent(this.context, NormalEvent.class));
+					}
+					break;
+				}
+				case 4: {
+					if (!flag) {
+						NotificationEventAdapter NEHelper = new NotificationEventAdapter(context);
+						Cursor NECursor = NEHelper.getNotificationEvent(cond_event_id);
+						int notificationType = Integer.valueOf(NECursor.getString(1));
+						String notificationMessage = NECursor.getString(2);
+						NotificationEvent ne = new NotificationEvent(notificationType, 
+								notificationMessage, context, cond_event_id);
+						ne.notifyNotification();
+					} else {
 						
+					}
+					break;
+				}
+				case 5: {
+					if (!flag) {
+						WallpaperEventAdapter WEHelper = new WallpaperEventAdapter(context);
+						Cursor WECursor = WEHelper.getWallpaperEvent(cond_event_id);
+						Uri wallpaperUri = Uri.parse(WECursor.getString(1));
+						ChangeWallpaperEvent cwe = new ChangeWallpaperEvent(context, wallpaperUri);
+						cwe.changeWallpaper();
 					} else {
 						
 					}

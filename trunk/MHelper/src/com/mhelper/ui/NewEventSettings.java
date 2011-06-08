@@ -77,14 +77,13 @@ public class NewEventSettings extends ExpandableListActivity {
 							int groupPosition, long id) {
 						// TODO Auto-generated method stub
 						eType = groupPosition;
-						Editor editor = prefs.edit();
-						editor.putInt(MHelperStrings.UI_EVENT_TYPE, eType);
-						editor.commit();
 						if (eType == 2)
 							eType = 4;
 						else if (eType == 3)
 							eType = 5;
-						
+						Editor editor = prefs.edit();
+						editor.putInt(MHelperStrings.UI_EVENT_TYPE, eType);
+						editor.commit();
 						for (int i = 0; i < 4; i++) {
 							if (i == groupPosition) {
 								if (parent.isGroupExpanded(groupPosition))
