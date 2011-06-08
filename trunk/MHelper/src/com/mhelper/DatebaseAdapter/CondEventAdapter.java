@@ -118,7 +118,8 @@ public class CondEventAdapter {
 				DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
 				groupData=DCCursor.getString(1)+"-"+EventName+"-"+CECursor.getString(0);//条件名＋事件名＋编号
 			} else if (ctype == 1) {
-				groupData="Google Calendar-"+EventName+"-"+CECursor.getString(0);
+				DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
+				groupData=DCCursor.getString(1)+"-"+EventName+"-"+CECursor.getString(0);//条件名＋事件名＋编号
 			} else if (ctype == 2){
 				groupData="Message-"+CECursor.getString(0);
 			}			
@@ -193,9 +194,13 @@ public class CondEventAdapter {
 				lstc.add(DCCursor.getString(2)+"\n"+EventName);
 				lst.add(lstc);
 			} else if (ctype == 1) {
+				DCCursor=DCHelper.getDetailCondition(Integer.valueOf(CECursor.getString(0)));
 				lstc.clear();
-				lstc.add("Google Calendar \n"+EventName);
+				lstc.add(DCCursor.getString(2)+"\n"+EventName);
 				lst.add(lstc);
+				/*lstc.clear();
+				lstc.add("Google Calendar \n"+EventName);
+				lst.add(lstc);*/
 			} else if (ctype == 2) {
 				SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
 				boolean slient = prefs.getBoolean(MHelperStrings.SMS_SLIENT, false);

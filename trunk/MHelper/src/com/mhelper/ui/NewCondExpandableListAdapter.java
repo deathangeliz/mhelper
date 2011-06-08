@@ -21,10 +21,10 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 	
 	private String[][] children = {
 			{ "Start Time", "End Time" },
-			{ "Calendar" },
+			{ "GC Start Time", "GC End Time" },
 			{ "Message Type" }
 	};	
-	private final int[] CHILDREN_COUNT = { 2, 1, 1 };
+	private final int[] CHILDREN_COUNT = { 2, 2, 1 };
 	
 	public NewCondExpandableListAdapter(Context ctx){
 		context = ctx;
@@ -53,7 +53,7 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 			if (childPosition == 0) {
 				NewAlarmChildView view = new NewAlarmChildView(context, childPosition);
 				String dateStr = "" + ((NewCondSettings)context).condAlramYear + "/" + 
-				    ((NewCondSettings)context).condAlarmMonth + "/" +
+				    (((NewCondSettings)context).condAlarmMonth+1) + "/" +
 				    ((NewCondSettings)context).condAlarmDay;
 				view.setAlarmDate(dateStr);
 				String timeStr = "" + ((NewCondSettings)context).condAlarmHour + ":";
@@ -71,7 +71,7 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 					view.finishCheckBox.setChecked(false);
 				}
 				String dateStr = "" + ((NewCondSettings)context).condAlramFinishYear + "/" + 
-			        ((NewCondSettings)context).condAlarmFinishMonth + "/" +
+			        (((NewCondSettings)context).condAlarmFinishMonth+1) + "/" +
 			        ((NewCondSettings)context).condAlarmFinishDay;
 			    view.setAlarmDate(dateStr);
 			    String timeStr = "" + ((NewCondSettings)context).condAlarmFinishHour + ":";
@@ -87,8 +87,41 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 		    }	
 		}
 		else if (groupPosition == 1) {
-			View view = new NewGCalendarChildView(context);
-			return view;
+			if (childPosition == 0) {
+				NewGCStartChildView view = new NewGCStartChildView(context, childPosition);
+				String dateStr = "" + ((NewCondSettings)context).condAlramYear + "/" + 
+				    (((NewCondSettings)context).condAlarmMonth+1) + "/" +
+				    ((NewCondSettings)context).condAlarmDay;
+				view.setAlarmDate(dateStr);
+				String timeStr = "" + ((NewCondSettings)context).condAlarmHour + ":";
+				if(((NewCondSettings)context).condAlramMinute < 10){
+					timeStr = timeStr + "0" + ((NewCondSettings)context).condAlramMinute;
+				}else
+					timeStr = timeStr + ((NewCondSettings)context).condAlramMinute;
+				view.setAlarmTime(timeStr);
+				return view;
+			} else if (childPosition == 1) {
+				NewGCFinishChlidView view = new NewGCFinishChlidView(context, childPosition);
+				if (((NewCondSettings)context).condAlarmShouldFinish) {
+					view.finishCheckBox.setChecked(true);
+				} else {
+					view.finishCheckBox.setChecked(false);
+				}
+				String dateStr = "" + ((NewCondSettings)context).condAlramFinishYear + "/" + 
+			        (((NewCondSettings)context).condAlarmFinishMonth+1) + "/" +
+			        ((NewCondSettings)context).condAlarmFinishDay;
+			    view.setAlarmDate(dateStr);
+			    String timeStr = "" + ((NewCondSettings)context).condAlarmFinishHour + ":";
+			    if(((NewCondSettings)context).condAlramFinishMinute < 10){
+				    timeStr = timeStr + "0" + ((NewCondSettings)context).condAlramFinishMinute;
+			    }else
+				    timeStr = timeStr + ((NewCondSettings)context).condAlramFinishMinute;
+			    view.setAlarmTime(timeStr);
+				return view;
+			} else {
+				Log.i("NewCondSettings.getChildView()", "groupPosition==0 error");
+			    return null;
+		    }	
 		}
 		else if (groupPosition == 2) {
 			NewMessageTypeChildView view = new NewMessageTypeChildView(context);

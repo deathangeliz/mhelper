@@ -310,7 +310,75 @@ public class Home extends ExpandableListActivity {
 			ash.addToAlarm(tc, true, shouldFinish);
 		}
 			break;
-		case 1:
+		case 1: {
+			int ceid;
+			Bundle params = new Bundle();
+			if (eType == 0) {
+				
+			} else if (eType > 0 && eType < 4) {
+
+			} else if (eType == 4) {
+				int nt = prefs.getInt(MHelperStrings.UI_NOTIFICATION_TYPE, -1);
+				if (nt == -1)
+					Log.i("Home.createCondEvent()", "NOTIFICATION_TYPE=-1");
+				params.putInt(MDBHelperAdapter.KEY_NOTIFICATIONTYPE, 
+						nt);
+				params.putString(MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE, 
+						prefs.getString(MHelperStrings.UI_NOTIFICATION_CONTENT, ""));
+			} else if (eType == 5) {
+				String str = prefs.getString(MHelperStrings.UI_WALLPAPER_URI, "");
+				if (str == null) {
+					Log.i("Home.createCondEvent()", "eType == 5,str == null");
+					return;
+				}
+				params.putString(MDBHelperAdapter.KEY_WALLPAPERURI, 
+						MHelperStrings.UI_WALLPAPER_URI);
+			}
+			ceid = condEventAdapter.createCondEvent(cType, eType, params);	
+			//deliver ceid and time params to time cond and start
+			Calendar startTime = getSettingStartTime();
+			boolean shouldFinish = prefs.getBoolean(MHelperStrings.UI_SHOULD_FINISH, false);
+			Calendar finishTime = Calendar.getInstance();
+			if (shouldFinish) {
+				finishTime = getSettingFinishTime();
+				detailCondAdapter.insertDetailCondition("Calendar", 
+						"StartTime: " + startTime.getTime().toString() + "\n" + "FinishTime: " + finishTime.getTime().toString(), 
+						startTime.getTime().toString(), 
+						finishTime.getTime().toString(), 1, ceid);
+			} else {
+				detailCondAdapter.insertDetailCondition("Calendar", 
+						"StartTime: " + startTime.getTime().toString(),
+						startTime.getTime().toString(), 
+						"FinishTime", 0, ceid);
+			}		
+			if (eType < 4) {
+				String modeStr = "";
+				switch (eType) {
+				case 0:
+					modeStr = "Shutdown";
+				case 1:
+					modeStr = "Slient";
+					break;
+				case 2:
+					modeStr = "Vibration";
+					break;
+				case 3:
+					modeStr = "AirMode";
+					break;
+				default:
+					Log.i("Home.creatCondEvent()", "noThisEvent");
+					break;
+				}
+				detailEventAdapter.insertDetailEvent(ceid, eType);
+			} else if (eType == 4) {
+				
+			} else if (eType == 5) {
+				
+			}
+			TimeCondition tc = setTimeCondition(ceid, startTime, finishTime, shouldFinish);
+			AlarmSetHelper ash = new AlarmSetHelper(this);
+			ash.addToAlarm(tc, true, shouldFinish);
+		}
 			break;
 		case 2: {
 			int ceid = condEventAdapter.createCondEvent(cType, -1, null);
