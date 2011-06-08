@@ -56,10 +56,12 @@ public class NewEventExpandableListAdapter extends BaseExpandableListAdapter {
 		}
 		else if (groupPosition == 2) {
 			if (childPosition == 0) {
-				View view = new NewNotificationSelectChildView(context);		
+				NewNotificationSelectChildView view = new NewNotificationSelectChildView(context);	
+				view.setSelectedType(((NewEventSettings)context).notificationType);
 				return view;
 			} else if (childPosition == 1) {
-				View view = new NewNotificationMessageChildView(context);		
+				NewNotificationMessageChildView view = new NewNotificationMessageChildView(context);	
+				view.setEditText(((NewEventSettings)context).notificationContent);
 				return view;
 			}
 		}
