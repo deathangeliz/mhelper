@@ -1,12 +1,15 @@
 package com.mhelper.ui;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 
 import com.mhelper.R;
+import com.mhelper.middle.MHelperStrings;
 
 public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 
@@ -87,7 +90,12 @@ public class NewCondExpandableListAdapter extends BaseExpandableListAdapter {
 			return view;
 		}
 		else if (groupPosition == 2) {
-			View view = new NewMessageChildView(context);
+			NewMessageTypeChildView view = new NewMessageTypeChildView(context);
+			SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
+			view.setWhichEnable(prefs.getBoolean(MHelperStrings.SMS_SLIENT, false), 
+					prefs.getBoolean(MHelperStrings.SMS_VIBRATION, false), 
+					prefs.getBoolean(MHelperStrings.SMS_AIRMODE, false),
+					prefs.getBoolean(MHelperStrings.SMS_NORMAL, false));
 			return view;
 		}
 		

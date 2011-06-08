@@ -35,7 +35,7 @@ public class NewNotificationSelectChildView extends LinearLayout {
 		newNotificationSpinner = (Spinner)findViewById(R.id.newNotificationSpinner);
 		
 		ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(
-                context, R.array.message_type, android.R.layout.simple_spinner_item);
+                context, R.array.notification_type, android.R.layout.simple_spinner_item);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		newNotificationSpinner.setAdapter(adapter);
 		newNotificationSpinner.setOnItemSelectedListener(

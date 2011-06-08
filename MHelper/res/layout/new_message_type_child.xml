@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent" android:orientation="vertical">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" 
+    android:orientation="horizontal">
+        <CheckBox android:layout_height="wrap_content" android:id="@+id/newSMSSlientCheckBox" android:text="Slient" android:layout_width="match_parent" android:layout_weight="1"></CheckBox>
+        <CheckBox android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="1" android:text="Vibration" android:id="@+id/newSMSVibrationCheckBox"></CheckBox>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" 
+    android:orientation="horizontal">
+        <CheckBox android:layout_height="wrap_content" android:layout_width="match_parent" android:layout_weight="1" android:text="Airmode" android:id="@+id/newSMSAirCheckBox"></CheckBox>
+        <CheckBox android:layout_height="wrap_content" android:id="@+id/newSMSNormalCheckBox" android:layout_width="match_parent" android:layout_weight="1" android:text="Normal"></CheckBox>
+    </LinearLayout>
+</LinearLayout>

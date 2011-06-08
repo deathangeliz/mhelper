@@ -9,7 +9,9 @@ import com.mhelper.DatebaseAdapter.DetailCondAdapter;
 import com.mhelper.DatebaseAdapter.DetailEventAdapter;
 import com.mhelper.DatebaseAdapter.EventsAdapter;
 import com.mhelper.DatebaseAdapter.MDBHelperAdapter;
+import com.mhelper.DatebaseAdapter.NotificationEventAdapter;
 import com.mhelper.DatebaseAdapter.TimeDetailCondAdapter;
+import com.mhelper.DatebaseAdapter.WallpaperEventAdapter;
 import com.mhelper.conditions.TimeCondition;
 import com.mhelper.events.ChangeWallpaperEvent;
 import com.mhelper.middle.AlarmSetHelper;
@@ -24,10 +26,12 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ExpandableListActivity;
 import android.app.WallpaperManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.DialogInterface.OnClickListener;
+import android.content.SharedPreferences.Editor;
 
 import android.database.Cursor;
 import android.content.res.Resources;
@@ -102,6 +106,8 @@ public class Home extends ExpandableListActivity {
 	private DetailCondAdapter detailCondAdapter;
 	private EventsAdapter eventsAdapter;
 	private DetailEventAdapter detailEventAdapter;
+	private NotificationEventAdapter notificationEventAdapter;
+	private WallpaperEventAdapter wallpaperEventAdapter;
 	//--------------------------------
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -116,12 +122,16 @@ public class Home extends ExpandableListActivity {
         detailCondAdapter=new DetailCondAdapter(this);
         eventsAdapter=new EventsAdapter(this);
         detailEventAdapter=new DetailEventAdapter(this);
+        notificationEventAdapter=new NotificationEventAdapter(this);
+        wallpaperEventAdapter=new WallpaperEventAdapter(this);
         
         detailCondAdapter.recreateCondictions();
         conditionsAdapter.recreateConditions();
         eventsAdapter.recreateEvents();
         detailEventAdapter.recreateDetailEvent();
         condEventAdapter.recreateCondEvent();
+        notificationEventAdapter.recreateNotificationEvents();
+        wallpaperEventAdapter.recreateWallpaperEvents();
         //---------------------------------------
         
         prefs = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
@@ -179,9 +189,9 @@ public class Home extends ExpandableListActivity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		//getOrRefreshData();
-		//setListAdapter(adapter);
-		//adapter.notifyDataSetChanged();
+		getOrRefreshData();
+		setListAdapter(adapter);
+		adapter.notifyDataSetChanged();
 	}
 	
 	@Override
@@ -236,37 +246,7 @@ public class Home extends ExpandableListActivity {
 			if (eType == 0) {
 				
 			} else if (eType > 0 && eType < 4) {
-				/*int ceid = condEventId.size();
-				//int _ceid = 
-				condEventId.add(ceid);
-				int id = ids.size();
-				ids.add(id);
-				Calendar st = getSettingStartTime();
-				AlarmSetHelper ash = new AlarmSetHelper(this);
-				ash.startToAlarm(st, null, false, eType, id, ceid, false);
-				String timeStr = "Alarm";
-				String modeStr = "";
-				switch (eType) {
-				case 1:
-					modeStr = "Slient";
-					break;
-				case 2:
-					modeStr = "Vibration";
-					break;
-				case 3:
-					modeStr = "AirMode";
-					break;
-				default:
-					Log.i("Home.creatCondEvent()", "noThisEvent");
-					break;
-				}
-				groupContent.add(timeStr + " - " + modeStr);
-				Log.i("Home.createCondEvent", "" + groupContent.size());
-				String childrenStr = "StartTime: " + st.getTime().toString()
-				                   + "\n" + "Change mode: " + modeStr;
-				ArrayList<String> addStrings = new ArrayList<String>();
-				addStrings.add(childrenStr);
-				childrenContent.add(addStrings);*/
+
 			} else if (eType == 4) {
 				int nt = prefs.getInt(MHelperStrings.UI_NOTIFICATION_TYPE, -1);
 				if (nt == -1)
@@ -276,6 +256,11 @@ public class Home extends ExpandableListActivity {
 				params.putString(MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE, 
 						prefs.getString(MHelperStrings.UI_NOTIFICATION_CONTENT, ""));
 			} else if (eType == 5) {
+				String str = prefs.getString(MHelperStrings.UI_WALLPAPER_URI, "");
+				if (str == null) {
+					Log.i("Home.createCondEvent()", "eType == 5,str == null");
+					return;
+				}
 				params.putString(MDBHelperAdapter.KEY_WALLPAPERURI, 
 						MHelperStrings.UI_WALLPAPER_URI);
 			}
@@ -327,8 +312,10 @@ public class Home extends ExpandableListActivity {
 			break;
 		case 1:
 			break;
-		case 2:
+		case 2: {
+			int ceid = condEventAdapter.createCondEvent(cType, -1, null);
 			break;
+		}	
 		default:
 			break;
 		}
@@ -385,24 +372,48 @@ public class Home extends ExpandableListActivity {
 	}
 	
 	public void toDeleteCondEvent(final int groupPosition) {
-		//invoke database method to delete
-		//    the cond-event which id is condEventId.get(groupPosition)
-		/*groupContent.remove(groupPosition);
-		childrenContent.remove(groupPosition);
-		condEventId.remove(groupPosition);*/
 		int ceid = condEventId.get(groupPosition);
-		condEventAdapter.deleteCondEvent(ceid);
+		Cursor CECursor = condEventAdapter.getCondEvent(ceid);
+		int ctype = Integer.valueOf(CECursor.getString(1));
+		int etype = Integer.valueOf(CECursor.getString(2));
+		if (ctype == 0) {
+			if (etype < 4) {
+				detailEventAdapter.deleteDetailEvent(ceid);
+			} else if (etype == 4) {
+				notificationEventAdapter.deleteNotificationEvent(ceid);			
+			} else if (etype == 5) {
+				wallpaperEventAdapter.deleteWallpaperEvent(ceid);
+			}
+			Cursor DCCursor = detailCondAdapter.getDetailCondition(ceid);
+			int point = Integer.valueOf(DCCursor.getString(5));
+			boolean setFinish = (point == 1 ? false : true);
+			detailCondAdapter.deleteCondition(ceid);
+			AlarmSetHelper ash = new AlarmSetHelper(this);
+			ash.cancelAlarm(ceid, true, setFinish);
+			condEventAdapter.deleteCondEvent(ceid);
+		} else if (ctype == 1) {
+			
+		} else if (ctype == 2) {
+			condEventAdapter.deleteCondEvent(ceid);
+			Editor editor = prefs.edit();
+			editor.putBoolean(MHelperStrings.SMS_SLIENT, false);
+			editor.putBoolean(MHelperStrings.SMS_VIBRATION, false);
+			editor.putBoolean(MHelperStrings.SMS_AIRMODE, false);
+			editor.putBoolean(MHelperStrings.SMS_NORMAL, false);
+			editor.commit();
+		}
+		/*condEventAdapter.deleteCondEvent(ceid);
 		AlarmSetHelper ash = new AlarmSetHelper(this);
-		ash.cancelAlarm(ceid, true, false);
+		ash.cancelAlarm(ceid, true, false);*/
 		getOrRefreshData();
 		setListAdapter(adapter);
 		adapter.notifyDataSetChanged();
 	}
 	
 	public void toEditCondEvent(final int groupPosition) {
-		int ecid = condEventId.get(groupPosition);
+		int ceid = condEventId.get(groupPosition);
 		Intent intent = new Intent(Home.this, NewCondEvent.class);
-		Bundle extras = getCondEventData(ecid);
+		Bundle extras = getCondEventData(ceid);
 		extras.putInt(MODE, MODE_EDIT);
 		intent.putExtras(extras);
 		startActivityForResult(intent, REQUEST_EDIT_PARAMS);

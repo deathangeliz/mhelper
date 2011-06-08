@@ -13,6 +13,7 @@ public class MHelperStrings {
 	public static final String SMS_SLIENT = "sms_slient";
 	public static final String SMS_VIBRATION = "sms_vibration";
 	public static final String SMS_AIRMODE = "sms_airmode";
+	public static final String SMS_NORMAL = "sms_normal";
 	//event strings
 	public static final String NOTIFICATION_TYPE = "notification_type";
 	public static final String NOTIFICATION_CONTENT = "notification_content";

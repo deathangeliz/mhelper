@@ -57,8 +57,8 @@ public class MDBHelperAdapter {
 		+ "detaileventsort integer not null,"
 		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid));";
 	private static final String DATABASE_CREATE6 = "create table notificationevent (condeventid INTEGER primary key, "
-		+ "noficationtype integer not null,"
-		+"noficationmessage test not null, "
+		+ "notificationtype integer not null,"
+		+"notificationmessage test, "
 		+"FOREIGN KEY (condeventid) REFERENCES condevent(ceid));";
 	private static final String DATABASE_CREATE7 = "create table wallpaperevent (condeventid INTEGER primary key, "
 		+"wallpaperuri test not null, "

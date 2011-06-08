@@ -36,7 +36,7 @@ public class DetailCondAdapter {
 		return b;
 	}
 
-	public Cursor getDetailCondition(int ceID) throws SQLException {
+	public Cursor getDetailCondition(int ceID) {
 		mDbHelper.open();
 		Cursor mCursor =
 			MDBHelperAdapter.getDBHelper().query(true, MDBHelperAdapter.DATABASE_TABLE4, new String[] { MDBHelperAdapter.KEY_CONDEVENTID,MDBHelperAdapter.KEY_TITLE,MDBHelperAdapter.KEY_DESCRIPTION,MDBHelperAdapter.KEY_STARTTIME,MDBHelperAdapter.KEY_FINISHTIME,MDBHelperAdapter.KEY_POINT}, 

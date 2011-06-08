@@ -19,7 +19,8 @@ public class NotificationEventAdapter {
 		initialValues.put(MDBHelperAdapter.KEY_NOTIFICATIONTYPE, ntfctype);
 		initialValues.put(MDBHelperAdapter.KEY_NOTIFICATIONMESSAGE, message);
 		mDbHelper.open();
-		return (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE6, null, initialValues);
+		int i = (int)MDBHelperAdapter.getDBHelper().insert(MDBHelperAdapter.DATABASE_TABLE6, null, initialValues);
+		return i;
 	}
 	public boolean deleteNotificationEvent(int ceid) {
 		mDbHelper.open();
@@ -39,6 +40,7 @@ public class NotificationEventAdapter {
 		if (mCursor != null) {
 			mCursor.moveToFirst();
 		}
+		mDbHelper.closeclose();
 		return mCursor;
 	}
 
