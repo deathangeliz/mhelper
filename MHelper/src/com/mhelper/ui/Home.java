@@ -460,7 +460,20 @@ public class Home extends ExpandableListActivity {
 			ash.cancelAlarm(ceid, true, setFinish);
 			condEventAdapter.deleteCondEvent(ceid);
 		} else if (ctype == 1) {
-			
+			if (etype < 4) {
+				detailEventAdapter.deleteDetailEvent(ceid);
+			} else if (etype == 4) {
+				notificationEventAdapter.deleteNotificationEvent(ceid);			
+			} else if (etype == 5) {
+				wallpaperEventAdapter.deleteWallpaperEvent(ceid);
+			}
+			Cursor DCCursor = detailCondAdapter.getDetailCondition(ceid);
+			int point = Integer.valueOf(DCCursor.getString(5));
+			boolean setFinish = (point == 1 ? false : true);
+			detailCondAdapter.deleteCondition(ceid);
+			AlarmSetHelper ash = new AlarmSetHelper(this);
+			ash.cancelAlarm(ceid, true, setFinish);
+			condEventAdapter.deleteCondEvent(ceid);
 		} else if (ctype == 2) {
 			condEventAdapter.deleteCondEvent(ceid);
 			Editor editor = prefs.edit();
