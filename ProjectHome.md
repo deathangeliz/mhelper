@@ -1,0 +1,1 @@
+a helper app on Android, featuring extensible framework by 3 layers in this app
